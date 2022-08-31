@@ -1,0 +1,166 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body ">
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Nama Orangtua</label>
+                </div>
+                <div class="col-md-10">
+                  <ng-autocomplete  [data]="resultOflistUser" [searchKeyword]="keyword" placeholder="Masukan Nama Orang Tua"
+                    (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.fullname"></a>
+                  </ng-template>
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                  <div *ngIf="parentNameValid == false" class="make-red" >
+                    <div *ngIf="parentNameValid == false">Nama Orang Tua Tidak Ditemukan</div>
+                  </div>  
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Nama Anak</label>
+                </div>
+                <div class="col-md-10">
+                 <select [(ngModel)]="selectedIdChild" class="form-control deft" (change)="changeChildName($event)">
+                   <option value=0 disabled>-- Silahkan Pilih Nama Anak --</option>
+                   <option *ngFor="let list of tempListChild" value="{{list.id}}" >{{list.fullname}}</option>
+                  </select>
+                  <div *ngIf="selectedIdChildEmpty == true" class="make-orange" >
+                    <div *ngIf="selectedIdChildEmpty == true">Nama Anak Harus Dipilih </div>
+                  </div>  
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Pemeriksan Ke - </label>
+                </div>
+                <div class="col-md-2">
+                  <select [(ngModel)]="selectedBatch" class="form-control deft" (change)="changeBatch($event)">
+                    <option value=0 disabled>-- Pilih --</option>
+                    <option *ngFor="let list of checkUpSchedule" value="{{list.batch}}">{{list.batch}}</option>
+                  </select>
+                  <div *ngIf="selectedBatchEmpty == true" class="make-orange" >
+                    <div *ngIf="selectedBatchEmpty == true">Bulan Harus Diisi</div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <input [(ngModel)]="description" type="description" class="form-control" readonly>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Tanggal Pemeriksaan</label>
+                </div>
+                <div class="col-md-10">
+                  <input [(ngModel)]="checkUpDate" [type]="isDate ? 'date' : 'text'" class="form-control" [readOnly]="isReadOnly">
+                  <div *ngIf="checkUpDateEmpty == true" class="make-orange" >
+                   <div *ngIf="checkUpDateEmpty == true">Tanggal Imunisasi Harus Diisi</div>
+                  </div> 
+                 </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Berat Badan</label>
+                </div>
+                <div class="col-md-1">
+                  <input [(ngModel)]="weight" type="weight" class="form-control" [readonly]="isReadOnly" (keypress)="numberOnly($event)" maxlength="3">
+                  <div *ngIf="weightEmpty == true" class="make-orange" >
+                    <div *ngIf="weightEmpty == true">Berat Badan Harus Diisi</div>
+                  </div> 
+                </div>
+                <div class="col-md-3">
+                  <label for="name">KG</label>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Panjang Badan</label>
+                </div>
+                <div class="col-md-1">
+                  <input [(ngModel)]="length" type="length" class="form-control" [readonly]="isReadOnly" (keypress)="numberOnly($event)" maxlength="3">
+                  <div *ngIf="lengthEmpty == true" class="make-orange" >
+                    <div *ngIf="lengthEmpty == true">Panjang Badan Harus Diisi</div>
+                  </div> 
+                </div>
+                <div class="col-md-3">
+                  <label for="name">CM</label>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Lingkar Kepala</label>
+                </div>
+                <div class="col-md-1">
+                  <input [(ngModel)]="headDiameter" type="text" class="form-control" [readonly]="isReadOnly" (keypress)="numberOnly($event)" maxlength="3">
+                  <div *ngIf="headDiameterEmpty == true" class="make-orange" >
+                    <div *ngIf="headDiameterEmpty == true">Lingkar Kepala Harus Diisi</div>
+                  </div> 
+                </div>
+                <div class="col-md-3">
+                  <label for="name">CM</label>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Catatan</label>
+                </div>
+                <div class="col-md-10">
+                  <textarea [(ngModel)]="notes" type="text" class="form-control" [readonly]="isReadOnly"></textarea>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2 d-flex justify-content-end">
+              <button class="btn btn-success" (click)="saveCheckUpRecord()" [disabled]="isDisabled">Simpan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

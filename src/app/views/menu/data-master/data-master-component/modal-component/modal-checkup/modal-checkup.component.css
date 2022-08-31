@@ -1,0 +1,19 @@
+.make-orange {
+    color: #fc5b00;
+    font-size: 80%;
+}
+.make-red{
+    color: red;
+    justify-content: center;
+}
+
+.modal-body{
+    position: relative;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+select option:disabled {
+    color: #ff0000;
+    font-weight: bold;
+}

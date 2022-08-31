@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-body">
+              <!-- title -->
+              <h4 class="card-title">Input Data</h4>
+              <h5 class="card-subtitle">Input Data Pengguna Baru, Jejak Imunisasi dan Medis</h5>
+              <!-- title -->
+              <br>
+              <div class="row">
+                <div class="col-md-12">
+                  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                    <li [ngbNavItem]="1">
+                      <a ngbNavLink>Registrasi Pengguna</a>
+                      <ng-template ngbNavContent>
+                        <app-parent-registration></app-parent-registration>
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="2">
+                      <a ngbNavLink>Registrasi Anak</a>
+                      <ng-template ngbNavContent>
+                        <app-child-registration></app-child-registration>
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="3">
+                      <a ngbNavLink>Imunisasi</a>
+                      <ng-template ngbNavContent>
+                        <app-vaccine-record></app-vaccine-record>
+                      </ng-template>
+                    </li>
+                    <li [ngbNavItem]="4">
+                      <a ngbNavLink>Jejak Medis</a>
+                      <ng-template ngbNavContent>
+                        <app-checkup-record></app-checkup-record>
+                      </ng-template>
+                    </li>
+                  </ul>
+                  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

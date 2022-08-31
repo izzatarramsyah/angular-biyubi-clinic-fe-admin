@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-register">{{header}}</h4>
+</div>
+<div class="modal-body">
+    {{wording}}
+</div>
+<div class="modal-footer" >     
+    <div *ngIf="header === 'Konfrimasi'">
+        <button type="button" class="btn btn-outline-dark" (click)="yes()">Ya</button>&nbsp;   
+        <button type="button" class="btn btn-outline-dark" (click)="no()">Tidak</button>
+    </div>
+    <div *ngIf="header === 'Sukses'">
+        <button type="button" class="btn btn-outline-dark" (click)="closeModal()">Tutup</button>&nbsp;   
+    </div>
+    <div *ngIf="header === 'Gagal'">
+        <button type="button" class="btn btn-outline-dark" (click)="closeModal()">Tutup</button>&nbsp;   
+    </div>
+    <div *ngIf="header === 'Informasi'">
+        <button type="button" class="btn btn-outline-dark" (click)="closeModalWithoutRefresh()">Tutup</button>&nbsp;   
+    </div>
+</div>

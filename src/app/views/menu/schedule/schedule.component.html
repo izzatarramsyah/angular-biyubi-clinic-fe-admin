@@ -1,0 +1,149 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <!-- title -->
+                <h4 class="card-title">Jadwal</h4>
+                <h5 class="card-subtitle">Jadwal Imunisasi dan Jejak Medis Anak</h5>
+                <!-- title -->
+                <br>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2">
+                               <label for="name">Nama Orangtua</label>
+                            </div>
+                            <div class="col-md-10">
+                              <ng-autocomplete  [data]="resultOflistUser" [searchKeyword]="keyword" placeholder="Masukan Nama Orang Tua"
+                                (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate"
+                                [notFoundTemplate]="notFoundTemplate">
+                              </ng-autocomplete>
+                              <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item.fullname"></a>
+                              </ng-template>
+                              <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                              </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-2">
+                          <label for="name">Nama Anak</label>
+                        </div>
+                        <div class="col-md-10">
+                          <select [(ngModel)]="selectedChildId" class="form-control deft" (change)="changeChildName($event)">
+                            <option value=0 disabled>-- Silahkan Pilih Nama Anak --</option>
+                            <option *ngFor="let list of tempListChild" value="{{list.id}}" >{{list.fullname}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                       <div class="row">
+                          <div class="col-md-2">
+                             <label for="name">Jenis Jadwal</label>
+                          </div>
+                          <div class="col-md-10">
+                            <select [(ngModel)]="selectedHistoryType" class="form-control" (change)="changeRecordType($event)">
+                              <option value='0' disabled>-- Silahkan Pilih Jadwal --</option>
+                              <option *ngFor="let type of typeSchedule" value="{{type.value}}" [disabled]="isDisabled">{{type.name}}</option>
+                            </select>
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="showTableCheckUp || showTableVaccine" class="card">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div *ngIf="showTableCheckUp" class="table-responsive">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-success" (click)="ExportTOExcel()">
+                            Export Excel
+                            </button>
+                        </div><br>
+                        <table datatable [dtOptions]="dtOptions" class="row-border hover">
+                          <thead>
+                              <tr>
+                                  <th class="text-dark font-medium fs-4" style="text-align:center">Jadwal Pemeriksaan</th>
+                                  <th class="text-dark font-medium fs-4" style="text-align:center">Bulan Ke </th>
+                                  <th class="text-dark font-medium fs-4" style="text-align:center">Deskripsi</th>
+                                  <th class="text-dark font-medium fs-4" style="text-align:center">Status</th>
+                                  <th class="text-dark font-medium fs-4" style="text-align:center">Aksi</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor='let list of checkUpSchedule'>
+                                  <td class="fs-4" style="text-align:center">{{list.scheduleDate}}</td>
+                                  <td class="fs-4" style="text-align:center">{{list.batch}}</td>
+                                  <td class="fs-4" style="text-align:center">{{list.description}}</td>
+                                  <td *ngIf ="list.checkUpDate == null" style="text-align:center">
+                                    <p style="color:red">Belum Dilakukan</p>
+                                  </td>
+                                  <td *ngIf ="list.checkUpDate != null" style="text-align:center">
+                                    <p style="color:green">Sudah Dilakukan</p>
+                                  </td>
+                                  <td *ngIf ="list.checkUpDate == null" style="text-align:center">
+                                    <a href="javascript:void(0)">Kirim Notifikasi</a>
+                                  </td>
+                                  <td *ngIf ="list.checkUpDate != null" style="text-align:center">
+                                    <a href="javascript:void(0)" (click)="checkDetailCheckUp(list)">Lihat Detail</a>
+                                  </td>
+                              </tr>              
+                          </tbody>
+                        </table>
+                    </div>
+
+                    <div *ngIf="showTableVaccine" class="table-responsive">
+                      <div class="d-flex justify-content-end">
+                          <button type="button" class="btn btn-success" (click)="ExportTOExcel()">
+                          Export Excel
+                          </button>
+                      </div><br>
+                      <table datatable [dtOptions]="dtOptions" class="row-border hover">
+                        <thead>
+                            <tr>
+                                <th class="text-dark font-medium fs-4" style="text-align:center">Nama Vaksin</th>
+                                <th class="text-dark font-medium fs-4" style="text-align:center">Bulan Ke</th>
+                                <th class="text-dark font-medium fs-4" style="text-align:center">Status</th>
+                                <th class="text-dark font-medium fs-4" style="text-align:center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor='let list of vaccineSchedule'>
+                                <td class="fs-4" style="text-align:center">{{list.vaccineName}}</td>
+                                <td class="fs-4" style="text-align:center">{{list.batch}}</td>
+                                <td *ngIf ="list.vaccineDate == null" style="text-align:center">
+                                  <p style="color:red">Belum Dilakukan</p>
+                                </td>
+                                <td *ngIf ="list.vaccineDate != null" style="text-align:center">
+                                  <p style="color:green">Sudah Dilakukan</p>
+                                </td>
+                                <td *ngIf ="list.vaccineDate == null" style="text-align:center">
+                                  <a href="javascript:void(0)">Kirim Notifikasi</a>
+                                </td>
+                                <td *ngIf ="list.vaccineDate != null" style="text-align:center">
+                                  <a href="javascript:void(0)" (click)="checkDetailVaccine(list)">Lihat Detail</a>
+                                </td>
+                            </tr>              
+                        </tbody>
+                      </table>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

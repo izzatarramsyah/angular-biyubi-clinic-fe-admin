@@ -1,0 +1,14 @@
+  .make-orange {
+    color: #fc5b00;
+    font-size: 80%;
+  }
+  
+  .make-red{
+    color: red;
+    justify-content: center;
+  }
+  
+  .dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+  }

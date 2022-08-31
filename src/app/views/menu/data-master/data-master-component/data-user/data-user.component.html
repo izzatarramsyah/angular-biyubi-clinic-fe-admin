@@ -1,0 +1,43 @@
+<div *ngIf="showTable">
+  <div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-success" (click)="ExportTOExcel()">
+      Export Excel
+    </button>
+  </div><br>
+  <div>
+    <table *ngIf="showTable" datatable [dtOptions]="dtOptions" class="row-border hover">
+      <thead>
+          <tr>
+              <th class="text-dark font-medium fs-4" style="text-align:center">Username</th>
+              <th class="text-dark font-medium fs-4" style="text-align:center">Nama Lengkap</th>
+              <th class="text-dark font-medium fs-4" style="text-align:center">Tanggal Bergabung</th>
+              <th class="text-dark font-medium fs-4" style="text-align:center">Daftar Anak</th>
+              <th class="text-dark font-medium fs-4" style="text-align:center">Status Akun</th>
+              <th class="text-dark font-medium fs-4" style="text-align:center">Aksi</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor='let list of listOfUser'>
+              <td class="fs-4" style="text-align:center">{{list.username}}</td>
+              <td class="fs-4" style="text-align:center">{{list.fullname}}</td>
+              <td class="fs-4" style="text-align:center">{{list.joinDate}}</td>
+              <td class="fs-4" style="text-align:center"> 
+                <a *ngFor='let lst of list.child; last as isLast' href="javascript:void(0)" (click)="checkChild(lst, list.id)">
+                  {{lst.fullname}}<span *ngIf="!isLast">&nbsp;</span></a>
+              </td>
+              <td class="fs-4" style="text-align:center">
+                <span [ngClass]="list.status == 'ACTIVE' ? 'p-2 bg-success rounded-circle d-inline-block ms-3' : 'p-2 bg-danger rounded-circle d-inline-block ms-3'"></span>
+              </td>
+              <td class="fs-4" style="text-align:center">
+                <label class="switch">  
+                  <input type="checkbox" (click)="changeCheckBox($event,list)" [checked]="list.status == 'ACTIVE'">
+                  <span class="slider"></span>
+                </label> &nbsp;
+                <button type="button" class="btn btn-info" (click)="modalEdit(list)">
+                  <i class="bi bi-gear"></i></button>
+              </td>
+          </tr>              
+      </tbody>
+    </table>
+  </div>
+</div>

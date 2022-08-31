@@ -1,0 +1,128 @@
+<div class="row">
+   <div class="col-lg-12">
+     <div class="card">
+       <div class="card-body ">
+         <div class="col-md-12">
+           <div class="form-group">
+             <div class="row">
+               <div class="col-md-2">
+                 <label for="name">Nama Orangtua</label>
+               </div>
+               <div class="col-md-10">
+                <ng-autocomplete  [data]="resultOflistUser" [searchKeyword]="keyword" placeholder="Masukan Nama Orang Tua"
+                  (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate"
+                  [notFoundTemplate]="notFoundTemplate">
+                </ng-autocomplete>
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.fullname"></a>
+                </ng-template>
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+                <div *ngIf="parentNameValid == false" class="make-red" >
+                  <div *ngIf="parentNameValid == false">Nama Orang Tua Tidak Ditemukan</div>
+                </div> 
+              </div>
+             </div>
+           </div>
+           <br>
+         </div>
+         <div class="col-md-12">
+           <div class="form-group">
+             <div class="row">
+               <div class="col-md-2">
+                 <label for="name">Nama Anak</label>
+               </div>
+               <div class="col-md-10">
+                <select [(ngModel)]="selectedIdChild" class="form-control deft" (change)="changeChildName($event)">
+                  <option value=0 disabled selected>-- Silahkan Nama Anak --</option>
+                  <option *ngFor="let list of tempListChild" value="{{list.id}}" >{{list.fullname}}</option>
+                </select>
+               </div>
+             </div>
+           </div>
+           <br>
+         </div>
+         <div class="col-md-12">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-2">
+                <label for="name">Nama Imunisasi </label>
+              </div>
+              <div class="col-md-6">
+                <select [(ngModel)]="vaccineName" class="form-control deft" (change)="changeVaccineName($event)">
+                  <option value=0 disabled selected>-- Silahkan Pilih Jenis Imunisasi --</option> 
+                  <option *ngFor="let list of listVaccine" value="{{list.vaccineCode}}">{{list.vaccineName}}</option>
+                 </select>
+                 <div *ngIf="vaccineNameEmpty == true" class="make-orange" >
+                  <div *ngIf="vaccineNameEmpty == true">Nama Imunisasi Harus Diisi</div>
+                 </div>
+              </div>
+              <div class="col-md-2">
+                <label for="name">Imunisasiasi Ke - </label>
+              </div>
+              <div class="col-md-2">
+                <select [(ngModel)]="selectedBatch" class="form-control deft" (change)="changeSelectedBatch($event)">
+                  <option value=0 disabled>-- Pilih --</option>
+                  <option *ngFor="let list of listBatch" value={{list.batch}} >{{list.batch}}</option>
+                </select>
+                <div *ngIf="selectedBatchEmpty == true" class="make-orange" >
+                  <div *ngIf="selectedBatchEmpty == true">Bulan Imunisasi Harus Diisi</div>
+                </div>
+             </div>
+            </div>
+          </div>
+          <br>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-2">
+                <label for="name">Tanggal Imunisasi</label>
+              </div>
+              <div class="col-md-10">
+                <input [(ngModel)]="vaccineDate" [type]="isDate ? 'date' : 'text'" class="form-control" (change)="changeVaccineDate($event)" [readOnly]="isReadOnly">
+                <div *ngIf="vaccineDateEmpty == true" class="make-orange" >
+                 <div *ngIf="vaccineDateEmpty == true">Tanggal Imunisasi Harus Diisi</div>
+                </div> 
+               </div>
+            </div>
+          </div>
+          <br>
+        </div>
+         <div class="col-md-12">
+           <div class="form-group">
+             <div class="row">
+               <div class="col-md-2">
+                 <label for="name">Tanggal Expired</label>
+               </div>
+               <div class="col-md-10">
+                 <input [(ngModel)]="expiredDate" type="text" class="form-control" readonly>
+               </div>
+             </div>
+           </div>
+           <br>
+         </div>
+         <div class="col-md-12">
+           <div class="form-group">
+             <div class="row">
+               <div class="col-md-2">
+                 <label for="name">Catatan</label>
+               </div>
+               <div class="col-md-10">
+                 <textarea [(ngModel)]="notes" type="textArea" class="form-control" [readOnly]="isReadOnly"></textarea>
+               </div>
+             </div>
+           </div>
+           <br>
+         </div>
+         <div class="row">
+           <div class="col-md-10"></div>
+           <div class="col-md-2 d-flex justify-content-end">
+             <button class="btn btn-success" (click)="saveVaccineRecord()" [disabled]="isDisabled">Simpan</button>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>

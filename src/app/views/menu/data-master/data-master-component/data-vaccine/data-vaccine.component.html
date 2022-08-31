@@ -1,0 +1,45 @@
+<div *ngIf="showTable">
+  <div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-info" (click)="modalAdd()">
+      Tambah Data
+    </button>&nbsp;
+    <button type="button" class="btn btn-success" (click)="ExportTOExcel()">
+      Export Excel
+    </button>
+  </div><br>
+  <div >
+    <table datatable [dtOptions]="dtOptions" class="row-border hover">
+      <thead>
+          <tr>
+              <th class="text-dark font-medium fs-4" style="text-align:center">Nama</th>
+              <th class="text-dark font-medium fs-4" style="text-align:center">Merk</th>
+              <th class="text-dark font-medium fs-4" style="text-align:center">Hari Kadaluarsa</th>
+              <th class="text-dark font-medium fs-4" style="text-align:center">Bulan Ke-</th>
+              <th class="text-dark font-medium fs-4" style="text-align:center">Status</th>
+              <th class="text-dark font-medium fs-4" style="text-align:center">Aksi</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor='let list of vaccineMaster'>
+              <td class="fs-4" style="text-align:center">{{list.vaccineName}}</td>
+              <td class="fs-4" style="text-align:center">{{list.vaccineType}}</td>
+              <td class="fs-4" style="text-align:center">{{list.expDays}}</td>
+              <td class="fs-4" style="text-align:center">{{list.batch}}</td>
+              <td class="fs-4" style="text-align:center">
+                <span [ngClass]="list.status == 'ACTIVE' ? 'p-2 bg-success rounded-circle d-inline-block ms-3' : 'p-2 bg-danger rounded-circle d-inline-block ms-3'"></span>
+              </td>
+              <td class="fs-4" style="text-align:center">
+                <label class="switch">  
+                  <input type="checkbox" (click)="changeCheckBox($event,list)" [checked]="list.status == 'ACTIVE'">
+                  <span class="slider"></span>
+                </label> &nbsp;
+                <button type="button" class="btn btn-info" (click)="modalEdit(list)">
+                  <i class="bi bi-gear"></i></button>
+              </td>
+          </tr>              
+      </tbody>
+    </table>
+  </div>
+</div>
+  
+  

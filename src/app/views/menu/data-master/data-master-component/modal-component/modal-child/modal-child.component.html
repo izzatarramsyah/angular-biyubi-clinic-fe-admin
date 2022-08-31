@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-login">Data Anak</h4>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Nama</label>
+        <input [(ngModel)]="name" type="text" class="form-control" >
+        <div *ngIf="nameEmpty == true" class="make-orange" >
+          <div *ngIf="nameEmpty == true">Nama Anak Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="type">Tanggal Lahir</label>
+        <input [(ngModel)]="birthDate" type="date" class="form-control" >
+        <div *ngIf="birthDateEmpty == true" class="make-orange" >
+          <div *ngIf="birthDateEmpty == true">Tanggal Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Jenis Kelamin</label>
+        <div class="form-group">
+          <input type="radio" [(ngModel)]="gender" value="L">
+          &nbsp;<label for="L">Laki-Laki</label>&nbsp;
+          <input type="radio" [(ngModel)]="gender" value="P">
+          &nbsp;<label for="P">Perempuan</label>
+          <div *ngIf="genderEmpty == true" class="make-orange" >
+            <div *ngIf="genderEmpty == true">Jenis Kelamin Harus Diisi</div>
+          </div>  
+        </div>
+      </div>
+      <br>
+    </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="process()">Proses</button>
+  </div>

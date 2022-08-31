@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body" *ngIf="showComponent">
+                <!-- title -->
+                <h4 class="card-title">Data Riwayat</h4>
+                <h5 class="card-subtitle">Data Riwayat Aktivitas Admin</h5>
+                <!-- title -->
+                <br>
+                <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2">
+                               <label for="name">Tanggal Awal</label>
+                            </div>
+                            <div class="col-md-4">
+                              <input [(ngModel)]="startDate" type="date" class="form-control" [max]="maxDate"> 
+                            </div>
+                            <div class="col-md-2">
+                                <label for="name">Tanggal Akhir</label>
+                             </div>
+                            <div class="col-md-4">
+                                <input [(ngModel)]="endDate" type="date" class="form-control" [max]="maxDate"> 
+                              </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-10">
+                            </div>
+                            <div class="col-md-2 d-flex justify-content-end">
+                                <button class="btn btn-success" (click)="search()" >Cari
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showTable" class="card">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div class="table-responsive">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-success" (click)="ExportTOExcel()">
+                            Export Excel
+                            </button>
+                        </div><br>
+                        <table datatable [dtOptions]="dtOptions" class="row-border hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-dark font-medium fs-4" style="text-align:center">Username</th>
+                                    <th class="text-dark font-medium fs-4" style="text-align:center">Tanggal</th>
+                                    <th class="text-dark font-medium fs-4" style="text-align:center">Aktivitas</th>
+                                    <th class="text-dark font-medium fs-4" style="text-align:center">Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor='let list of auditTrail'>
+                                    <td class="fs-4" style="text-align:center">{{list.username}}</td>
+                                    <td class="fs-4" style="text-align:center">{{list.date}}</td>
+                                    <td class="fs-4" style="text-align:center">{{list.activity}}</td>
+                                    <td class="fs-4" style="text-align:center">{{list.detail}}</td>
+                                </tr>              
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

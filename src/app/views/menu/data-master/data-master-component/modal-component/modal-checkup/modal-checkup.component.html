@@ -1,0 +1,58 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-login">{{header}}</h4>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Aktivitas</label>
+        <input [(ngModel)]="actName" type="text" class="form-control" >
+        <div *ngIf="actNameEmpty == true" class="make-orange" >
+          <div *ngIf="actNameEmpty == true">Nama Aktivitas Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="type">Description</label>
+        <input [(ngModel)]="description" type="text" class="form-control">
+        <div *ngIf="descriptionEmpty == true" class="make-orange" >
+          <div *ngIf="descriptionEmpty == true">Deskripsi Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div *ngIf="command == 'Edit'" class="col-md-12">
+      <div class="form-group">
+        <label for="name">Bulan Ke-</label>
+        <input [(ngModel)]="selectedBatch" type="text" class="form-control">
+        <div *ngIf="batchEmpty == true" class="make-orange" >
+          <div *ngIf="batchEmpty == true">Bulan Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div *ngIf="command == 'Add'" class="col-md-12">
+      <div class="form-group">
+        <label for="type">Bulan Ke-</label>
+        <select [(ngModel)]="selectedBatch" class="form-control deft" >
+          <option value=0 [disabled]="true" >-- Pilih --</option>
+          <option *ngFor="let list of listBatch" value="{{list.batch}}" [disabled]="list.value">{{list.batch}}</option>
+        </select>
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+          <label for="name">Pemeriksaan Selanjutnya</label>
+          <input [(ngModel)]="nextCheckUpDays" type="number" class="form-control">
+          <div *ngIf="nextCheckUpDaysEmpty == true" class="make-orange" >
+            <div *ngIf="nextCheckUpDaysEmpty == true">Pemeriksaan Selanjtunya Harus Diisi</div>
+          </div> 
+        </div>
+        <br>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="process()">Proses</button>
+  </div>

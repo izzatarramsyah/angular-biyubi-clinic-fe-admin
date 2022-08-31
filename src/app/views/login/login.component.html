@@ -1,0 +1,31 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <form>
+      <div>
+        <input #username type="text" id="username" class="fadeIn second" name="username" placeholder="login">
+        <div *ngIf="usernameEmpty == true" class="make-red" >
+          <div *ngIf="usernameEmpty == true">Username Harus Diisi</div>
+        </div> 
+      </div>
+      <div>
+        <input #password type="password" id="password" class="fadeIn third" name="password" placeholder="password" password>
+        <div *ngIf="passwordEmpty == true" class="make-red" >
+          <div *ngIf="passwordEmpty == true">Password Harus Diisi</div>
+        </div> 
+      </div>
+      <div>
+        <button class="btn-login fadeIn fourth" (click)="login()">Log In &nbsp;
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
+        </button>
+        <div *ngIf="isValid == false" class="make-orange" >
+          <div *ngIf="isValid == false">Username / Password salah</div>
+        </div> 
+      </div>
+    </form>
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Forgot Password?</a>
+    </div>
+  </div>
+</div>
+  

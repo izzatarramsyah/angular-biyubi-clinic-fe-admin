@@ -1,0 +1,160 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card"><br>
+        <div class="card-body ">
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Nama Orangtua</label>
+                </div>
+                <div class="col-md-10">
+                  <ng-autocomplete  [data]="resultOflistUser" [searchKeyword]="keyword" placeholder="Masukan Nama Orang Tua"
+                    (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.fullname"></a>
+                  </ng-template>
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                  <div *ngIf="parentNameValid == false" class="make-red" >
+                    <div *ngIf="parentNameValid == false">Nama Orang Tua Tidak Ditemukan</div>
+                  </div> 
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Nama Anak</label>
+                </div>
+                <div class="col-md-10">
+                  <input [(ngModel)]="childName" type="text" class="form-control" >
+                  <div *ngIf="childNameEmpty == true" class="make-orange" >
+                    <div *ngIf="childNameEmpty == true">Nama Anak Harus Diisi</div>
+                  </div> 
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Tanggal Lahir</label>
+                </div>
+                <div class="col-md-10">
+                  <input [(ngModel)]="birthDate" type="date" class="form-control">
+                  <div *ngIf="birthDateEmpty == true" class="make-orange" >
+                    <div *ngIf="birthDateEmpty == true">Tanggal Lahir Anak Harus Diisi</div>
+                  </div> 
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Gender</label>
+                </div>
+                <div class="col-md-10">
+                  <input type="radio" [(ngModel)]="gender" value="L">
+                  &nbsp;<label for="L">Laki-Laki</label>&nbsp;
+                  <input type="radio" [(ngModel)]="gender" value="P">
+                  &nbsp;<label for="P">Perempuan</label>
+                  <div *ngIf="genderEmpty == true" class="make-orange" >
+                    <div *ngIf="genderEmpty == true">Jenis Kelamin Harus Diisi</div>
+                  </div> 
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Berat Badan</label>
+                </div>
+                <div class="col-md-1">
+                  <input [(ngModel)]="weight" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="3" >
+                  <div *ngIf="weightEmpty == true" class="make-orange" >
+                    <div *ngIf="weightEmpty == true">Berat Saat Lahir Harus Diisi</div>
+                  </div> 
+                </div>
+                <div class="col-md-3">
+                  <label for="name">KG</label>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Panjang Lahir</label>
+                </div>
+                <div class="col-md-1">
+                  <input [(ngModel)]="lenght" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="3" >
+                  <div *ngIf="lenghtEmpty == true" class="make-orange" >
+                    <div *ngIf="lenghtEmpty == true">Panjang Saat Lahir Harus Diisi</div>
+                  </div> 
+                </div>
+                <div class="col-md-3">
+                  <label for="name">CM</label>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Lingkar Kepala</label>
+                </div>
+                <div class="col-md-1">
+                  <input [(ngModel)]="headDiameter" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="3" >
+                  <div *ngIf="headDiameterEmpty == true" class="make-orange" >
+                    <div *ngIf="headDiameterEmpty == true">Lingkar Kepala Harus Diisi</div>
+                  </div> 
+                </div>
+                <div class="col-md-3">
+                  <label for="name">CM</label>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Catatan</label>
+                </div>
+                <div class="col-md-10">
+                  <textarea [(ngModel)]="notes" type="text" class="form-control"></textarea>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2 d-flex justify-content-end">
+              <button class="btn btn-success" (click)="registration()">Simpan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

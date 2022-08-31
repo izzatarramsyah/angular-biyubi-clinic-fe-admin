@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card"><br>
+        <div class="card-body ">
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Nama Orangtua</label>
+                </div>
+                <div class="col-md-10">
+                  <input [(ngModel)]="parentName" type="text" class="form-control">
+                  <div *ngIf="parentNameEmpty == true" class="make-orange" >
+                    <div *ngIf="parentNameEmpty == true">Nama Orang Tua Harus Diisi</div>
+                  </div>  
+                </div>
+                </div>
+              </div>
+            </div>
+            <br>
+         
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Alamat</label>
+                </div>
+                <div class="col-md-10">
+                  <input [(ngModel)]="address" type="text" class="form-control" >
+                  <div *ngIf="addressEmpty == true" class="make-orange" >
+                    <div *ngIf="addressEmpty == true">Alamat Harus Diisi</div>
+                  </div> 
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Email</label>
+                </div>
+                <div class="col-md-10">
+                  <input [(ngModel)]="email" type="text" class="form-control" >
+                  <div *ngIf="emailEmpty == true" class="make-orange" >
+                    <div *ngIf="emailEmpty == true">Email Harus Diisi</div>
+                  </div> 
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">No Telepon</label>
+                </div>
+                <div class="col-md-10">
+                  <input [(ngModel)]="phoneNo" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="12">
+                  <div *ngIf="phoneNoEmpty == true" class="make-orange" >
+                    <div *ngIf="phoneNoEmpty == true">Nomor Telepon Harus Diisi</div>
+                  </div> 
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2 d-flex justify-content-end">
+              <button class="btn btn-success" (click)="registration()">Simpan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

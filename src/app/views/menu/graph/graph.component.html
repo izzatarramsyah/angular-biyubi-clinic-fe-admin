@@ -1,0 +1,163 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- title -->
+        <h4 class="card-title">Data Anak</h4>
+        <h5 class="card-subtitle">Data Anak dan Grafik Perkembangan Anak</h5>
+        <!-- title -->
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                       <label for="name">Nama Orangtua</label>
+                    </div>
+                    <div class="col-md-10">
+                      <ng-autocomplete  [data]="resultOflistUser" [searchKeyword]="keyword" placeholder="Masukan Nama Orang Tua"
+                        (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate">
+                      </ng-autocomplete>
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.fullname"></a>
+                      </ng-template>
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                    </div>
+                </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="name">Nama Anak</label>
+                </div>
+                <div class="col-md-9">
+                  <select [(ngModel)]="selectedChildId" class="form-control deft" (change)="changeChildName($event)">
+                    <option value=0 disabled>-- Silahkan Pilih Nama Anak --</option>
+                    <option *ngFor="let list of tempListChild" value="{{list.id}}" >{{list.fullname}}</option>
+                  </select>
+                </div>
+                <div class="col-md-1">
+                  <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+                    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                    <i class="bi bi-info"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div id="collapseExample" [ngbCollapse]="isCollapsed">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label for="name">Tanggal Lahir</label>
+                    </div>
+                    <div class="col-md-10">
+                      <input [(ngModel)]="birthDate" type="text" class="form-control" [readonly]="isReadOnly">
+                    </div>
+                    <br>
+                  </div>
+                </div>
+                <br>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label for="name">Usia</label>
+                    </div>
+                    <div class="col-md-10">
+                      <input [(ngModel)]="age" type="text" class="form-control" [readonly]="isReadOnly">
+                    </div>
+                    <br>
+                  </div>
+                </div>
+                <br>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label for="name">Jenis Kelamin</label>
+                    </div>
+                    <div class="col-md-10">
+                      <input [(ngModel)]="gender" type="text" class="form-control" [readonly]="isReadOnly">
+                    </div>
+                    <br>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- title -->
+        <h4 class="card-title">Graik Pertumbuhan Anak</h4>
+        <!-- title -->
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-3">
+                  <label for="name">Jenis Grafik</label>
+                </div>
+                <div class="col-md-9">
+                  <select class="form-control" (change)="changeGraphType($event)">
+                    <option value="0" disabled selected>-- Silahkan Pilih Grafik --</option>
+                    <option value="weight">Berat Badan</option>
+                    <option value="length">Panjang Badan</option>
+                    <option value="headDiameter">Lingkar Kepala</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><br>
+        <div *ngIf="series.length > 0" class="bg-info p-3 rounded">
+          <div class="row">
+                <div class="col-md-4">
+                    <h6 class="text-white">Tinggi Badan</h6>
+                    <h3 class="text-white mb-0">{{length}} CM</h3>
+                    <h6 class="text-white">{{lengthCategory}}</h6>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="text-white">Berat Badan</h6>
+                    <h3 class="text-white mb-0">{{weight}} KG</h3>
+                    <h6 class="text-white">{{weightCategory}}</h6>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="text-white">Lingkar Kepala</h6>
+                    <h3 class="text-white mb-0">{{headDiameter}} CM</h3>
+                    <h6 class="text-white">{{headDiameterCategory}}</h6>
+                </div>
+          </div>
+      </div>
+        <div class="row mt-3">
+          <!-- column -->
+          <div class="col-lg-12">
+            <div *ngIf="series.length > 0">
+              <div class="d-flex flex-column w-100">
+                <apx-chart [series]="series" [chart]="salesChartOptions.chart" [plotOptions]="salesChartOptions.plotOptions" [xaxis]="salesChartOptions.xaxis" [yaxis]="salesChartOptions.yaxis" [grid]="salesChartOptions.grid" [stroke]="salesChartOptions.stroke" [tooltip]="salesChartOptions.tooltip" [dataLabels]="salesChartOptions.dataLabels" [legend]="salesChartOptions.legend" [colors]="salesChartOptions.colors" [markers]="salesChartOptions.markers"></apx-chart>
+              </div>
+            </div>
+          </div>
+          <!-- column -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

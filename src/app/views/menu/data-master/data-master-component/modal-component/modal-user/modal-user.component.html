@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-login">Data Profil Pengguna</h4>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Nama</label>
+        <input [(ngModel)]="name" type="text" class="form-control">
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="type">Alamat</label>
+        <input [(ngModel)]="address" type="text" class="form-control" >
+        <div *ngIf="addressEmpty == true" class="make-orange" >
+          <div *ngIf="addressEmpty == true">Alamat Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Email</label>
+        <input [(ngModel)]="email" type="text" class="form-control" > 
+        <div *ngIf="emailEmpty == true" class="make-orange" >
+          <div *ngIf="emailEmpty == true">Email Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Nomor Telepon</label>
+        <input [(ngModel)]="phoneNo" type="text" class="form-control" >
+        <div *ngIf="phoneNoEmpty == true" class="make-orange" >
+          <div *ngIf="phoneNoEmpty == true">Nomo Telepon Harus Diisi</div>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="process()">Simpan</button>
+  </div>

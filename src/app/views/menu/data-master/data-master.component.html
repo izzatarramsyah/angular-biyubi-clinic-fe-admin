@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <!-- title -->
+                <h4 class="card-title">Data Master</h4>
+                <h5 class="card-subtitle">Data Master Imunisasi, Medis & Pengguna</h5>
+                <!-- title -->
+                <br>
+                <div class="row">
+                  <div class="col-md-12">
+                    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                      <li [ngbNavItem]="1">
+                        <a ngbNavLink>Data Imunisasi</a>
+                        <ng-template ngbNavContent>
+                          <app-data-vaccine></app-data-vaccine>
+                        </ng-template>
+                      </li>
+                      <li [ngbNavItem]="2">
+                        <a ngbNavLink>Data Medis</a>
+                        <ng-template ngbNavContent>
+                          <app-data-checkup></app-data-checkup>
+                        </ng-template>
+                      </li>
+                      <li [ngbNavItem]="3">
+                        <a ngbNavLink>Data Pengguna</a>
+                        <ng-template ngbNavContent>
+                          <app-data-user></app-data-user>
+                        </ng-template>
+                      </li>
+                    </ul>
+                    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

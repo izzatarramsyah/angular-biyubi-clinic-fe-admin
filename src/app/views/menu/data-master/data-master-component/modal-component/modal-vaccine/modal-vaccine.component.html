@@ -1,0 +1,71 @@
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-login">{{header}}</h4>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Nama</label>
+        <input [(ngModel)]="name" type="text" class="form-control" (input)="onSearchChange($event)" [readOnly]="isReadOnly">
+        <div *ngIf="nameEmpty == true" class="make-orange" >
+          <div *ngIf="nameEmpty == true">Nama Vaksin Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="type">Merk</label>
+        <input [(ngModel)]="type" type="text" class="form-control" [readOnly]="isReadOnly">
+        <div *ngIf="typeEmpty == true" class="make-orange" >
+          <div *ngIf="typeEmpty == true">Tipe Vaksin Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div *ngIf="command == 'Edit'" class="col-md-12">
+      <div class="form-group">
+        <label for="type">Bulan Ke-</label>
+        <select [(ngModel)]="selectedBatch" class="form-control deft" >
+          <option value=0 [disabled]="true" >-- Pilih --</option>
+          <option *ngFor="let list of vaccineMaster.listBatch" value="{{list}}">{{list}}</option>
+        </select>
+        <div *ngIf="selectedBatchEmpty == true" class="make-orange" >
+          <div *ngIf="selectedBatchEmpty == true">Bulan Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div *ngIf="command == 'Add'" class="col-md-12">
+      <div class="form-group">
+        <label for="type">Bulan Ke-</label>
+        <select [(ngModel)]="selectedBatch" class="form-control deft" >
+          <option value=0 [disabled]="true" >-- Pilih --</option>
+          <option *ngFor="let list of listBatch" value="{{list.batch}}" [disabled]="list.value">{{list.batch}}</option>
+        </select>
+        <div *ngIf="selectedBatchEmpty == true" class="make-orange" >
+          <div *ngIf="selectedBatchEmpty == true">Bulan Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Hari Kadaluarsa</label>
+        <input [(ngModel)]="expiredDays" type="number" class="form-control" >
+        <div *ngIf="expiredDaysEmpty == true" class="make-orange" >
+          <div *ngIf="expiredDaysEmpty == true">Hari Kadaluarsa Vaksin Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Catatan</label>
+        <textarea [(ngModel)]="notes" class="form-control" ></textarea>
+      </div>
+      <br>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="process()">Proses</button>
+  </div>
