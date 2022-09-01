@@ -1,5 +1,5 @@
 import { OnInit, Component, AfterViewInit, EventEmitter, Output , Type, ViewChild} from '@angular/core';
-import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { first } from 'rxjs/operators';
 import { UserAdminService } from '../../../integration/service/userAdminService';
@@ -15,6 +15,11 @@ import { LoadingComponent } from "../../components/loading/loading.component";
 export class NavigationComponent implements OnInit {
 
   userAdmin : UserAdmin;
+
+  ngbModalOptions: NgbModalOptions = {
+    backdrop : 'static',
+    keyboard : false
+  };
 
   constructor(private modalService: NgbModal,
               private userAdminService: UserAdminService,
@@ -54,11 +59,10 @@ export class NavigationComponent implements OnInit {
     }else {
       this.router.navigate(['/login']);
     }
-    return true;
   }
 
   logout(){
-    this.modalService.open(LoadingComponent);
+    this.modalService.open(LoadingComponent, this.ngbModalOptions);
     const user = this.userAdminService.userAdminValue;
     let payload = { 
       "payload": { 
