@@ -66,16 +66,17 @@ export class NavigationComponent implements OnInit {
     const user = this.userAdminService.userAdminValue;
     let payload = { 
       "payload": { 
-        "username": user.username, 
-        "password": user.password 
+        "username": user.username
       },
       "header": { 
         "uName":user.username, 
         "session" : user.sessionId 
       }
     };
+    console.log(JSON.stringify(payload));
     this.userAdminService.logout(JSON.stringify(payload)).
     pipe(first()).subscribe(data => {
+      console.log(data);
       if (data.header.responseCode == '00' ){
         if (data.payload.message = 'Logout Success') {
           this.modalService.dismissAll(LoadingComponent);

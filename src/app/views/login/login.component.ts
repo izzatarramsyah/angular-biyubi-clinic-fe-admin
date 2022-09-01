@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-
+    console.log("login");
     this.username = this.inputUsername.nativeElement.value;
     this.password = this.inputPassword.nativeElement.value;
     this.usernameEmpty = false;
