@@ -12,7 +12,7 @@ export class DashboardComponent implements AfterViewInit {
   constructor(private userAdminService: UserAdminService) {
     this.userAdmin = this.userAdminService.userAdminValue;
     this.title = 'Selamat Datang, ' + this.userAdmin.username + " ! ";
-    this.subtitle = 'Website ini digunakan untuk admin Biyubi App';
+    this.subtitle = 'Website ini digunakan untuk admin Biyubi Clinic App';
   }
 
   ngAfterViewInit() { }

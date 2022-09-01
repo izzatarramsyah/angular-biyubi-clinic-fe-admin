@@ -73,10 +73,8 @@ export class NavigationComponent implements OnInit {
         "session" : user.sessionId 
       }
     };
-    console.log(JSON.stringify(payload));
     this.userAdminService.logout(JSON.stringify(payload)).
     pipe(first()).subscribe(data => {
-      console.log(data);
       if (data.header.responseCode == '00' ){
         if (data.payload.message = 'Logout Success') {
           this.modalService.dismissAll(LoadingComponent);

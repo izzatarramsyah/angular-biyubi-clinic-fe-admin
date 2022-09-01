@@ -51,7 +51,7 @@
     <div class="col-md-12">
       <div class="form-group">
         <label for="name">Hari Kadaluarsa</label>
-        <input [(ngModel)]="expiredDays" type="number" class="form-control" >
+        <input [(ngModel)]="expiredDays" class="form-control" (keypress)="numberOnly($event)" maxlength="3">
         <div *ngIf="expiredDaysEmpty == true" class="make-orange" >
           <div *ngIf="expiredDaysEmpty == true">Hari Kadaluarsa Vaksin Harus Diisi</div>
         </div> 

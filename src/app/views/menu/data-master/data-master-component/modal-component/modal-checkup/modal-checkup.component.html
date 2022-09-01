@@ -14,7 +14,7 @@
     </div>
     <div class="col-md-12">
       <div class="form-group">
-        <label for="type">Description</label>
+        <label for="type">Deskripsi</label>
         <input [(ngModel)]="description" type="text" class="form-control">
         <div *ngIf="descriptionEmpty == true" class="make-orange" >
           <div *ngIf="descriptionEmpty == true">Deskripsi Harus Diisi</div>
@@ -25,7 +25,7 @@
     <div *ngIf="command == 'Edit'" class="col-md-12">
       <div class="form-group">
         <label for="name">Bulan Ke-</label>
-        <input [(ngModel)]="selectedBatch" type="text" class="form-control">
+        <input [(ngModel)]="selectedBatch" class="form-control" (keypress)="numberOnly($event)" maxlength="3">
         <div *ngIf="batchEmpty == true" class="make-orange" >
           <div *ngIf="batchEmpty == true">Bulan Harus Diisi</div>
         </div> 
@@ -35,7 +35,7 @@
     <div *ngIf="command == 'Add'" class="col-md-12">
       <div class="form-group">
         <label for="type">Bulan Ke-</label>
-        <select [(ngModel)]="selectedBatch" class="form-control deft" >
+        <select [(ngModel)]="selectedBatch" class="form-control deft" (keypress)="numberOnly($event)" maxlength="3">
           <option value=0 [disabled]="true" >-- Pilih --</option>
           <option *ngFor="let list of listBatch" value="{{list.batch}}" [disabled]="list.value">{{list.batch}}</option>
         </select>
@@ -45,7 +45,7 @@
     <div class="col-md-12">
         <div class="form-group">
           <label for="name">Pemeriksaan Selanjutnya</label>
-          <input [(ngModel)]="nextCheckUpDays" type="number" class="form-control">
+          <input [(ngModel)]="nextCheckUpDays" class="form-control" (keypress)="numberOnly($event)" maxlength="3">
           <div *ngIf="nextCheckUpDaysEmpty == true" class="make-orange" >
             <div *ngIf="nextCheckUpDaysEmpty == true">Pemeriksaan Selanjtunya Harus Diisi</div>
           </div> 

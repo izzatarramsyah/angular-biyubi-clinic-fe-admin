@@ -22,6 +22,9 @@ export class HistoryComponent implements OnInit{
   startDate : String;
   endDate : String;
 
+  startDateEmpty : boolean;
+  endDateEmpty : boolean;
+
   showTable = false;
 
   loading = false;
@@ -52,37 +55,52 @@ export class HistoryComponent implements OnInit{
     this.auditTrail = [];
     this.showTable = false;
     this.loading = true;
-     
-    let payload = {
-      header : {
-        uName: this.userAdmin.username,
-        session: this.userAdmin.sessionId,
-      },
-      payload : {
-        startDate : this.startDate,
-        endDate : this.endDate,
-      }
-    };
 
-    this.auditTrailService.getListAuditTrail(JSON.stringify(payload))
-    .pipe(first()).subscribe(
-      (data) => {
-        if (data.header.responseCode == '00') {
-          this.auditTrail = data.payload.object;
-          this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,  
-            processing: true
-          };
-          this.showTable = true;
-        } 
-        this.loading = false;
-      },
+    this.startDateEmpty = false;
+    this.endDateEmpty = false;
 
-      (error) => {
-        console.log("error : ", error);
-      }  
-    );
+    if (this.startDate == null) {
+      this.startDateEmpty = true;
+    }
+    if (this.endDate == null){
+      this.endDateEmpty = true;
+    }
+
+    if (this.startDateEmpty == false && this.endDateEmpty == false ) {
+      let payload = {
+        header : {
+          uName: this.userAdmin.username,
+          session: this.userAdmin.sessionId,
+        },
+        payload : {
+          startDate : this.startDate,
+          endDate : this.endDate,
+        }
+      };
+  
+      this.auditTrailService.getListAuditTrail(JSON.stringify(payload))
+      .pipe(first()).subscribe(
+        (data) => {
+          if (data.header.responseCode == '00') {
+            this.auditTrail = data.payload.object;
+            this.dtOptions = {
+              pagingType: 'full_numbers',
+              pageLength: 10,  
+              processing: true
+            };
+            this.showTable = true;
+          } 
+          this.loading = false;
+        },
+  
+        (error) => {
+          console.log("error : ", error);
+        }  
+      );
+    } else {
+      this.loading = false;
+    }
+
   }
 
 
