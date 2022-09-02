@@ -253,13 +253,14 @@ export class CheckUpRecordComponent implements OnInit {
           childId : this.selectedIdChild,
           mstCode : this.mstCode,
           weight: this.weight,
-          lenght: this.length,
+          length: this.length,
           headDiameter: this.headDiameter,
           batch : this.selectedBatch,
           notes: this.notes,
           checkUpDate: this.checkUpDate
         }
       };
+      console.log(JSON.stringify(payload));
       this.recordService.addCheckUpRecord(JSON.stringify(payload))
       .pipe(first()).subscribe(
         (data) => {

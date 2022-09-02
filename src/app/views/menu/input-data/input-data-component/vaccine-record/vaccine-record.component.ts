@@ -45,6 +45,7 @@ export class VaccineRecordComponent implements OnInit {
   parentNameValid : boolean;
   vaccineNameEmpty : boolean;
   selectedBatchEmpty : boolean;
+  selectedIdChildEmpty : boolean;
 
   keyword = 'fullname';
 
@@ -245,6 +246,7 @@ export class VaccineRecordComponent implements OnInit {
     this.vaccineDateEmpty = false;
     this.vaccineNameEmpty = false;
     this.selectedBatchEmpty = false;
+    this.selectedIdChildEmpty = false;
     this.parentNameValid = true;
 
     if (this.vaccineDate == null) {
@@ -263,8 +265,13 @@ export class VaccineRecordComponent implements OnInit {
       this.selectedBatchEmpty = true;
     }
 
+    if (this.selectedIdChild == 0) {
+      this.selectedIdChildEmpty = true;
+    }
+
     if (this.vaccineDateEmpty == false && this.parentNameValid == true 
-      && this.vaccineNameEmpty == false && this.selectedBatchEmpty == false) {
+      && this.vaccineNameEmpty == false && this.selectedBatchEmpty == false
+      && this.selectedIdChildEmpty == false) {
         const modalRef = this.modalService.open(AlertComponent);
         modalRef.componentInstance.header = 'Konfrimasi';
         modalRef.componentInstance.wording = 'Apakah anda yakin untuk menyimpan data ini ? ';

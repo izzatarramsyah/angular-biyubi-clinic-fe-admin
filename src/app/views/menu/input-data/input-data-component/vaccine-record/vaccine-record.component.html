@@ -38,6 +38,9 @@
                   <option value=0 disabled selected>-- Silahkan Nama Anak --</option>
                   <option *ngFor="let list of tempListChild" value="{{list.id}}" >{{list.fullname}}</option>
                 </select>
+                <div *ngIf="selectedIdChildEmpty == true" class="make-orange" >
+                  <div *ngIf="selectedIdChildEmpty == true">Nama Anak Harus Dipilih </div>
+                 </div>
                </div>
              </div>
            </div>
