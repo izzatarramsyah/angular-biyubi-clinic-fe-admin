@@ -32,6 +32,7 @@ export class NavigationComponent implements OnInit {
   }
 
   checkSession(){
+    this.modalService.open(LoadingComponent, this.ngbModalOptions);
     if (this.userAdmin) {
       let payload = { 
         "payload": {  
@@ -48,6 +49,7 @@ export class NavigationComponent implements OnInit {
       .subscribe(data => {
         const user = this.userAdminService.userAdminValue;
         if (data.header.responseCode == '00' ){
+          this.modalService.dismissAll(LoadingComponent);
           this.userAdmin = user;
         } else {
           this.router.navigate(['/login']);
