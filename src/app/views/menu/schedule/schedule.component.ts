@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'; 
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap'; 
 import { first } from 'rxjs/operators';
 import { DatePipe, JsonPipe } from '@angular/common';
 import { UserAdmin } from "../../../entity/userAdmin";
@@ -43,6 +43,11 @@ export class ScheduleComponent implements OnInit {
 
   typeSchedule: any = [{name: 'Jadwal Imunisasi', value: 'info-vaccine'},
   {name: 'Jadwal Medis', value: 'info-checkup'}];
+
+  ngbModalOptions: NgbModalOptions = {
+    backdrop : 'static',
+    keyboard : false
+  };
 
   constructor(private modalService : NgbModal,
               private userService : UserService,
@@ -124,7 +129,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   getListVaccineRecord () {
-    this.modalService.open(LoadingComponent);
+    this.modalService.open(LoadingComponent, this.ngbModalOptions);
     this.vaccineSchedule = [];
     this.showTableCheckUp = false;
     let payload = {
@@ -165,7 +170,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   getListCheckUpRecord () {
-    this.modalService.open(LoadingComponent);
+    this.modalService.open(LoadingComponent, this.ngbModalOptions);
     this.checkUpSchedule = [];
     this.showTableVaccine = false;
     let payload = {
@@ -182,6 +187,7 @@ export class ScheduleComponent implements OnInit {
     this.recordService.getSchedule(JSON.stringify(payload))
     .pipe(first()).subscribe(
       (data) => {
+        console.log(JSON.stringify(data));
         if (data.header.responseCode == '00') {
           this.checkUpSchedule = data.payload.object;
           this.dtOptions = {

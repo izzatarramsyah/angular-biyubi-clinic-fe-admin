@@ -72,6 +72,9 @@ export class VaccineRecordComponent implements OnInit {
   }
 
   numberOnly(event): boolean {
+    if(event.keyCode == 46){
+      return true;
+    }
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
@@ -310,7 +313,7 @@ export class VaccineRecordComponent implements OnInit {
           this.modalService.dismissAll(LoadingComponent);
           const modalRef = this.modalService.open(AlertComponent,this.ngbModalOptions);
           modalRef.componentInstance.header = header;
-          modalRef.componentInstance.wording = data.payload.message;
+          modalRef.componentInstance.wording = data.header.responseMessage;
         },
         (error) => {
           console.log("error : ", error);

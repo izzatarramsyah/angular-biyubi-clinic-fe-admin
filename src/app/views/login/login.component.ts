@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { UserAdminService } from '../../integration/service/userAdminService';
 import { catchError, first, retry} from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { UserAdmin } from "../../entity/userAdmin";
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 export class LoginComponent implements OnInit {
   
+  userAdmin : UserAdmin;
+
+  ngbModalOptions: NgbModalOptions = {
+    backdrop : 'static',
+    keyboard : false
+  };
+
   username : string;
   password : string;
   usernameEmpty = false;
@@ -26,13 +34,11 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private userAdminService: UserAdminService,
               private modalService: NgbModal) { 
-      const user = this.userAdminService.userAdminValue;
-      if (user){
-        this.router.navigate(['/dashboard']);
-      }
+    this.userAdmin = this.userAdminService.userAdminValue;
   }
 
   ngOnInit() {
+    //this.checkSession();
   }
 
   login(){
@@ -64,11 +70,7 @@ export class LoginComponent implements OnInit {
       pipe(first()).subscribe(data => {
         this.loading = false;
         if (data.header.responseCode == '00' ){
-          if (data.payload.message == 'Login Success') {
-            this.router.navigate(['/dashboard']);
-          } else {
-            this.isValid = false;
-          }
+          this.router.navigate(['/dashboard']);
         }else{
           this.isValid = false;
         }
@@ -78,4 +80,29 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  checkSession(){
+    if (this.userAdmin) {
+      let payload = { 
+        "header":{ 
+          "uName" : this.userAdmin.username, 
+          "session" : this.userAdmin.sessionId 
+        }
+      };
+      this.userAdminService.checkSession(JSON.stringify(payload))
+      .pipe(first())
+      .subscribe(data => {
+        if (data.header.responseCode == '00' ){
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.router.navigate(['/login']);
+        }
+      },
+      error => {
+        console.log('error : ', error);
+      });
+    }else {
+      this.router.navigate(['/login']);
+    }
+  }
+  
 }

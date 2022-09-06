@@ -10,18 +10,21 @@ export interface UserData {
     birthDate: string;
     age: number;
     gender: string;
+    weight : number;
     weightCategory : string;
     weightNotes : string;
+    length : number;
     lengthCategory : string;
     lengthNotes: string;
+    headDiameter : number;
     headDiameterCategory: string;
     headDiameterNotes: string;
-    growthDetail : GrowthDtl[];
+    seriesWeight : number[];
+    seriesLength : number[];
+    seriesHeadDiameter : number[];
 }
 
 export interface GrowthDtl {
-    mstCode : string;
-    description: string;
     batch: number;
     weight: number;
     length: number;

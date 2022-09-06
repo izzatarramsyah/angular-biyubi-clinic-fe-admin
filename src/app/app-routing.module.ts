@@ -24,9 +24,10 @@ export const Approutes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [LoginGuard],
     children: [
       {
-        path: 'login', canActivate: [LoginGuard],
+        path: 'login', 
         loadChildren: () => import('./views/login/login.module').then(m => m.LoginModule)
       },
     ]

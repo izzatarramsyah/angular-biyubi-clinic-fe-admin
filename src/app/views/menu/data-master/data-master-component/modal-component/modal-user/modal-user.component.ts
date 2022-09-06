@@ -49,6 +49,14 @@ export class ModalUserComponent implements OnInit {
       this.setUser();
     }
 
+    numberOnly(event): boolean {
+      const charCode = (event.which) ? event.which : event.keyCode;
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+      }
+      return true;
+    }
+    
     setUser(){
       this.id = this.user.id;
       this.name = this.user.fullname;
@@ -103,7 +111,7 @@ export class ModalUserComponent implements OnInit {
               this.modalService.dismissAll(LoadingComponent);
               const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
               modalRef.componentInstance.header = header;
-              modalRef.componentInstance.wording = data.payload.message;
+              modalRef.componentInstance.wording = data.header.responseMessage;
             },
             (error) => {
               console.log("error : ", error);

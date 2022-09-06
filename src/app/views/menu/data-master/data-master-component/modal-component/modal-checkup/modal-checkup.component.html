@@ -25,7 +25,7 @@
     <div *ngIf="command == 'Edit'" class="col-md-12">
       <div class="form-group">
         <label for="name">Bulan Ke-</label>
-        <input [(ngModel)]="selectedBatch" class="form-control" (keypress)="numberOnly($event)" maxlength="3">
+        <input [(ngModel)]="selectedBatch" class="form-control" (keypress)="numberOnly($event)" maxlength="2">
         <div *ngIf="batchEmpty == true" class="make-orange" >
           <div *ngIf="batchEmpty == true">Bulan Harus Diisi</div>
         </div> 
@@ -35,10 +35,13 @@
     <div *ngIf="command == 'Add'" class="col-md-12">
       <div class="form-group">
         <label for="type">Bulan Ke-</label>
-        <select [(ngModel)]="selectedBatch" class="form-control deft" (keypress)="numberOnly($event)" maxlength="3">
+        <select [(ngModel)]="selectedBatch" class="form-control deft" (keypress)="numberOnly($event)" maxlength="2">
           <option value=0 [disabled]="true" >-- Pilih --</option>
           <option *ngFor="let list of listBatch" value="{{list.batch}}" [disabled]="list.value">{{list.batch}}</option>
         </select>
+        <div *ngIf="batchEmpty == true" class="make-orange" >
+          <div *ngIf="batchEmpty == true">Bulan Harus Diisi</div>
+        </div> 
       </div>
       <br>
     </div>

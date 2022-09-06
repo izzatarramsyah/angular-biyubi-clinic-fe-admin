@@ -73,6 +73,9 @@ export class CheckUpRecordComponent implements OnInit {
   }
 
   numberOnly(event): boolean {
+    if(event.keyCode == 46){
+      return true;
+    }
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
@@ -260,7 +263,6 @@ export class CheckUpRecordComponent implements OnInit {
           checkUpDate: this.checkUpDate
         }
       };
-      console.log(JSON.stringify(payload));
       this.recordService.addCheckUpRecord(JSON.stringify(payload))
       .pipe(first()).subscribe(
         (data) => {
@@ -271,7 +273,7 @@ export class CheckUpRecordComponent implements OnInit {
           this.modalService.dismissAll(LoadingComponent);
           const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
           modalRef.componentInstance.header = header;
-          modalRef.componentInstance.wording = data.payload.message;
+          modalRef.componentInstance.wording = data.header.responseMessage;
         },
         (error) => {
           console.log("error : ", error);

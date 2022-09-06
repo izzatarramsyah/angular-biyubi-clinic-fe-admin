@@ -34,6 +34,7 @@ export class ModalCheckUpComponent implements OnInit {
     descriptionEmpty : boolean;
     batchEmpty : boolean;
     nextCheckUpDaysEmpty : boolean;
+    selectedBatchEmpty : boolean;
 
     listBatch: any = [
       {batch: 1, value: false},
@@ -150,7 +151,7 @@ export class ModalCheckUpComponent implements OnInit {
               this.modalService.dismissAll(LoadingComponent);
               const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
               modalRef.componentInstance.header = header;
-              modalRef.componentInstance.wording = data.payload.message;
+              modalRef.componentInstance.wording = data.header.responseMessage;
             },
             (error) => {
               console.log("error : ", error);
@@ -189,7 +190,7 @@ export class ModalCheckUpComponent implements OnInit {
                 this.modalService.dismissAll(LoadingComponent);
                 const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
                 modalRef.componentInstance.header = header;
-                modalRef.componentInstance.wording = data.payload.message;
+                modalRef.componentInstance.wording = data.header.responseMessage;
               },
               (error) => {
                 console.log("error : ", error);

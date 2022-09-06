@@ -121,7 +121,7 @@ export class DataVaccineComponent implements OnInit{
           this.modalService.dismissAll(LoadingComponent);
           const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
           modalRef.componentInstance.header = header;
-          modalRef.componentInstance.wording = data.payload.message;
+          modalRef.componentInstance.wording = data.header.responseMessage;
         },
         (error) => {
           console.log("error : ", error);

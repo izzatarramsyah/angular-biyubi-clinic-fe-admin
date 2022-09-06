@@ -59,22 +59,17 @@
                     <div class="col-md-2">
                       <label for="name">Tanggal Lahir</label>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-2">
                       <input [(ngModel)]="birthDate" type="text" class="form-control" [readonly]="isReadOnly">
                     </div>
-                    <br>
-                  </div>
-                </div>
-                <br>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group">
-                  <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                       <label for="name">Usia</label>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-1">
                       <input [(ngModel)]="age" type="text" class="form-control" [readonly]="isReadOnly">
+                    </div>
+                    <div class="col-md-2">
+                      <label for="name">Bulan</label>
                     </div>
                     <br>
                   </div>
@@ -89,6 +84,48 @@
                     </div>
                     <div class="col-md-10">
                       <input [(ngModel)]="gender" type="text" class="form-control" [readonly]="isReadOnly">
+                    </div>
+                    <br>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label for="name">Catatan Berat Badan</label>
+                    </div>
+                    <div class="col-md-10">
+                      <textarea [(ngModel)]="weightNotes" type="text" class="form-control" [readonly]="isReadOnly"></textarea>
+                    </div>
+                    <br>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label for="name">Catatan Panjang Badan</label>
+                    </div>
+                    <div class="col-md-10">
+                      <textarea [(ngModel)]="lengthNotes" type="text" class="form-control" [readonly]="isReadOnly"></textarea>
+                    </div>
+                    <br>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label for="name">Catatan Lingkar Kepala</label>
+                    </div>
+                    <div class="col-md-10">
+                      <textarea [(ngModel)]="headDiameterNotes" type="text" class="form-control" [readonly]="isReadOnly"></textarea>
                     </div>
                     <br>
                   </div>
@@ -118,9 +155,9 @@
                 <div class="col-md-9">
                   <select class="form-control" (change)="changeGraphType($event)">
                     <option value="0" disabled selected>-- Silahkan Pilih Grafik --</option>
-                    <option value="weight">Berat Badan</option>
-                    <option value="length">Panjang Badan</option>
-                    <option value="headDiameter">Lingkar Kepala</option>
+                    <option value="WEIGHT">Berat Badan</option>
+                    <option value="LENGTH">Panjang Badan</option>
+                    <option value="HEAD CIRCUMFERENCE">Lingkar Kepala</option>
                   </select>
                 </div>
               </div>
@@ -132,19 +169,24 @@
                 <div class="col-md-4">
                     <h6 class="text-white">Tinggi Badan</h6>
                     <h3 class="text-white mb-0">{{length}} CM</h3>
-                    <h6 class="text-white">{{lengthCategory}}</h6>
+                    <h6 [ngClass]="lengthCategory == 'NORMAL' ? 'text-green' : 'text-red' ">{{lengthCategory}}</h6>
                 </div>
                 <div class="col-md-4">
                     <h6 class="text-white">Berat Badan</h6>
                     <h3 class="text-white mb-0">{{weight}} KG</h3>
-                    <h6 class="text-white">{{weightCategory}}</h6>
+                    <h6 [ngClass]="weightCategory == 'NORMAL' ? 'text-green' : 'text-red' ">{{weightCategory}}</h6>
                 </div>
                 <div class="col-md-4">
                     <h6 class="text-white">Lingkar Kepala</h6>
                     <h3 class="text-white mb-0">{{headDiameter}} CM</h3>
-                    <h6 class="text-white">{{headDiameterCategory}}</h6>
+                    <h6 [ngClass]="headDiameterCategory == 'NORMAL' ? 'text-green' : 'text-red' ">{{headDiameterCategory}}</h6>
                 </div>
           </div>
+          <div class="row">
+            <div class="col-md-12">
+                <h6 class="text-white">*Kategori berdasarkan data pemeriksaan terakhir</h6>
+            </div>
+        </div>
       </div>
         <div class="row mt-3">
           <!-- column -->

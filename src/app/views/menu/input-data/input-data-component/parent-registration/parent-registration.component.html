@@ -26,7 +26,7 @@
                   <label for="name">Alamat</label>
                 </div>
                 <div class="col-md-10">
-                  <input [(ngModel)]="address" type="text" class="form-control" >
+                  <textarea [(ngModel)]="address" type="text" class="form-control" ></textarea>
                   <div *ngIf="addressEmpty == true" class="make-orange" >
                     <div *ngIf="addressEmpty == true">Alamat Harus Diisi</div>
                   </div> 
@@ -41,10 +41,19 @@
                 <div class="col-md-2">
                   <label for="name">Email</label>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-2">
                   <input [(ngModel)]="email" type="text" class="form-control" >
                   <div *ngIf="emailEmpty == true" class="make-orange" >
                     <div *ngIf="emailEmpty == true">Email Harus Diisi</div>
+                  </div> 
+                </div>
+                <div class="col-md-1">
+                  <label for="name">@</label>
+                </div>
+                <div class="col-md-2">
+                  <input [(ngModel)]="domain" type="text" class="form-control" >
+                  <div *ngIf="domainEmpty == true" class="make-orange" >
+                    <div *ngIf="domainEmpty == true">Domain Harus Diisi</div>
                   </div> 
                 </div>
               </div>
