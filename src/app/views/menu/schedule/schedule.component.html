@@ -93,7 +93,7 @@
                                     <p style="color:red">Belum Dilakukan</p>
                                   </td>
                                   <td *ngIf ="list.checkUpDate != null" style="text-align:center">
-                                    <a href="javascript:void(0)" (click)="checkDetailCheckUp(list)">Lihat Detail</a>
+                                    <a href="javascript:void(0)" (click)="downloadPdf(list)">Unduh Laporan</a>
                                   </td>
                               </tr>              
                           </tbody>
@@ -122,7 +122,7 @@
                                   <p style="color:red">Belum Dilakukan</p>
                                 </td>
                                 <td *ngIf ="list.vaccineDate != null" style="text-align:center">
-                                  <a href="javascript:void(0)" (click)="checkDetailVaccine(list)">Lihat Detail</a>
+                                  <a href="javascript:void(0)" (click)="downloadPdf(list)">Unduh Laporan</a>
                                 </td>
                             </tr>              
                         </tbody>

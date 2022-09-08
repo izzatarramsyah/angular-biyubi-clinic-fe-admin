@@ -23,11 +23,11 @@ import { LoadingComponent } from "./components/loading/loading.component";
 import { ScheduleComponent } from './schedule/schedule.component';
 import { GraphComponent } from './graph/graph.component';
 import { DataUserComponent } from "./data-master/data-master-component/data-user/data-user.component";
-import { DetailCheckUpComponent } from "./schedule/schedule-component/detail-checkup/detail-checkup.component";
 import { DataCheckUpComponent } from "./data-master/data-master-component/data-checkup/data-checkup.component";
 import { ModalCheckUpComponent } from "./data-master/data-master-component/modal-component/modal-checkup/modal-checkup.component";
 import { ModalChildComponent } from "./data-master/data-master-component/modal-component/modal-child/modal-child.component";
 import { HistoryComponent } from './history/history.component';
+import { FileSaverModule } from 'ngx-filesaver';
 
 @NgModule({ 
   providers: [DatePipe],
@@ -40,7 +40,8 @@ import { HistoryComponent } from './history/history.component';
     NgApexchartsModule,
     DataTablesModule,
     AngularEditorModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    FileSaverModule
   ],
   declarations: [
     InputDataComponent,
@@ -57,7 +58,6 @@ import { HistoryComponent } from './history/history.component';
     LoadingComponent,
     DataUserComponent,
     ModalUserComponent,
-    DetailCheckUpComponent,
     DataCheckUpComponent,
     ModalCheckUpComponent,
     ModalChildComponent,

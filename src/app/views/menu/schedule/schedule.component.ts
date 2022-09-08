@@ -10,9 +10,9 @@ import { UserAdminService } from '../../../integration/service/userAdminService'
 import { UserService } from '../../../integration/service/userService';
 import { RecordService } from '../../../integration/service/recordService';
 import { LoadingComponent } from "../../components/loading/loading.component";
-import { DetailCheckUpComponent } from "./schedule-component/detail-checkup/detail-checkup.component";
-import { DetailVaccineComponent } from "./schedule-component/detail-vaccine/detail-vaccine.component";
-
+import { ExportService } from '../../../integration/service/exportService';
+import { FileSaverService } from 'ngx-filesaver'; 
+import { saveAs } from 'file-saver'
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -53,7 +53,7 @@ export class ScheduleComponent implements OnInit {
               private userService : UserService,
               private userAdminService : UserAdminService,
               private recordService: RecordService,
-              private datePipe : DatePipe) {
+              private exportService : ExportService) {
     this.userAdmin = this.userAdminService.userAdminValue;
   }
 
@@ -164,11 +164,6 @@ export class ScheduleComponent implements OnInit {
     );
   }
 
-  checkDetailVaccine(object){
-    const modalRef = this.modalService.open(DetailVaccineComponent);
-    modalRef.componentInstance.scheduleVaccine = object;
-  }
-
   getListCheckUpRecord () {
     this.modalService.open(LoadingComponent, this.ngbModalOptions);
     this.checkUpSchedule = [];
@@ -206,41 +201,74 @@ export class ScheduleComponent implements OnInit {
     );
   }
 
-  checkDetailCheckUp(object){
-    const modalRef = this.modalService.open(DetailCheckUpComponent);
-    modalRef.componentInstance.scheduleCheckUp = object;
+  downloadPdf(object){
+    let command;
+    let filename;
+    let payload;
+    if (this.selectedHistoryType == 'info-checkup') {
+      command = 'report-checkup';
+      filename = 'Laporan Rekam Medis.xls';
+      payload = {
+        header : {
+          uName: this.userAdmin.username,
+          session: this.userAdmin.sessionId,
+          command: 'report-checkup'
+        },
+        payload: {
+          parentId : this.tempUser.id,
+          childId : this.selectedChildId,
+          param : object.code
+        }
+      };
+    } else if (this.selectedHistoryType == 'info-vaccine') {
+      command = 'report-vaccine';
+      filename = 'Laporan Rekam Imunisasi.xls';
+      payload = {
+        header : {
+          uName: this.userAdmin.username,
+          session: this.userAdmin.sessionId,
+          command: 'report-vaccine'
+        },
+        payload: {
+          parentId : this.tempUser.id,
+          childId : this.selectedChildId,
+          param : object.vaccineCode,
+          batch : object.batch
+        }
+      };
+    }
+    this.exportService.report(JSON.stringify(payload))
+    .then(blob=> {
+       saveAs(blob, filename);
+    });
   }
  
   ExportTOExcel() {
-    let data; let fileName;
-    if (this.selectedHistoryType == 'info-vaccine') {
-      data = this.vaccineSchedule.map(c => ({ 
-        'Nama Imunisasi': c.vaccineName, 
-        'Tipe Imunisasi': c.vaccineType,
-        'Bulan Ke -' : c.batch,
-        'Tanggal Imunisasi': c.vaccineDate,
-        'Tanggal Kadaluarsa': c.expDate,
-        'Catatan' : c.notes
-      }));
-      fileName = 'Jadwal Imunisasi.xlsx';
-    } else if (this.selectedHistoryType == 'info-checkup') {
-      data = this.checkUpSchedule.map(c => ({ 
-        'Kegiatan': c.actName, 
-        'Deskripsi': c.description,
-        'Bulan Ke -' : c.batch,
-        'Jadwal Cek Medis': c.scheduleDate,
-        'Tanggal Cek Medis': c.checkUpDate,
-        'Berat' : c.weight + ' KG',
-        'Tinggi ': c.length + ' CM',
-        'Lingkar Kepala': c.headDiameter + ' CM',
-        'Catatan' : c.notes
-      }));
-      fileName = 'Jadwal Cek Medis.xlsx';
+    let command = '';
+    let filename = '';
+    if (this.selectedHistoryType == 'info-checkup') {
+      command = 'schedule-checkup';
+      filename = 'Jadwal Rekam Medis.xls';
+    } else if (this.selectedHistoryType == 'info-vaccine') {
+      command = 'schedule-vaccine'
+      filename = 'Jadwal Rekam Imunisasi.xls';
     }
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, fileName);
+    let payload = {
+      header : {
+        uName: this.userAdmin.username,
+        session: this.userAdmin.sessionId,
+        command: command
+      },
+      payload: {
+        parentId : this.tempUser.id,
+        childId : this.selectedChildId
+      }
+    };
+    this.exportService.schedule(JSON.stringify(payload))
+    .then(blob=> {
+       saveAs(blob, filename);
+    });
+    
   }
 
  
