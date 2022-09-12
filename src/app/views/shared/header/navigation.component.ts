@@ -29,40 +29,6 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.checkSession();
-  }
-
-  checkSession(){
-    this.modalService.open(LoadingComponent, this.ngbModalOptions);
-    if (this.userAdmin) {
-      let payload = { 
-        "payload": {  
-          "username" : this.userAdmin.username, 
-          "password" : this.userAdmin.password 
-        },
-        "header":{ 
-          "uName" : this.userAdmin.username, 
-          "session" : this.userAdmin.sessionId 
-        }
-      };
-      this.userAdminService.checkSession(JSON.stringify(payload))
-      .pipe(first()).subscribe(data => {
-        const user = this.userAdminService.userAdminValue;
-        this.modalService.dismissAll(LoadingComponent);
-        if (data.header.responseCode == '00' ){
-          this.userAdmin = user;
-        } else {
-          this.modalService.open(LogoutComponent, this.ngbModalOptions);
-          this.router.navigate(['/login']);
-        }
-      },
-      error => {
-        console.log('error : ', error);
-      });
-    }else {
-      this.modalService.dismissAll(LoadingComponent);
-      this.router.navigate(['/login']);
-    }
   }
 
   logout(){

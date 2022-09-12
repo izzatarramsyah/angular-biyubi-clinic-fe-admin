@@ -22,8 +22,7 @@ export class AuthGuard implements CanActivate {
         }
       };
       this.userAdminService.checkSession(JSON.stringify(payload))
-        .pipe(first())
-        .subscribe(data => {
+        .pipe(first()).subscribe(data => {
           this.routeURL = this.router.url;
           if (data.header.responseCode == '00'){
             return true;
@@ -39,6 +38,7 @@ export class AuthGuard implements CanActivate {
         });
       return true;
     }else {
+      console.log("route to login");
       this.router.navigate(['/login']);
       return true;
     }
