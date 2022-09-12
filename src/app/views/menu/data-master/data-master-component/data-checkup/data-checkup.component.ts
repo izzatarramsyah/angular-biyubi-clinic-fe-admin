@@ -9,6 +9,8 @@ import { first } from 'rxjs/operators';
 import { LoadingComponent } from "../../../components/loading/loading.component";
 import { CheckUpMaster } from "../../../../../entity/checkUpMaster";
 import * as XLSX from 'xlsx';
+import { ExportService } from '../../../../../integration/service/exportService';
+import { saveAs } from 'file-saver'
 
 @Component({ 
     selector: 'app-data-checkup',
@@ -30,7 +32,8 @@ export class DataCheckUpComponent implements OnInit{
 
   constructor(private modalService: NgbModal,
             private userAdminService: UserAdminService,
-            private masterService : MasterService) { 
+            private masterService : MasterService,
+            private exportService : ExportService) { 
     this.userAdmin = this.userAdminService.userAdminValue;
   }
 
@@ -57,7 +60,7 @@ export class DataCheckUpComponent implements OnInit{
           this.showTable = true;
           this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 10,
+            pageLength: 5,
             processing: true
           };
         } 
@@ -134,17 +137,19 @@ export class DataCheckUpComponent implements OnInit{
   }
 
   ExportTOExcel() {
-    const data = this.checkUpMaster.map(c => ({ 
-      'Kegiatan': c.actName, 
-      'Deskripsi': c.description,
-      'Bulan Ke -' : c.batch,
-      'Hari Rekam Medis Selanjtunya': c.nextCheckUpDays
-    }));
-    const fileName = 'Daftar Data Rekam Medis.xlsx';
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, fileName);
+    this.modalService.open(LoadingComponent, this.ngbModalOptions);
+    let payload = {
+      header : {
+        uName: this.userAdmin.username,
+        session: this.userAdmin.sessionId,
+        command: 'mst-checkup'
+      }
+    };
+    this.exportService.schedule(JSON.stringify(payload))
+    .then(blob=> {
+       saveAs(blob, 'Daftar data rekam medis.xls');
+       this.modalService.dismissAll(LoadingComponent);
+    });
   }
 
 }

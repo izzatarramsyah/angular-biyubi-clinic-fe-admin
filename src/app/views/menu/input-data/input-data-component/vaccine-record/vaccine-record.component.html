@@ -83,30 +83,23 @@
               <div class="col-md-2">
                 <label for="name">Tanggal Imunisasi</label>
               </div>
-              <div class="col-md-10">
+              <div class="col-md-4">
                 <input [(ngModel)]="vaccineDate" [type]="isDate ? 'date' : 'text'" class="form-control" (change)="changeVaccineDate($event)" [readOnly]="isReadOnly">
                 <div *ngIf="vaccineDateEmpty == true" class="make-orange" >
                  <div *ngIf="vaccineDateEmpty == true">Tanggal Imunisasi Harus Diisi</div>
                 </div> 
-               </div>
+              </div>
+              <div class="col-md-2">
+                <label for="name">Tanggal Expired</label>
+              </div>
+              <div class="col-md-4">
+                <input [(ngModel)]="expiredDate" type="text" class="form-control" readonly>
+              </div>
             </div>
           </div>
           <br>
         </div>
-         <div class="col-md-12">
-           <div class="form-group">
-             <div class="row">
-               <div class="col-md-2">
-                 <label for="name">Tanggal Expired</label>
-               </div>
-               <div class="col-md-10">
-                 <input [(ngModel)]="expiredDate" type="text" class="form-control" readonly>
-               </div>
-             </div>
-           </div>
-           <br>
-         </div>
-         <div class="col-md-12">
+        <div class="col-md-12">
            <div class="form-group">
              <div class="row">
                <div class="col-md-2">
@@ -118,13 +111,13 @@
              </div>
            </div>
            <br>
-         </div>
-         <div class="row">
+        </div>
+        <div class="row">
            <div class="col-md-10"></div>
            <div class="col-md-2 d-flex justify-content-end">
              <button class="btn btn-success" (click)="saveVaccineRecord()" [disabled]="isDisabled">Simpan</button>
            </div>
-         </div>
+        </div>
        </div>
      </div>
    </div>

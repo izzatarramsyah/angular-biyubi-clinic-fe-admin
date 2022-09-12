@@ -20,6 +20,9 @@
         <div *ngIf="isValid == false" class="make-orange" >
           <div *ngIf="isValid == false">Username / Password salah</div>
         </div> 
+        <div *ngIf="validSession == true" class="make-orange" >
+          <div *ngIf="validSession == true">Kami mendeteksi Anda masih aktif di browser lain, Silakan logout dulu dan coba lagi</div>
+        </div> 
       </div>
     </form>
   </div>

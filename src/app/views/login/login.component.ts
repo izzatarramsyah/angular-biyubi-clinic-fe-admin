@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   passwordEmpty = false;
   isValid = true;
   loading = false;
+  validSession = false;
   @ViewChild('username') inputUsername : ElementRef;
   @ViewChild('password') inputPassword : ElementRef;
 
@@ -38,7 +39,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.checkSession();
   }
 
   login(){
@@ -48,18 +48,25 @@ export class LoginComponent implements OnInit {
     this.passwordEmpty = false;
     this.isValid = true;
     this.loading = true;
+    this.validSession = false;
 
     if (this.username == '' && this.password == ''){
       this.loading = false;
       this.passwordEmpty = true;
       this.usernameEmpty = true;
-    } else if (this.username == ''){
+    } 
+    
+    if (this.username == ''){
       this.loading = false;
       this.usernameEmpty = true;
-    } else if (this.password == ''){
+    } 
+    
+    if (this.password == ''){
       this.loading = false;
       this.passwordEmpty = true;
-    }else{
+    }
+    
+    if (this.usernameEmpty == false && this.passwordEmpty == false) {
       let payload = {
         "payload":{
           "username": this.username,
@@ -71,7 +78,9 @@ export class LoginComponent implements OnInit {
         this.loading = false;
         if (data.header.responseCode == '00' ){
           this.router.navigate(['/dashboard']);
-        }else{
+        }else if (data.header.responseCode == '08') {
+          this.validSession = true;
+        }else {
           this.isValid = false;
         }
       },error => {
@@ -80,29 +89,4 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  checkSession(){
-    if (this.userAdmin) {
-      let payload = { 
-        "header":{ 
-          "uName" : this.userAdmin.username, 
-          "session" : this.userAdmin.sessionId 
-        }
-      };
-      this.userAdminService.checkSession(JSON.stringify(payload))
-      .pipe(first())
-      .subscribe(data => {
-        if (data.header.responseCode == '00' ){
-          this.router.navigate(['/dashboard']);
-        } else {
-          this.router.navigate(['/login']);
-        }
-      },
-      error => {
-        console.log('error : ', error);
-      });
-    }else {
-      this.router.navigate(['/login']);
-    }
-  }
-  
 }

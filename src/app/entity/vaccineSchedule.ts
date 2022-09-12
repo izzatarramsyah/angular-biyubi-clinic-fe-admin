@@ -7,6 +7,7 @@ export interface VaccineSchedule {
 	userId : number;
 	childId : number;
     vaccineDate : string;
+	scheduleDate : string;
 	expDate : string;
 	notes : string;
 }

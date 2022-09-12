@@ -9,6 +9,8 @@ import { first } from 'rxjs/operators';
 import { LoadingComponent } from "../../../components/loading/loading.component";
 import * as XLSX from 'xlsx';
 import { VaccineMaster } from "../../../../../entity/vaccineMaster";
+import { ExportService } from '../../../../../integration/service/exportService';
+import { saveAs } from 'file-saver'
 
 @Component({
     selector: 'app-data-vaccine',
@@ -30,7 +32,8 @@ export class DataVaccineComponent implements OnInit{
 
   constructor(private modalService: NgbModal,
             private userAdminService: UserAdminService,
-            private masterService : MasterService) { 
+            private masterService : MasterService,
+            private exportService : ExportService) { 
     this.userAdmin = this.userAdminService.userAdminValue;
   }
 
@@ -51,16 +54,16 @@ export class DataVaccineComponent implements OnInit{
     this.masterService.getListMst(JSON.stringify(payload))
     .pipe(first()).subscribe(
       (data) => {
+        this.modalService.dismissAll(LoadingComponent);
         if (data.header.responseCode == '00') {
           this.vaccineMaster = data.payload.object;
           this.showTable = true;
           this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 10,
+            pageLength: 5,
             processing: true
           };
         } 
-        this.modalService.dismissAll(LoadingComponent);
       },
       (error) => {
         console.log("error : ", error);
@@ -133,18 +136,19 @@ export class DataVaccineComponent implements OnInit{
   }
 
   ExportTOExcel() {
-    const data = this.vaccineMaster.map(c => ({ 
-      'Nama Vaksin': c.vaccineName, 
-      'Tipe Vaksin': c.vaccineType,
-      'Bulan Ke -' : c.batch,
-      'Hari Kadaluarsa': c.expDays,
-      'Catatan': c.notes
-    }));
-    const fileName = 'Daftar Data imunisasi.xlsx';
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, fileName);
+    this.modalService.open(LoadingComponent, this.ngbModalOptions);
+    let payload = {
+      header : {
+        uName: this.userAdmin.username,
+        session: this.userAdmin.sessionId,
+        command: 'mst-vaccine'
+      }
+    };
+    this.exportService.schedule(JSON.stringify(payload))
+    .then(blob=> {
+       saveAs(blob, 'Daftar data imunisasi.xls');
+       this.modalService.dismissAll(LoadingComponent);
+    });
   }
 
 }

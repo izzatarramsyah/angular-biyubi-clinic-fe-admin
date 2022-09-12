@@ -41,19 +41,13 @@
                 <div class="col-md-2">
                   <label for="name">Email</label>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-10">
                   <input [(ngModel)]="email" type="text" class="form-control" >
                   <div *ngIf="emailEmpty == true" class="make-orange" >
                     <div *ngIf="emailEmpty == true">Email Harus Diisi</div>
                   </div> 
-                </div>
-                <div class="col-md-1">
-                  <label for="name">@</label>
-                </div>
-                <div class="col-md-2">
-                  <input [(ngModel)]="domain" type="text" class="form-control" >
-                  <div *ngIf="domainEmpty == true" class="make-orange" >
-                    <div *ngIf="domainEmpty == true">Domain Harus Diisi</div>
+                  <div *ngIf="emailValid == false" class="make-orange" >
+                    <div *ngIf="emailValid == false">Format Email Tidak Sesuai</div>
                   </div> 
                 </div>
               </div>

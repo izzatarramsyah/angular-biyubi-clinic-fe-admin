@@ -24,13 +24,12 @@ export class ParentRegistrationComponent implements OnInit {
   phoneNo : string;
   address : string;
   email : string;
-  domain : string;
   parentNameEmpty : boolean;
   phoneNoEmpty : boolean
   addressEmpty : boolean
   emailEmpty : boolean
+  emailValid : boolean;
   parentNameValid : boolean;
-  domainEmpty : boolean;
 
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
@@ -57,12 +56,19 @@ export class ParentRegistrationComponent implements OnInit {
     return true;
   }
   
+  isEmail(email:string):boolean {
+      var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+      return regexp.test(email);
+  }
+  
   registration () {
+    this.isEmail(this.email);
+
     this.parentNameEmpty = false;
     this.phoneNoEmpty = false;
     this.addressEmpty = false;
     this.emailEmpty = false;
-    this.domainEmpty = false;
+    this.emailValid = false;
 
     if (this.parentName == null) {
       this.parentNameEmpty = true;
@@ -75,13 +81,15 @@ export class ParentRegistrationComponent implements OnInit {
     }
     if (this.email == null) {
       this.emailEmpty = true;
-    }
-    if (this.domain == null) {
-      this.domainEmpty = true;
+      this.emailValid = true;
+    } else {
+      if (this.isEmail(this.email) == true) {
+        this.emailValid = true;
+      }
     }
     
     if ( this.parentNameEmpty == false && this.phoneNoEmpty == false 
-      && this.addressEmpty == false && this.emailEmpty == false && this.domainEmpty == false) { 
+      && this.addressEmpty == false && this.emailEmpty == false && this.emailValid == true ) { 
         const modalRef = this.modalService.open(AlertComponent);
         modalRef.componentInstance.header = 'Konfrimasi';
         modalRef.componentInstance.wording = 'Apakah anda yakin untuk menyimpan data ini ? ';
@@ -93,8 +101,7 @@ export class ParentRegistrationComponent implements OnInit {
 
   recive(event) {
     if (event) {
-      this.modalService.open(LoadingComponent, this.ngbModalOptions);
-      const mail = this.email + "@" + this.domain;
+      this.modalService.open(LoadingComponent, this.ngbModalOptions); 
       let payload = {
         header : {
           uName: this.userAdmin.username,
@@ -105,7 +112,7 @@ export class ParentRegistrationComponent implements OnInit {
             fullname: this.parentName,
             phone_no: this.phoneNo,
             address: this.address,
-            email: mail
+            email: this.email
         }
       };
       this.userService.userProcess(JSON.stringify(payload))

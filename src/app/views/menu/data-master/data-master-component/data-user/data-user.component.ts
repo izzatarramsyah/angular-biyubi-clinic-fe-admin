@@ -11,6 +11,8 @@ import { ModalChildComponent } from "../modal-component/modal-child/modal-child.
 import { first } from 'rxjs/operators';
 import { LoadingComponent } from "../../../components/loading/loading.component";
 import * as XLSX from 'xlsx';
+import { ExportService } from '../../../../../integration/service/exportService';
+import { saveAs } from 'file-saver'
 
 @Component({
     selector: 'app-data-user',
@@ -32,7 +34,8 @@ export class DataUserComponent implements OnInit{
 
   constructor(private modalService: NgbModal,
             private userAdminService: UserAdminService,
-            private userService : UserService) { 
+            private userService : UserService,
+            private exportService : ExportService) { 
     this.userAdmin = this.userAdminService.userAdminValue;
   }
 
@@ -58,12 +61,8 @@ export class DataUserComponent implements OnInit{
           this.showTable = true;
           this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 3,
-            processing: true,
-            dom: 'Bfrtip',
-            buttons: [
-              'copy', 'csv', 'excel', 'print'
-              ]
+            pageLength: 5,
+            processing: true
           };
         } 
         this.modalService.dismissAll(LoadingComponent);
@@ -131,18 +130,19 @@ export class DataUserComponent implements OnInit{
   }
 
   ExportTOExcel() {
-    const data = this.listOfUser.map(c => ({ 
-      'Username': c.username, 
-      'Nama Lengkap': c.fullname,
-      'Alamat' : c.address,
-      'Nomor Telepon': c.phone_no,
-      'Tanggal Bergabung': c.joinDate
-    }));
-    const fileName = 'Daftar Data Pengguna Aplikasi.xlsx';
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, fileName);
+    this.modalService.open(LoadingComponent, this.ngbModalOptions);
+    let payload = {
+      header : {
+        uName: this.userAdmin.username,
+        session: this.userAdmin.sessionId,
+        command: 'list-user'
+      }
+    };
+    this.exportService.schedule(JSON.stringify(payload))
+    .then(blob=> {
+       saveAs(blob, 'Daftar data pengguna.xls');
+       this.modalService.dismissAll(LoadingComponent);
+    });
   }
 
   checkChild(obj, parentId){   

@@ -150,9 +150,8 @@ export class ScheduleComponent implements OnInit {
           this.vaccineSchedule = data.payload.object;
           this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            dom: 'Bfrtip'
+            pageLength: 3,
+            processing: true
           };
           this.showTableVaccine = true;
         } 
@@ -182,14 +181,12 @@ export class ScheduleComponent implements OnInit {
     this.recordService.getSchedule(JSON.stringify(payload))
     .pipe(first()).subscribe(
       (data) => {
-        console.log(JSON.stringify(data));
         if (data.header.responseCode == '00') {
           this.checkUpSchedule = data.payload.object;
           this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            dom: 'Bfrtip'
+            pageLength: 3,
+            processing: true
           };
           this.showTableCheckUp = true;
         }
@@ -202,12 +199,14 @@ export class ScheduleComponent implements OnInit {
   }
 
   downloadPdf(object){
+    this.modalService.open(LoadingComponent, this.ngbModalOptions);
     let command;
     let filename;
     let payload;
+    let child = this.tempListChild.filter(({id}) => id == this.selectedChildId)
     if (this.selectedHistoryType == 'info-checkup') {
       command = 'report-checkup';
-      filename = 'Laporan Rekam Medis.xls';
+      filename = 'Laporan Rekam Medis '+ child[0].fullname +'.pdf';
       payload = {
         header : {
           uName: this.userAdmin.username,
@@ -222,7 +221,7 @@ export class ScheduleComponent implements OnInit {
       };
     } else if (this.selectedHistoryType == 'info-vaccine') {
       command = 'report-vaccine';
-      filename = 'Laporan Rekam Imunisasi.xls';
+      filename = 'Laporan Rekam Imunisasi '+ child[0].fullname +'.pdf';
       payload = {
         header : {
           uName: this.userAdmin.username,
@@ -240,10 +239,12 @@ export class ScheduleComponent implements OnInit {
     this.exportService.report(JSON.stringify(payload))
     .then(blob=> {
        saveAs(blob, filename);
+       this.modalService.dismissAll(LoadingComponent);
     });
   }
  
   ExportTOExcel() {
+    this.modalService.open(LoadingComponent, this.ngbModalOptions);
     let command = '';
     let filename = '';
     if (this.selectedHistoryType == 'info-checkup') {
@@ -267,8 +268,8 @@ export class ScheduleComponent implements OnInit {
     this.exportService.schedule(JSON.stringify(payload))
     .then(blob=> {
        saveAs(blob, filename);
+       this.modalService.dismissAll(LoadingComponent);
     });
-    
   }
 
  

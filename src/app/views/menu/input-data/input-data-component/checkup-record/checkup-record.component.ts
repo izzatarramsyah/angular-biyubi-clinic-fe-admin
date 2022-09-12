@@ -195,6 +195,7 @@ export class CheckUpRecordComponent implements OnInit {
             this.weight = this.checkUpSchedule[i].weight;
             this.length = this.checkUpSchedule[i].length;
             this.headDiameter = this.checkUpSchedule[i].headDiameter;
+            this.notes = this.checkUpSchedule[i].notes;
         }
         break;
       }
