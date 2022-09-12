@@ -39,7 +39,6 @@ export class UserAdminService {
       return this.http.post<ApiResponse>(`${environment.apiUrl}/admin-clinic/user/checkSession`, payload)
         .pipe(map(res => {
           if (res.header.responseCode != '00') {
-            console.log("invalid session")
             const user = res.payload.object;
             this.userAdminSubject.next(user);
             localStorage.removeItem('userAdmin');

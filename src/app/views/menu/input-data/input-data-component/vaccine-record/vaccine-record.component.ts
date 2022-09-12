@@ -238,6 +238,7 @@ export class VaccineRecordComponent implements OnInit {
             this.isDate = false;
             this.vaccineDate = this.vaccineSchedule[i].vaccineDate;
             this.expiredDate = this.vaccineSchedule[i].expDate;
+            this.notes = this.vaccineSchedule[i].notes;
         }
         break;
       }
