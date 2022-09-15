@@ -1,30 +1,50 @@
-<div class="wrapper fadeInDown">
-  <div id="formContent">
-    <form>
-      <div>
-        <input #username type="text" id="username" class="fadeIn second" name="username" placeholder="login">
-        <div *ngIf="usernameEmpty == true" class="make-red" >
-          <div *ngIf="usernameEmpty == true">Username Harus Diisi</div>
-        </div> 
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<div class="wrapper">
+  <body class="my-login-page">
+    <section class="h-100">
+      <div class="container h-100">
+        <div class="row justify-content-md-center h-100">
+          <div class="card-wrapper">
+            <div class="card fat">
+              <div class="card-body">
+                <h4 class="card-title">Login</h4>
+                <form class="my-login-validation">
+                  <div class="form-group">
+                    <label for="username">Username</label>
+                    <input [(ngModel)]="username" type="text" class="form-control" autofocus>
+                    <div *ngIf="usernameEmpty == true" class="make-red" >
+                      <div *ngIf="usernameEmpty == true">Username Harus Diisi</div>
+                    </div> 
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input [(ngModel)]="password" type="password" class="form-control" data-eye>
+                    <div *ngIf="passwordEmpty == true" class="make-red" >
+                      <div *ngIf="passwordEmpty == true">Password Harus Diisi</div>
+                    </div> 
+                  </div>
+                  <div class="form-group m-0">
+                    <button type="submit" class="btn btn-primary btn-block" (click)="login()">
+                      Login
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
+                    </button>
+                    <div *ngIf="invalidSession == true" class="make-orange" >
+                      <div *ngIf="invalidSession == true">Anda sudah login di tempat lain. Mohon logout terlebih dahulu</div>
+                    </div> 
+                    <div *ngIf="isValid == false" class="make-orange" >
+                      <div *ngIf="isValid == false">Username / Password salah</div>
+                    </div> 
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        <input #password type="password" id="password" class="fadeIn third" name="password" placeholder="password" password>
-        <div *ngIf="passwordEmpty == true" class="make-red" >
-          <div *ngIf="passwordEmpty == true">Password Harus Diisi</div>
-        </div> 
-      </div>
-      <div>
-        <button class="btn-login fadeIn fourth" (click)="login()">Log In &nbsp;
-          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
-        </button>
-        <div *ngIf="isValid == false" class="make-orange" >
-          <div *ngIf="isValid == false">Username / Password salah</div>
-        </div> 
-        <div *ngIf="validSession == true" class="make-orange" >
-          <div *ngIf="validSession == true">Kami mendeteksi Anda masih aktif di browser lain, Silakan logout dulu dan coba lagi</div>
-        </div> 
-      </div>
-    </form>
-  </div>
+    </section>
+  </body>
 </div>
-  
+</html>

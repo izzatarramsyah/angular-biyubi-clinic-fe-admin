@@ -6,7 +6,6 @@ import { UserAdminService } from '../../../integration/service/userAdminService'
 import { UserAdmin } from "../../../entity/userAdmin";
 import { Router } from '@angular/router';
 import { LoadingComponent } from "../../components/loading/loading.component";
-import { LogoutComponent } from "../../components/logout/logout.component";
 
 @Component({
   selector: 'app-navigation',

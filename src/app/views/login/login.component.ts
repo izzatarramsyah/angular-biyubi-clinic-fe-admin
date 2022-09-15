@@ -27,28 +27,25 @@ export class LoginComponent implements OnInit {
   passwordEmpty = false;
   isValid = true;
   loading = false;
-  validSession = false;
-  @ViewChild('username') inputUsername : ElementRef;
-  @ViewChild('password') inputPassword : ElementRef;
-
-  constructor(private http: HttpClient, 
-              private router: Router,
-              private userAdminService: UserAdminService,
-              private modalService: NgbModal) { 
+  invalidSession = false;
+ 
+  constructor(private router: Router,
+              private userAdminService: UserAdminService ) { 
     this.userAdmin = this.userAdminService.userAdminValue;
   }
 
   ngOnInit() {
+    this.username = '';
+    this.password = '';
   }
 
   login(){
-    this.username = this.inputUsername.nativeElement.value;
-    this.password = this.inputPassword.nativeElement.value;
+
     this.usernameEmpty = false;
     this.passwordEmpty = false;
     this.isValid = true;
     this.loading = true;
-    this.validSession = false;
+    this.invalidSession = false;
 
     if (this.username == '' && this.password == ''){
       this.loading = false;
@@ -79,7 +76,7 @@ export class LoginComponent implements OnInit {
         if (data.header.responseCode == '00' ){
           this.router.navigate(['/dashboard']);
         }else if (data.header.responseCode == '08') {
-          this.validSession = true;
+          this.invalidSession = true;
         }else {
           this.isValid = false;
         }
@@ -87,6 +84,7 @@ export class LoginComponent implements OnInit {
         console.log('error : ', error);
       });
     }
+
   }
 
 }
