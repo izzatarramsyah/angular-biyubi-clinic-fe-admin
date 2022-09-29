@@ -28,28 +28,34 @@
                             <div class="col-md-2">
                                <label for="name">Tanggal Awal</label>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-10">
                               <input [(ngModel)]="startDate" type="date" class="form-control" [max]="maxDate"> 
                               <div *ngIf="startDateEmpty == true" class="make-orange" >
                                 <div *ngIf="startDateEmpty == true">Tanggal Awal Harus Diisi</div>
                                 </div> 
                             </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="row">
                             <div class="col-md-2">
                                 <label for="name">Tanggal Akhir</label>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-10">
                                 <input [(ngModel)]="endDate" type="date" class="form-control" [max]="maxDate"> 
                                 <div *ngIf="endDateEmpty == true" class="make-orange" >
                                     <div *ngIf="endDateEmpty == true">Tanggal Akhir Harus Diisi</div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <button class="btn btn-success" (click)="search()" >Cari
-                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
-                                </button>
-                            </div>
                         </div>
                     </div>
+                </div><br>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-success" (click)="search()" >Cari
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
+                    </button>
                 </div>
             </div>
         </div>
