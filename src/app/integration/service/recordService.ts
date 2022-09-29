@@ -14,22 +14,22 @@ export class RecordService {
                 private http: HttpClient) {
     }
    
-    addCheckUpRecord(payload : string) {
-        return this.http.post<ApiResponse>(`${environment.apiUrl}/admin-clinic/record/addCheckUpRecord`, payload)
+    checkUpRecord(payload : string) {
+        return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/record/checkUpRecord`, payload)
         .pipe(map(res => {
             return res;
         }));
     } 
 
-    addVaccineRecord(payload : string) {
-        return this.http.post<ApiResponse>(`${environment.apiUrl}/admin-clinic/record/addVaccineRecord`, payload)
+    vaccineRecord(payload : string) {
+        return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/record/vaccineRecord`, payload)
         .pipe(map(res => {
             return res;
         }));
     } 
     
     getSchedule(payload : string) {
-        return this.http.post<ApiResponse>(`${environment.apiUrl}/admin-clinic/record/getSchedule`, payload)
+        return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/record/getSchedule`, payload)
         .pipe(map(res => {
             return res;
         }));

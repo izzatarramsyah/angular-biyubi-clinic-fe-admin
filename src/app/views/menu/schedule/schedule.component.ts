@@ -14,6 +14,8 @@ import { ExportService } from '../../../integration/service/exportService';
 import { FileSaverService } from 'ngx-filesaver'; 
 import { saveAs } from 'file-saver'
 import * as XLSX from 'xlsx';
+import { EditCheckUpComponent } from "./schedule-component/edit-checkup/edit-checkup-component";
+import { EditVaccineComponent } from "./schedule-component/edit-vaccine/edit-vaccine.component";
 
 @Component({
   selector: 'app-schedule',
@@ -29,6 +31,8 @@ export class ScheduleComponent implements OnInit {
   resultOflistUser : ListUser [];
   tempUser : ListUser;
   tempListChild : ListChild [] ;
+
+  listVaccine = [] ;
 
   selectedChildId = 0;
   selectedHistoryType = '0';
@@ -65,9 +69,10 @@ export class ScheduleComponent implements OnInit {
     this.resultOflistUser = [];
     let payload = {
       header : {
-        uName: this.userAdmin.username,
-        session: this.userAdmin.sessionId,
-        command:'info-all-simple-user'
+        uName : this.userAdmin.username,
+        session : this.userAdmin.sessionId,
+        command :'info-all-simple-user',
+        channel : "WEB"
       }
     };
     this.userService.getUser(JSON.stringify(payload))
@@ -134,12 +139,13 @@ export class ScheduleComponent implements OnInit {
     this.showTableCheckUp = false;
     let payload = {
       header : {
-        uName: this.userAdmin.username,
-        session: this.userAdmin.sessionId,
-        command: 'info-schedule-vaccine'
+        uName : this.userAdmin.username,
+        session : this.userAdmin.sessionId,
+        command : 'info-schedule-vaccine',
+        channel : "WEB"
       },
       payload: {
-        parentId : this.tempUser.id,
+        userId : this.tempUser.id,
         childId : this.selectedChildId
       }
     };
@@ -150,7 +156,8 @@ export class ScheduleComponent implements OnInit {
           this.vaccineSchedule = data.payload.object;
           this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 3,
+            pageLength: 4,
+            lengthMenu : [4,8,16,32,64,128],
             processing: true
           };
           this.showTableVaccine = true;
@@ -169,12 +176,13 @@ export class ScheduleComponent implements OnInit {
     this.showTableVaccine = false;
     let payload = {
       header : {
-        uName: this.userAdmin.username,
-        session: this.userAdmin.sessionId,
-        command: 'info-schedule-checkup'
+        uName : this.userAdmin.username,
+        session : this.userAdmin.sessionId,
+        command : 'info-schedule-checkup',
+        channel : "WEB"
       },
       payload: {
-        parentId : this.tempUser.id,
+        userId : this.tempUser.id,
         childId : this.selectedChildId
       }
     };
@@ -185,7 +193,8 @@ export class ScheduleComponent implements OnInit {
           this.checkUpSchedule = data.payload.object;
           this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 3,
+            pageLength: 4,
+            lengthMenu : [4,8,16,32,64,128],
             processing: true
           };
           this.showTableCheckUp = true;
@@ -200,27 +209,24 @@ export class ScheduleComponent implements OnInit {
 
   downloadPdf(object){
     this.modalService.open(LoadingComponent, this.ngbModalOptions);
-    let command;
     let filename;
     let payload;
     let child = this.tempListChild.filter(({id}) => id == this.selectedChildId)
     if (this.selectedHistoryType == 'info-checkup') {
-      command = 'report-checkup';
       filename = 'Laporan Rekam Medis '+ child[0].fullname +'.pdf';
       payload = {
         header : {
-          uName: this.userAdmin.username,
-          session: this.userAdmin.sessionId,
-          command: 'report-checkup'
+          uName : this.userAdmin.username,
+          session : this.userAdmin.sessionId,
+          command : 'report-checkup',
         },
         payload: {
-          parentId : this.tempUser.id,
+          userId : this.tempUser.id,
           childId : this.selectedChildId,
           param : object.code
         }
       };
     } else if (this.selectedHistoryType == 'info-vaccine') {
-      command = 'report-vaccine';
       filename = 'Laporan Rekam Imunisasi '+ child[0].fullname +'.pdf';
       payload = {
         header : {
@@ -229,7 +235,7 @@ export class ScheduleComponent implements OnInit {
           command: 'report-vaccine'
         },
         payload: {
-          parentId : this.tempUser.id,
+          userId : this.tempUser.id,
           childId : this.selectedChildId,
           param : object.vaccineCode,
           batch : object.batch
@@ -261,7 +267,7 @@ export class ScheduleComponent implements OnInit {
         command: command
       },
       payload: {
-        parentId : this.tempUser.id,
+        userId : this.tempUser.id,
         childId : this.selectedChildId
       }
     };
@@ -272,6 +278,26 @@ export class ScheduleComponent implements OnInit {
     });
   }
 
- 
+  editCheckUp(object){
+    const modalRef = this.modalService.open(EditCheckUpComponent);
+    modalRef.componentInstance.header = "Edit Jejak Medis Bulan Ke - " + object.batch;
+    modalRef.componentInstance.weight = object.weight;
+    modalRef.componentInstance.length = object.length;
+    modalRef.componentInstance.headDiameter = object.headDiameter;
+    modalRef.componentInstance.userId = this.tempUser.id;
+    modalRef.componentInstance.childId = this.selectedChildId;
+    modalRef.componentInstance.notes = object.notes;
+    modalRef.componentInstance.mstCode = object.code;
+  }
+
+  editVaccine(object){
+    const modalRef = this.modalService.open(EditVaccineComponent);
+    modalRef.componentInstance.header = "Edit Catatan Imunisasi Bulan Ke - " + object.batch;
+    modalRef.componentInstance.notes = object.notes;
+    modalRef.componentInstance.mstCode = object.vaccineCode;
+    modalRef.componentInstance.batch = object.batch;
+    modalRef.componentInstance.userId = this.tempUser.id;
+    modalRef.componentInstance.childId = this.selectedChildId;
+  }
 
 }

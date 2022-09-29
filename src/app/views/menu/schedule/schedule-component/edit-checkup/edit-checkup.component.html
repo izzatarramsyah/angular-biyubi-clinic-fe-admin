@@ -1,0 +1,48 @@
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-login">{{header}}</h4>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Berat Badan</label>
+        <input [(ngModel)]="weight" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="2">
+        <div *ngIf="weightEmpty == true" class="make-orange" >
+          <div *ngIf="weightEmpty == true">Berat Badan Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="type">Panjang Badan</label>
+        <input [(ngModel)]="length" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="2">
+        <div *ngIf="lengthEmpty == true" class="make-orange" >
+          <div *ngIf="lengthEmpty == true">Panjang Badan Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Lingkar Kepala</label>
+        <input [(ngModel)]="headDiameter" class="form-control" (keypress)="numberOnly($event)" maxlength="2">
+        <div *ngIf="headDiameterEmpty == true" class="make-orange" >
+          <div *ngIf="headDiameterEmpty == true">Lingkar Kepala Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Catatan</label>
+        <input [(ngModel)]="notes" class="form-control" >
+        <div *ngIf="notesEmpty == true" class="make-orange" >
+          <div *ngIf="notesEmpty == true">Catatan Harus Diisi</div>
+        </div> 
+      </div>
+      <br>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="process()">Proses</button>
+  </div>

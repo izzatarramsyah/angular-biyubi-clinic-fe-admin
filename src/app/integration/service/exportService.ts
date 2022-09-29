@@ -16,13 +16,13 @@ export class ExportService {
   
     schedule(payload) {
       return this.http
-      .post(`${environment.apiUrl}/admin-clinic/export/excel`, payload, { responseType:'blob' })
+      .post(`${environment.apiUrl}/clinic/export/excel`, payload, { responseType:'blob' })
       .toPromise();
     }
 
     report(payload) {
       return this.http
-      .post(`${environment.apiUrl}/admin-clinic/export/pdf`, payload, { responseType:'blob' })
+      .post(`${environment.apiUrl}/clinic/export/pdf`, payload, { responseType:'blob' })
       .toPromise();
     }
     

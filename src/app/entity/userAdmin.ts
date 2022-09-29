@@ -5,4 +5,5 @@ export interface UserAdmin {
 	status : string;
 	sessionId : string;
 	lastActivity : Date;
+	createdDtm : Date;
 }

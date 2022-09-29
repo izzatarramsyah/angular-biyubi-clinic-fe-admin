@@ -48,7 +48,8 @@ export class ModalCheckUpComponent implements OnInit {
       {batch: 9, value: false},
       {batch: 10, value: false},
       {batch: 11, value: false},
-      {batch: 12, value: false}
+      {batch: 12, value: false},
+      {batch: 13, value: false}
     ];
 
     ngbModalOptions: NgbModalOptions = {
@@ -111,7 +112,7 @@ export class ModalCheckUpComponent implements OnInit {
         this.descriptionEmpty = true;
       }
 
-      if (this.selectedBatch == null || this.selectedBatch == 0) {
+      if (this.selectedBatch == null) {
         this.batchEmpty = true;
       }
 
@@ -128,9 +129,10 @@ export class ModalCheckUpComponent implements OnInit {
           this.modalService.open(LoadingComponent, this.ngbModalOptions);
           let payload = {
             header : {
-              uName: this.userAdmin.username,
-              session: this.userAdmin.sessionId,
-              command: 'update'
+              uName : this.userAdmin.username,
+              session : this.userAdmin.sessionId,
+              command : 'update',
+              channel : 'WEB'
             },
             payload : {
               code : this.checkUpMaster.code,
@@ -169,9 +171,10 @@ export class ModalCheckUpComponent implements OnInit {
             this.modalService.open(LoadingComponent, this.ngbModalOptions);
             let payload = {
               header : {
-                uName: this.userAdmin.username,
-                session: this.userAdmin.sessionId,
-                command: 'save'
+                uName : this.userAdmin.username,
+                session : this.userAdmin.sessionId,
+                command : 'save',
+                channel : 'WEB'
               },
               payload : {
                 actName : this.actName,

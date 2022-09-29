@@ -68,6 +68,9 @@ export class LoginComponent implements OnInit {
         "payload":{
           "username": this.username,
           "password" : this.password
+        },
+        "header": { 
+          "channel" : "WEB"
         }
       };
       this.userAdminService.login(JSON.stringify(payload)).

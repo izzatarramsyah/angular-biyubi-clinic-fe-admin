@@ -48,9 +48,10 @@ export class DataUserComponent implements OnInit{
     this.listOfUser = [];
     let payload = {
       header : {
-        uName: this.userAdmin.username,
-        session: this.userAdmin.sessionId,
-        command: 'info-all-user'
+        uName : this.userAdmin.username,
+        session : this.userAdmin.sessionId,
+        command : 'info-all-user',
+        channel : "WEB"
       },
     };
     this.userService.getUser(JSON.stringify(payload))
@@ -61,7 +62,8 @@ export class DataUserComponent implements OnInit{
           this.showTable = true;
           this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 5,
+            pageLength: 4,
+            lengthMenu : [4,8,16,32,64,128],
             processing: true
           };
         } 
@@ -101,9 +103,10 @@ export class DataUserComponent implements OnInit{
       this.modalService.open(LoadingComponent, this.ngbModalOptions);
       let payload = {
         header : {
-          uName: this.userAdmin.username,
-          session: this.userAdmin.sessionId,
-          command: 'changeStatus'
+          uName : this.userAdmin.username,
+          session : this.userAdmin.sessionId,
+          command : 'changeStatus',
+          channel : "WEB"
         },
         payload : {
           id : ids,

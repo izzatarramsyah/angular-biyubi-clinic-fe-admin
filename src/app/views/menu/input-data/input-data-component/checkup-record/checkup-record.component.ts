@@ -101,9 +101,10 @@ export class CheckUpRecordComponent implements OnInit {
     this.resultOflistUser = [];
     let payload = {
       header : {
-        uName: this.userAdmin.username,
-        session: this.userAdmin.sessionId,
-        command:'info-all-simple-user'
+        uName : this.userAdmin.username,
+        session : this.userAdmin.sessionId,
+        command :'info-all-simple-user',
+        channel : "WEB"
       }
     };
     this.userService.getUser(JSON.stringify(payload))
@@ -144,7 +145,8 @@ export class CheckUpRecordComponent implements OnInit {
       header : {
         uName : this.userAdmin.username,
         session : this.userAdmin.sessionId,
-        command : 'info-schedule-checkup'
+        command : 'info-schedule-checkup',
+        channel : "WEB"
       },
       payload : {
         parentId : this.tempUser.id,
@@ -249,8 +251,10 @@ export class CheckUpRecordComponent implements OnInit {
       this.modalService.open(LoadingComponent, this.ngbModalOptions);
       let payload = {
         header : {
-          uName: this.userAdmin.username,
-          session: this.userAdmin.sessionId,
+          uName : this.userAdmin.username,
+          session : this.userAdmin.sessionId,
+          channel : "WEB",
+          command : "save"
         },
         payload : {
           userId : this.tempUser.id,
@@ -264,7 +268,7 @@ export class CheckUpRecordComponent implements OnInit {
           checkUpDate: this.checkUpDate
         }
       };
-      this.recordService.addCheckUpRecord(JSON.stringify(payload))
+      this.recordService.checkUpRecord(JSON.stringify(payload))
       .pipe(first()).subscribe(
         (data) => {
           let header = 'Gagal';

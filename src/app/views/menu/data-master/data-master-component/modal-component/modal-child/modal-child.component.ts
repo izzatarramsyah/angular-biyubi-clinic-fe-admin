@@ -77,9 +77,10 @@ export class ModalChildComponent implements OnInit {
         this.modalService.open(LoadingComponent,this.ngbModalOptions);
         let payload = {
           header : {
-            uName: this.userAdmin.username,
-            session: this.userAdmin.sessionId,
-            command: 'update'
+            uName : this.userAdmin.username,
+            session : this.userAdmin.sessionId,
+            command : 'update',
+            channel : 'WEB'
           },
           payload : {
             id: this.id,

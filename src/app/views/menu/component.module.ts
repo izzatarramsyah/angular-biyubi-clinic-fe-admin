@@ -28,6 +28,8 @@ import { ModalCheckUpComponent } from "./data-master/data-master-component/modal
 import { ModalChildComponent } from "./data-master/data-master-component/modal-component/modal-child/modal-child.component";
 import { HistoryComponent } from './history/history.component';
 import { FileSaverModule } from 'ngx-filesaver';
+import { EditCheckUpComponent } from "./schedule/schedule-component/edit-checkup/edit-checkup-component";
+import { EditVaccineComponent } from "./schedule/schedule-component/edit-vaccine/edit-vaccine.component";
 
 @NgModule({ 
   providers: [DatePipe],
@@ -61,7 +63,9 @@ import { FileSaverModule } from 'ngx-filesaver';
     DataCheckUpComponent,
     ModalCheckUpComponent,
     ModalChildComponent,
-    HistoryComponent
+    HistoryComponent,
+    EditCheckUpComponent,
+    EditVaccineComponent
   ]
 })
 export class ComponentsModule { }

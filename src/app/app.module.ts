@@ -7,6 +7,7 @@ import {
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router'; 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FullComponent } from './views/layouts/full/full.component';
@@ -20,6 +21,8 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { LoadingComponent } from './views/components/loading/loading.component';
+import { ProfileComponent } from './views/components/profile/profile.component';
+import { QRCodeComponent } from './views/components/qrcode/qrcode.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -36,7 +39,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NavigationComponent,
     SidebarComponent,
     LoginComponent,
-    LoadingComponent
+    LoadingComponent,
+    ProfileComponent,
+    QRCodeComponent
   ],
   imports: [
     CommonModule,
@@ -57,7 +62,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
+    },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

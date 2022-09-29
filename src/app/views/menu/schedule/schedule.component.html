@@ -81,7 +81,8 @@
                                   <th class="text-dark font-medium fs-4" style="text-align:center">Jadwal Pemeriksaan</th>
                                   <th class="text-dark font-medium fs-4" style="text-align:center">Bulan Ke </th>
                                   <th class="text-dark font-medium fs-4" style="text-align:center">Deskripsi</th>
-                                  <th class="text-dark font-medium fs-4" style="text-align:center">Detail</th>
+                                  <th class="text-dark font-medium fs-4" style="text-align:center">Status</th>
+                                  <th class="text-dark font-medium fs-4" style="text-align:center">Aksi</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -89,11 +90,13 @@
                                   <td class="fs-4" style="text-align:center">{{list.scheduleDate}}</td>
                                   <td class="fs-4" style="text-align:center">{{list.batch}}</td>
                                   <td class="fs-4" style="text-align:center">{{list.description}}</td>
-                                  <td *ngIf ="list.checkUpDate == null" style="text-align:center">
-                                    <p style="color:red">Belum Dilakukan</p>
+                                  <td class="fs-4" style="text-align:center">
+                                    <p *ngIf ="list.checkUpDate == null" style="text-align:center; color:red">Belum Dilakukan</p>
+                                    <p *ngIf ="list.checkUpDate != null" style="text-align:center; color:green">Sudah Dilakukan</p>
                                   </td>
-                                  <td *ngIf ="list.checkUpDate != null" style="text-align:center">
-                                    <a href="javascript:void(0)" (click)="downloadPdf(list)">Unduh Laporan</a>
+                                  <td class="fs-4" style="text-align:center">
+                                    <button *ngIf ="list.checkUpDate != null" type="button" class="btn btn-info" (click)="editCheckUp(list)"><i class="bi bi-pencil-square"></i></button>&nbsp;
+                                    <button *ngIf ="list.checkUpDate != null" type="button" class="btn btn-info" (click)="downloadPdf(list)"><i class="bi bi-download"></i></button>
                                   </td>
                               </tr>              
                           </tbody>
@@ -112,7 +115,8 @@
                                 <th class="text-dark font-medium fs-4" style="text-align:center">Jadwal Imunisasi</th>
                                 <th class="text-dark font-medium fs-4" style="text-align:center">Nama Imunisasi</th>
                                 <th class="text-dark font-medium fs-4" style="text-align:center">Bulan Ke</th>
-                                <th class="text-dark font-medium fs-4" style="text-align:center">Detail</th>
+                                <th class="text-dark font-medium fs-4" style="text-align:center">Status</th>
+                                <th class="text-dark font-medium fs-4" style="text-align:center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -120,11 +124,13 @@
                                 <td class="fs-4" style="text-align:center">{{list.scheduleDate}}</td>
                                 <td class="fs-4" style="text-align:center">{{list.vaccineName}}</td>
                                 <td class="fs-4" style="text-align:center">{{list.batch}}</td>
-                                <td *ngIf ="list.vaccineDate == null" style="text-align:center">
-                                  <p style="color:red">Belum Dilakukan</p>
+                                <td class="fs-4" style="text-align:center">
+                                  <p *ngIf ="list.vaccineDate == null" style="text-align:center; color:red" >Belum Dilakukan</p>
+                                  <p *ngIf ="list.vaccineDate != null" style="text-align:center; color:green">Sudah Dilakukan</p>
                                 </td>
-                                <td *ngIf ="list.vaccineDate != null" style="text-align:center">
-                                  <a href="javascript:void(0)" (click)="downloadPdf(list)">Unduh Laporan</a>
+                                <td class="fs-4" style="text-align:center">
+                                  <button *ngIf ="list.vaccineDate != null" type="button" class="btn btn-info" (click)="editVaccine(list)"><i class="bi bi-pencil-square"></i></button>&nbsp;
+                                  <button *ngIf ="list.vaccineDate != null" type="button" class="btn btn-info" (click)="downloadPdf(list)"><i class="bi bi-download"></i></button>
                                 </td>
                             </tr>              
                         </tbody>

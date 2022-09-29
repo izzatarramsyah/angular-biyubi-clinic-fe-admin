@@ -123,9 +123,10 @@ export class GraphComponent implements OnInit {
     this.resultOflistUser = [];
     let payload = {
       header : {
-        uName: this.userAdmin.username,
-        session: this.userAdmin.sessionId,
-        command:'info-all-simple-user'
+        uName : this.userAdmin.username,
+        session : this.userAdmin.sessionId,
+        command :'info-all-simple-user',
+        channel : "WEB"
       }
     };
     this.userService.getUser(JSON.stringify(payload))
@@ -165,9 +166,10 @@ export class GraphComponent implements OnInit {
 
     let payload = {
       header : {
-        uName: this.userAdmin.username,
-        session: this.userAdmin.sessionId,
-        command:'info-user'
+        uName : this.userAdmin.username,
+        session : this.userAdmin.sessionId,
+        command :'info-user',
+        channel : "WEB"
       }, payload : {
         parentId : this.tempUser.id,
         childId : this.selectedChildId

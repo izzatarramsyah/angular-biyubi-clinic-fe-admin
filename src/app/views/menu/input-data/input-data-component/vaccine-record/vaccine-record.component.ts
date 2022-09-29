@@ -119,9 +119,10 @@ export class VaccineRecordComponent implements OnInit {
     this.resultOflistUser = [];
     let payload = {
       header : {
-        uName: this.userAdmin.username,
-        session: this.userAdmin.sessionId,
-        command:'info-all-simple-user'
+        uName : this.userAdmin.username,
+        session : this.userAdmin.sessionId,
+        command :'info-all-simple-user',
+        channel : "WEB"
       }
     };
     this.userService.getUser(JSON.stringify(payload))
@@ -168,7 +169,8 @@ export class VaccineRecordComponent implements OnInit {
       header : {
         uName : this.userAdmin.username,
         session : this.userAdmin.sessionId,
-        command : 'info-schedule-vaccine'
+        command : 'info-schedule-vaccine',
+        channel : "WEB"
       },
       payload : {
         parentId : this.tempUser.id,
@@ -291,8 +293,10 @@ export class VaccineRecordComponent implements OnInit {
       this.modalService.open(LoadingComponent,this.ngbModalOptions);
       let payload = {
         header : {
-          uName: this.userAdmin.username,
-          session: this.userAdmin.sessionId,
+          uName : this.userAdmin.username,
+          session : this.userAdmin.sessionId,
+          command : "save",
+          channel : "WEB"
         },
         payload : {
           userId : this.tempUser.id,
@@ -303,8 +307,7 @@ export class VaccineRecordComponent implements OnInit {
           notes :this.notes
         }
       };
-      console.log(JSON.stringify(payload));
-      this.recordService.addVaccineRecord(JSON.stringify(payload))
+      this.recordService.vaccineRecord(JSON.stringify(payload))
       .pipe(first()).subscribe(
         (data) => {
           let header = 'Gagal';

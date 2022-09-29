@@ -6,6 +6,10 @@ import { UserAdminService } from '../../../integration/service/userAdminService'
 import { UserAdmin } from "../../../entity/userAdmin";
 import { Router } from '@angular/router';
 import { LoadingComponent } from "../../components/loading/loading.component";
+import { ProfileComponent } from "../../components/profile/profile.component";
+import { QRCodeComponent } from "../../components/qrcode/qrcode.component";
+import { DatePipe } from '@angular/common';
+import { QRCodeService } from '../../../integration/service/qrCodeService';
 
 @Component({
   selector: 'app-navigation',
@@ -15,6 +19,8 @@ import { LoadingComponent } from "../../components/loading/loading.component";
 export class NavigationComponent implements OnInit {
 
   userAdmin : UserAdmin;
+  qrCode : string; 
+  message : string;
 
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
@@ -23,11 +29,25 @@ export class NavigationComponent implements OnInit {
 
   constructor(private modalService: NgbModal,
               private userAdminService: UserAdminService,
-              private router: Router) {
+              private router: Router,
+              private datepipe: DatePipe,
+              private qRCodeService: QRCodeService) {
     this.userAdmin = this.userAdminService.userAdminValue;
   }
 
   ngOnInit() {
+    
+  }
+
+  showModalProfile(){
+    const modalRef = this.modalService.open(ProfileComponent);
+    modalRef.componentInstance.username = this.userAdmin.username;
+    modalRef.componentInstance.lastActivity = this.datepipe.transform(this.userAdmin.lastActivity, "MM / dd / yyyy hh:mm:ss");
+    modalRef.componentInstance.joinDate = this.datepipe.transform(this.userAdmin.createdDtm, "MM / dd / yyyy hh:mm:ss");
+  }
+
+  showModalQR(){
+    this.modalService.open(QRCodeComponent);
   }
 
   logout(){
@@ -39,7 +59,8 @@ export class NavigationComponent implements OnInit {
       },
       "header": { 
         "uName":user.username, 
-        "session" : user.sessionId 
+        "session" : user.sessionId,
+        "channel" : "WEB"
       }
     };
     this.userAdminService.logout(JSON.stringify(payload)).

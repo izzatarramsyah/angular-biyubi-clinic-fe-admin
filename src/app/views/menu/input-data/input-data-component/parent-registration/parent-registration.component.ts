@@ -104,9 +104,10 @@ export class ParentRegistrationComponent implements OnInit {
       this.modalService.open(LoadingComponent, this.ngbModalOptions); 
       let payload = {
         header : {
-          uName: this.userAdmin.username,
-          session: this.userAdmin.sessionId,
-          command: 'save'
+          uName : this.userAdmin.username,
+          session : this.userAdmin.sessionId,
+          command : 'save',
+          channel : "WEB"
         },
         payload : {
             fullname: this.parentName,

@@ -18,7 +18,8 @@ export class AuthGuard implements CanActivate {
       let payload = {
         "header":{
           "session":user.sessionId,
-          "uName":user.username
+          "uName":user.username,
+          "channel" : "WEB"
         }
       };
       this.userAdminService.checkSession(JSON.stringify(payload))

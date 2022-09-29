@@ -18,13 +18,16 @@ import { LoadingComponent } from "../../components/loading/loading.component";
 })
 export class HistoryComponent implements OnInit{
  
-  auditTrail : AuditTrail[];
+  auditTrail : AuditTrail [];
+  listData = [];
   userAdmin : UserAdmin;
   dtOptions : any;
 
+  username : string;
   startDate : String;
   endDate : String;
 
+  usernameEmpty : boolean;
   startDateEmpty : boolean;
   endDateEmpty : boolean;
 
@@ -52,6 +55,7 @@ export class HistoryComponent implements OnInit{
   ngOnInit() {
     this.startDate = null;
     this.endDate = null;
+    this.username = null
     this.setMaxDate();
   }
 
@@ -63,39 +67,57 @@ export class HistoryComponent implements OnInit{
 
   search() {
     this.auditTrail = [];
+    this.listData = [];
     this.showTable = false;
     this.loading = true;
 
     this.startDateEmpty = false;
     this.endDateEmpty = false;
+    this.usernameEmpty = false;
 
     if (this.startDate == null) {
       this.startDateEmpty = true;
     }
+
     if (this.endDate == null){
       this.endDateEmpty = true;
     }
 
-    if (this.startDateEmpty == false && this.endDateEmpty == false ) {
+    if (this.username == null){
+      this.usernameEmpty = true;
+    }
+
+    if (this.startDateEmpty == false && this.endDateEmpty == false && this.usernameEmpty == false) {
       let payload = {
         header : {
           uName: this.userAdmin.username,
           session: this.userAdmin.sessionId,
+          channel : "WEB"
         },
         payload : {
+          username : this.username,
           startDate : this.startDate,
           endDate : this.endDate,
         }
       };
   
-      this.auditTrailService.getListAuditTrail(JSON.stringify(payload))
+      this.auditTrailService.listActivity(JSON.stringify(payload))
       .pipe(first()).subscribe(
         (data) => {
           if (data.header.responseCode == '00') {
             this.auditTrail = data.payload.object;
+            for (const i in this.auditTrail) {
+              this.listData.push({
+                activity : this.auditTrail[i].activity,
+                username : this.auditTrail[i].value1,
+                date : this.datepipe.transform(this.auditTrail[i].createdDtm, 'dd-MM-yyyy'),
+                detail : this.auditTrail[i].value2
+              });
+            }
             this.dtOptions = {
               pagingType: 'full_numbers',
-              pageLength: 5,  
+              pageLength: 4,
+              lengthMenu : [4,8,16,32,64,128],
               processing: true
             };
             this.showTable = true;
@@ -122,6 +144,7 @@ export class HistoryComponent implements OnInit{
         command: "list-audit-trail"
       },
       payload: {
+        username : this.username,
         startDate : this.startDate,
         endDate : this.endDate,
       }

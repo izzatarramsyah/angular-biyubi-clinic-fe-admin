@@ -22,7 +22,7 @@ export class DataCheckUpComponent implements OnInit{
   checkUpMaster : CheckUpMaster[];
   userAdmin : UserAdmin;
   status : string;
-  showTable : boolean;
+  showTable = false;
   dtOptions: any = {};
 
   ngbModalOptions: NgbModalOptions = {
@@ -46,11 +46,10 @@ export class DataCheckUpComponent implements OnInit{
     this.modalService.open(LoadingComponent, this.ngbModalOptions);
     this.checkUpMaster = [];
     let payload = {
-      header : {
-        uName: this.userAdmin.username,
-        session: this.userAdmin.sessionId,
-        command: 'info-list-checkup' 
-      },
+      uName : this.userAdmin.username,
+      session : this.userAdmin.sessionId,
+      command : 'info-list-checkup' ,
+      channel : "WEB"
     };
     this.masterService.getListMst(JSON.stringify(payload))
     .pipe(first()).subscribe(
@@ -60,7 +59,8 @@ export class DataCheckUpComponent implements OnInit{
           this.showTable = true;
           this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 5,
+            pageLength: 4,
+            lengthMenu : [4,8,16,32,64,128],
             processing: true
           };
         } 
@@ -107,10 +107,12 @@ export class DataCheckUpComponent implements OnInit{
       this.modalService.open(LoadingComponent, this.ngbModalOptions);
       let payload = {
         header : {
-          uName: this.userAdmin.username,
-          session: this.userAdmin.sessionId,
-          command: 'changeStatus'
+          uName : this.userAdmin.username,
+          session : this.userAdmin.sessionId,
+          command : 'changeStatus',
+          channel : "WEB"
         },payload : {
+          actName : object.actName,
           code : object.code,
           status : this.status
         }

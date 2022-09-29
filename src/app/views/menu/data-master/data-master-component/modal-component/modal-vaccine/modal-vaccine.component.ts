@@ -19,7 +19,7 @@ import { LoadingComponent } from "../../../../components/loading/loading.compone
 export class ModalVaccineComponent implements OnInit {
 
     @Input() vaccineMaster : VaccineMaster ;
-    @Input() listOfVaccine : any ;
+    @Input() lilstOfVaccineMaster : VaccineMaster [] ;
     @Input() command : string ;
     @Input() header  : string ;
 
@@ -83,16 +83,16 @@ export class ModalVaccineComponent implements OnInit {
     }
     
     onSearchChange(e){
-      this.name = e.target.value;
-      for (const i in this.listOfVaccine) {
-        if (this.name == this.listOfVaccine[i].vaccineName) {
-          this.type = this.listOfVaccine[i].vaccineType;
-          this.expiredDays = this.listOfVaccine[i].expDays;
-          this.notes = this.listOfVaccine[i].notes;
+      this.name = e.target.value; 
+      for (const i in this.lilstOfVaccineMaster) {
+        if (this.name == this.lilstOfVaccineMaster[i].vaccineName) {
+          this.type = this.lilstOfVaccineMaster[i].vaccineType;
+          this.expiredDays = this.lilstOfVaccineMaster[i].expDays;
+          this.notes = this.lilstOfVaccineMaster[i].notes;
           this.isReadOnly = true;
           for (const y in this.listBatch) {
-            for (const x in this.listOfVaccine[i].listBatch) {
-              if (this.listBatch[y].batch == this.listOfVaccine[i].listBatch[x]){
+            for (const x in this.lilstOfVaccineMaster[i].detail) {
+              if (this.listBatch[y].batch == this.lilstOfVaccineMaster[i].detail[x].batch){
                 this.listBatch[y].value = true;
               }
             }
@@ -141,9 +141,10 @@ export class ModalVaccineComponent implements OnInit {
             this.modalService.open(LoadingComponent, this.ngbModalOptions);
             let payload = {
               header : {
-                uName: this.userAdmin.username,
-                session: this.userAdmin.sessionId,
-                command: 'update'
+                uName : this.userAdmin.username,
+                session : this.userAdmin.sessionId,
+                command : 'update',
+                channel : 'WEB'
               },
               payload : {
                   vaccineCode : this.vaccineMaster.vaccineCode,
@@ -185,7 +186,8 @@ export class ModalVaccineComponent implements OnInit {
               header : {
                 uName: this.userAdmin.username,
                 session: this.userAdmin.sessionId,
-                command: 'save'
+                command: 'save',
+                channel : 'WEB'
               },
               payload : {
                 vaccineName : this.name,

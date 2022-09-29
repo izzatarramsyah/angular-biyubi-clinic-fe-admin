@@ -73,9 +73,10 @@ export class ChildRegistrationComponent implements OnInit {
     this.resultOflistUser = [];
     let payload = {
       header : {
-        uName: this.userAdmin.username,
-        session: this.userAdmin.sessionId,
-        command:'info-all-simple-user'
+        uName : this.userAdmin.username,
+        session : this.userAdmin.sessionId,
+        command :'info-all-simple-user',
+        channel : "WEB"
       }
     };
     this.userService.getUser(JSON.stringify(payload))
@@ -153,9 +154,10 @@ export class ChildRegistrationComponent implements OnInit {
       this.modalService.open(LoadingComponent,this.ngbModalOptions);
       let payload = {
         header : {
-            uName: this.userAdmin.username,
-            session: this.userAdmin.sessionId,
-            command: 'save'
+            uName : this.userAdmin.username,
+            session : this.userAdmin.sessionId,
+            command : 'save',
+            channel : "WEB"
         },
         payload : {
             userId: this.tempUser.id,
