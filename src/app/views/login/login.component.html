@@ -32,12 +32,9 @@
                     <button type="submit" class="btn btn-primary btn-block" (click)="login()">
                       Login
                       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
-                    </button>
-                    <div *ngIf="invalidSession == true" class="make-orange" >
-                      <div *ngIf="invalidSession == true">Anda sudah login di tempat lain. Mohon logout terlebih dahulu</div>
-                    </div> 
+                    </button> 
                     <div *ngIf="isValid == false" class="make-orange" >
-                      <div *ngIf="isValid == false">Username / Password salah</div>
+                      <div *ngIf="isValid == false">{{errorMessage}}</div>
                     </div> 
                   </div>
                 </form>

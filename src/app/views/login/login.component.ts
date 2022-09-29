@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   passwordEmpty = false;
   isValid = true;
   loading = false;
-  invalidSession = false;
+  errorMessage : string;
  
   constructor(private router: Router,
               private userAdminService: UserAdminService ) { 
@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit {
     this.passwordEmpty = false;
     this.isValid = true;
     this.loading = true;
-    this.invalidSession = false;
 
     if (this.username == '' && this.password == ''){
       this.loading = false;
@@ -78,10 +77,9 @@ export class LoginComponent implements OnInit {
         this.loading = false;
         if (data.header.responseCode == '00' ){
           this.router.navigate(['/dashboard']);
-        }else if (data.header.responseCode == '08') {
-          this.invalidSession = true;
         }else {
           this.isValid = false;
+          this.errorMessage = data.header.responseMessage;
         }
       },error => {
         console.log('error : ', error);
