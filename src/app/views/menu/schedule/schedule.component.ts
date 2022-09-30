@@ -32,13 +32,12 @@ export class ScheduleComponent implements OnInit {
   tempUser : ListUser;
   tempListChild : ListChild [] ;
 
-  listVaccine = [] ;
+  listData = [] ;
 
   selectedChildId = 0;
   selectedHistoryType = '0';
 
-  showTableVaccine = false;
-  showTableCheckUp = false;
+  showTable = false;
   dtOptions: any = {};
 
   keyword = 'fullname';
@@ -47,6 +46,9 @@ export class ScheduleComponent implements OnInit {
 
   typeSchedule: any = [{name: 'Jadwal Imunisasi', value: 'info-vaccine'},
   {name: 'Jadwal Medis', value: 'info-checkup'}];
+
+  displayedColumns : string[];
+  rowTable : string[];
 
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
@@ -88,23 +90,21 @@ export class ScheduleComponent implements OnInit {
     );
   }
 
-  selectEvent(object : any) {
+  onSelectEvent(object : any) {
     this.tempUser = object;
     this.tempListChild = this.tempUser.listChild;
     this.selectedChildId = 0;
     this.selectedHistoryType = '0';
-    this.showTableVaccine = false;
-    this.showTableCheckUp = false;
+    this.showTable = false;
     this.isDisabled = true;
   }
 
-  onChangeSearch(name: string) {
+  onInputChanged(name: string) {
     this.tempUser = null;
     this.tempListChild = [];
     this.selectedChildId = 0;
     this.selectedHistoryType = '0';
-    this.showTableVaccine = false;
-    this.showTableCheckUp = false;
+    this.showTable = false;
     this.isDisabled = true;
     for (const i in this.resultOflistUser) {
       if (name == this.resultOflistUser[i].fullname) {
@@ -114,35 +114,42 @@ export class ScheduleComponent implements OnInit {
     }
   }
   
-  changeChildName(e){
+  onChangeChildName(e) {
     this.selectedChildId = e.target.value;
     this.selectedHistoryType = '0';
-    this.showTableVaccine = false;
-    this.showTableCheckUp = false;
+    this.showTable = false;
     if (e.target.value != 0) {
       this.isDisabled = false;
     }
   }
 
-  changeRecordType (e) {
+  onChangeRecordType(e) {
     this.selectedHistoryType = e.target.value;
-    if (this.selectedHistoryType == 'info-vaccine') {
+    this.listData = [];
+    this.showTable = false;
+    switch (this.selectedHistoryType){
+      case ('info-vaccine'):
+        this.displayedColumns = ['Jadwal Imunisasi', 'Nama Imunisasi', 'Bulan Ke', 'Detail'];
+        this.rowTable = ['scheduleDate', 'vaccineName', 'batch', 'execDate'];
         this.getListVaccineRecord();
-    } else if (this.selectedHistoryType == 'info-checkup') {
+        break;
+      case ('info-checkup'):
+        this.displayedColumns = ['Jadwal Pemeriksaan', 'Bulan Ke', 'Deskripsi', 'Detail'];
+        this.rowTable = ['scheduleDate', 'batch', 'description', 'execDate'];
         this.getListCheckUpRecord();
+        break;
     }
   }
 
   getListVaccineRecord () {
     this.modalService.open(LoadingComponent, this.ngbModalOptions);
     this.vaccineSchedule = [];
-    this.showTableCheckUp = false;
     let payload = {
       header : {
         uName : this.userAdmin.username,
         session : this.userAdmin.sessionId,
         command : 'info-schedule-vaccine',
-        channel : "WEB"
+        channel : 'WEB'
       },
       payload: {
         userId : this.tempUser.id,
@@ -154,13 +161,23 @@ export class ScheduleComponent implements OnInit {
       (data) => {
         if (data.header.responseCode == '00') {
           this.vaccineSchedule = data.payload.object;
+          for (const i in this.vaccineSchedule) {
+            this.listData.push({
+              execDate : this.vaccineSchedule[i].vaccineDate,
+              scheduleDate: this.vaccineSchedule[i].scheduleDate,
+              vaccineName : this.vaccineSchedule[i].vaccineName,
+              batch : this.vaccineSchedule[i].batch,
+              data : this.vaccineSchedule[i],
+              flag : 'vaccine'
+            });
+          }
           this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 4,
             lengthMenu : [4,8,16,32,64,128],
             processing: true
           };
-          this.showTableVaccine = true;
+          this.showTable = true;
         } 
         this.modalService.dismissAll(LoadingComponent);
       },
@@ -173,13 +190,12 @@ export class ScheduleComponent implements OnInit {
   getListCheckUpRecord () {
     this.modalService.open(LoadingComponent, this.ngbModalOptions);
     this.checkUpSchedule = [];
-    this.showTableVaccine = false;
     let payload = {
       header : {
         uName : this.userAdmin.username,
         session : this.userAdmin.sessionId,
         command : 'info-schedule-checkup',
-        channel : "WEB"
+        channel : 'WEB'
       },
       payload: {
         userId : this.tempUser.id,
@@ -191,13 +207,23 @@ export class ScheduleComponent implements OnInit {
       (data) => {
         if (data.header.responseCode == '00') {
           this.checkUpSchedule = data.payload.object;
+          for (const i in this.checkUpSchedule) {
+            this.listData.push({
+              scheduleDate : this.checkUpSchedule[i].scheduleDate,
+              execDate: this.checkUpSchedule[i].checkUpDate,
+              description : this.checkUpSchedule[i].description,
+              batch : this.checkUpSchedule[i].batch,
+              data : this.checkUpSchedule[i],
+              flag : 'checkUp'
+            });
+          }
           this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 4,
             lengthMenu : [4,8,16,32,64,128],
             processing: true
           };
-          this.showTableCheckUp = true;
+          this.showTable = true;
         }
         this.modalService.dismissAll(LoadingComponent);
       },
@@ -209,8 +235,7 @@ export class ScheduleComponent implements OnInit {
 
   downloadPdf(object){
     this.modalService.open(LoadingComponent, this.ngbModalOptions);
-    let filename;
-    let payload;
+    let filename; let payload;
     let child = this.tempListChild.filter(({id}) => id == this.selectedChildId)
     if (this.selectedHistoryType == 'info-checkup') {
       filename = 'Laporan Rekam Medis '+ child[0].fullname +'.pdf';
@@ -223,7 +248,7 @@ export class ScheduleComponent implements OnInit {
         payload: {
           userId : this.tempUser.id,
           childId : this.selectedChildId,
-          param : object.code
+          mstCode : object.code
         }
       };
     } else if (this.selectedHistoryType == 'info-vaccine') {
@@ -237,7 +262,7 @@ export class ScheduleComponent implements OnInit {
         payload: {
           userId : this.tempUser.id,
           childId : this.selectedChildId,
-          param : object.vaccineCode,
+          mstCode : object.vaccineCode,
           batch : object.batch
         }
       };
@@ -249,10 +274,9 @@ export class ScheduleComponent implements OnInit {
     });
   }
  
-  ExportTOExcel() {
+  ExportToExcel() {
     this.modalService.open(LoadingComponent, this.ngbModalOptions);
-    let command = '';
-    let filename = '';
+    let command; let filename;
     if (this.selectedHistoryType == 'info-checkup') {
       command = 'schedule-checkup';
       filename = 'Jadwal Rekam Medis.xls';
@@ -278,26 +302,38 @@ export class ScheduleComponent implements OnInit {
     });
   }
 
+  editData (object : any, flag : string) {
+    console.log(flag);
+    switch (flag){
+      case ('vaccine'):
+        this.editVaccine(object);
+        break;
+      case ('checkUp'):
+        this.editCheckUp(object);
+        break;
+    }
+  }
+
   editCheckUp(object){
     const modalRef = this.modalService.open(EditCheckUpComponent);
     modalRef.componentInstance.header = "Edit Jejak Medis Bulan Ke - " + object.batch;
-    modalRef.componentInstance.weight = object.weight;
-    modalRef.componentInstance.length = object.length;
-    modalRef.componentInstance.headDiameter = object.headDiameter;
     modalRef.componentInstance.userId = this.tempUser.id;
     modalRef.componentInstance.childId = this.selectedChildId;
     modalRef.componentInstance.notes = object.notes;
     modalRef.componentInstance.mstCode = object.code;
+    modalRef.componentInstance.weight = object.weight;
+    modalRef.componentInstance.length = object.length;
+    modalRef.componentInstance.headDiameter = object.headDiameter;
   }
 
   editVaccine(object){
     const modalRef = this.modalService.open(EditVaccineComponent);
     modalRef.componentInstance.header = "Edit Catatan Imunisasi Bulan Ke - " + object.batch;
+    modalRef.componentInstance.userId = this.tempUser.id;
+    modalRef.componentInstance.childId = this.selectedChildId;
     modalRef.componentInstance.notes = object.notes;
     modalRef.componentInstance.mstCode = object.vaccineCode;
     modalRef.componentInstance.batch = object.batch;
-    modalRef.componentInstance.userId = this.tempUser.id;
-    modalRef.componentInstance.childId = this.selectedChildId;
   }
 
 }

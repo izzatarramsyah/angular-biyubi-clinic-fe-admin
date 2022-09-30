@@ -15,7 +15,7 @@
                             </div>
                             <div class="col-md-10">
                               <ng-autocomplete  [data]="resultOflistUser" [searchKeyword]="keyword" placeholder="Masukan Nama Orang Tua"
-                                (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate"
+                                (selected)='onSelectEvent($event)' (inputChanged)='onInputChanged($event)' [itemTemplate]="itemTemplate"
                                 [notFoundTemplate]="notFoundTemplate">
                               </ng-autocomplete>
                               <ng-template #itemTemplate let-item>
@@ -36,7 +36,7 @@
                           <label for="name">Nama Anak</label>
                         </div>
                         <div class="col-md-10">
-                          <select [(ngModel)]="selectedChildId" class="form-control deft" (change)="changeChildName($event)">
+                          <select [(ngModel)]="selectedChildId" class="form-control deft" (change)="onChangeChildName($event)">
                             <option value=0 disabled>-- Silahkan Pilih Nama Anak --</option>
                             <option *ngFor="let list of tempListChild" value="{{list.id}}" >{{list.fullname}}</option>
                           </select>
@@ -52,7 +52,7 @@
                              <label for="name">Jenis Jadwal</label>
                           </div>
                           <div class="col-md-10">
-                            <select [(ngModel)]="selectedHistoryType" class="form-control" (change)="changeRecordType($event)">
+                            <select [(ngModel)]="selectedHistoryType" class="form-control" (change)="onChangeRecordType($event)">
                               <option value='0' disabled>-- Silahkan Pilih Jadwal --</option>
                               <option *ngFor="let type of typeSchedule" value="{{type.value}}" [disabled]="isDisabled">{{type.name}}</option>
                             </select>
@@ -64,78 +64,39 @@
         </div>
     </div>
 </div>
-<div *ngIf="showTableCheckUp || showTableVaccine" class="card">
+<div *ngIf="showTable" class="card">
     <div class="row">
         <div class="col-lg-12">
             <div class="card-body">
                 <div class="table-responsive">
-                    <div *ngIf="showTableCheckUp" class="table-responsive">
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-success" (click)="ExportTOExcel()">
-                            Export Excel
-                            </button>
-                        </div><br>
-                        <table datatable [dtOptions]="dtOptions" class="row-border hover">
-                          <thead>
-                              <tr>
-                                  <th class="text-dark font-medium fs-4" style="text-align:center">Jadwal Pemeriksaan</th>
-                                  <th class="text-dark font-medium fs-4" style="text-align:center">Bulan Ke </th>
-                                  <th class="text-dark font-medium fs-4" style="text-align:center">Deskripsi</th>
-                                  <th class="text-dark font-medium fs-4" style="text-align:center">Status</th>
-                                  <th class="text-dark font-medium fs-4" style="text-align:center">Aksi</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr *ngFor='let list of checkUpSchedule'>
-                                  <td class="fs-4" style="text-align:center">{{list.scheduleDate}}</td>
-                                  <td class="fs-4" style="text-align:center">{{list.batch}}</td>
-                                  <td class="fs-4" style="text-align:center">{{list.description}}</td>
-                                  <td class="fs-4" style="text-align:center">
-                                    <p *ngIf ="list.checkUpDate == null" style="text-align:center; color:red">Belum Dilakukan</p>
-                                    <p *ngIf ="list.checkUpDate != null" style="text-align:center; color:green">Sudah Dilakukan</p>
-                                  </td>
-                                  <td class="fs-4" style="text-align:center">
-                                    <button *ngIf ="list.checkUpDate != null" type="button" class="btn btn-info" (click)="editCheckUp(list)"><i class="bi bi-pencil-square"></i></button>&nbsp;
-                                    <button *ngIf ="list.checkUpDate != null" type="button" class="btn btn-info" (click)="downloadPdf(list)"><i class="bi bi-download"></i></button>
-                                  </td>
-                              </tr>              
-                          </tbody>
-                        </table>
-                    </div>
-
-                    <div *ngIf="showTableVaccine" class="table-responsive">
+                    <div class="table-responsive">
                       <div class="d-flex justify-content-end">
-                          <button type="button" class="btn btn-success" (click)="ExportTOExcel()">
+                          <button type="button" class="btn btn-success" (click)="ExportToExcel()">
                           Export Excel
                           </button>
                       </div><br>
                       <table datatable [dtOptions]="dtOptions" class="row-border hover">
                         <thead>
                             <tr>
-                                <th class="text-dark font-medium fs-4" style="text-align:center">Jadwal Imunisasi</th>
-                                <th class="text-dark font-medium fs-4" style="text-align:center">Nama Imunisasi</th>
-                                <th class="text-dark font-medium fs-4" style="text-align:center">Bulan Ke</th>
-                                <th class="text-dark font-medium fs-4" style="text-align:center">Status</th>
-                                <th class="text-dark font-medium fs-4" style="text-align:center">Aksi</th>
+                              <th *ngFor="let i of displayedColumns">{{i}}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor='let list of vaccineSchedule'>
-                                <td class="fs-4" style="text-align:center">{{list.scheduleDate}}</td>
-                                <td class="fs-4" style="text-align:center">{{list.vaccineName}}</td>
-                                <td class="fs-4" style="text-align:center">{{list.batch}}</td>
-                                <td class="fs-4" style="text-align:center">
-                                  <p *ngIf ="list.vaccineDate == null" style="text-align:center; color:red" >Belum Dilakukan</p>
-                                  <p *ngIf ="list.vaccineDate != null" style="text-align:center; color:green">Sudah Dilakukan</p>
+                            <tr *ngFor='let row of listData'>
+                              <ng-container *ngFor="let p of rowTable">
+                                <td *ngIf="p != 'execDate'">{{row[p]}}</td>
+                                <td *ngIf="p == 'execDate' && row.execDate == null">
+                                  <p style="color:red">Belum Dilakukan</p>
                                 </td>
-                                <td class="fs-4" style="text-align:center">
-                                  <button *ngIf ="list.vaccineDate != null" type="button" class="btn btn-info" (click)="editVaccine(list)"><i class="bi bi-pencil-square"></i></button>&nbsp;
-                                  <button *ngIf ="list.vaccineDate != null" type="button" class="btn btn-info" (click)="downloadPdf(list)"><i class="bi bi-download"></i></button>
+                                <td *ngIf="p == 'execDate' && row.execDate != null">
+                                  <button class="btn btn-info" (click)="editData(row.data, row.flag)"><i class="bi bi-pencil-square"></i></button>&nbsp;
+                                  <button class="btn btn-info" (click)="downloadPdf(row.data)"><i class="bi bi-download"></i></button>
                                 </td>
+                              </ng-container>
                             </tr>              
                         </tbody>
                       </table>
-                  </div>
+                    </div>
                 </div>
             </div>
         </div>

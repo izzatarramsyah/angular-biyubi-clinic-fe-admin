@@ -47,7 +47,7 @@ export class DataVaccineComponent implements OnInit{
         uName : this.userAdmin.username,
         session : this.userAdmin.sessionId,
         command : 'info-list-vaccine',
-        channel : "WEB"
+        channel : 'WEB'
     };
     this.masterService.getListMst(JSON.stringify(payload))
     .pipe(first()).subscribe(
@@ -55,13 +55,13 @@ export class DataVaccineComponent implements OnInit{
         this.modalService.dismissAll(LoadingComponent);
         if (data.header.responseCode == '00') {
           this.vaccineMaster = data.payload.object;
-          this.showTable = true;
           this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 4,
             lengthMenu : [4,8,16,32,64,128],
             processing: true
           };
+          this.showTable = true;
         } 
       },
       (error) => {

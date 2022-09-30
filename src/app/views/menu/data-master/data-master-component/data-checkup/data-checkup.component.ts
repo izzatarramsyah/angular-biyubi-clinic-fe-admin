@@ -56,13 +56,13 @@ export class DataCheckUpComponent implements OnInit{
       (data) => {
         if (data.header.responseCode == '00') {
           this.checkUpMaster = data.payload.object;
-          this.showTable = true;
           this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 4,
             lengthMenu : [4,8,16,32,64,128],
             processing: true
           };
+          this.showTable = true;
         } 
         this.modalService.dismissAll(LoadingComponent);
       },

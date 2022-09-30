@@ -59,13 +59,13 @@ export class DataUserComponent implements OnInit{
       (data) => {
         if (data.header.responseCode == '00') {
           this.listOfUser = data.payload.object;
-          this.showTable = true;
           this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 4,
             lengthMenu : [4,8,16,32,64,128],
             processing: true
           };
+          this.showTable = true;
         } 
         this.modalService.dismissAll(LoadingComponent);
       },
@@ -106,7 +106,7 @@ export class DataUserComponent implements OnInit{
           uName : this.userAdmin.username,
           session : this.userAdmin.sessionId,
           command : 'changeStatus',
-          channel : "WEB"
+          channel : 'WEB'
         },
         payload : {
           id : ids,
