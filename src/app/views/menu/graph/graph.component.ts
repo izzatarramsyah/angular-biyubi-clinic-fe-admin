@@ -171,7 +171,7 @@ export class GraphComponent implements OnInit {
         command :'info-user',
         channel : "WEB"
       }, payload : {
-        parentId : this.tempUser.id,
+        userId : this.tempUser.id,
         childId : this.selectedChildId
       }
     };
@@ -180,22 +180,22 @@ export class GraphComponent implements OnInit {
       (data) => {
         if (data.header.responseCode == '00') {
           this.userData = data.payload.object;
-          this.childName =  this.userData.childData.fullname;
-          this.birthDate = this.userData.childData.birthDate;
-          this.gender = this.userData.childData.gender;
-          this.age = this.userData.childData.age;
-          this.weight = this.userData.childData.weight;
-          this.weightCategory = this.userData.childData.weightCategory;
-          this.lengthCategory = this.userData.childData.lengthCategory;
-          this.weightNotes = this.userData.childData.weightNotes;
-          this.length = this.userData.childData.length;
-          this.lengthNotes = this.userData.childData.lengthNotes;
-          this.headDiameter = this.userData.childData.headDiameter;
-          this.headDiameterCategory = this.userData.childData.headDiameterCategory;
-          this.headDiameterNotes = this.userData.childData.headDiameterNotes;
-          this.seriesWeight = this.userData.childData.seriesWeight;
-          this.seriesLength = this.userData.childData.seriesLength;
-          this.seriesHeadDiameter = this.userData.childData.seriesHeadDiameter;
+          this.childName =  this.userData.childData[0].fullname;
+          this.birthDate = this.userData.childData[0].birthDate;
+          this.gender = this.userData.childData[0].gender;
+          this.age = this.userData.childData[0].age;
+          this.weight = this.userData.childData[0].weight;
+          this.weightCategory = this.userData.childData[0].weightCategory;
+          this.lengthCategory = this.userData.childData[0].lengthCategory;
+          this.weightNotes = this.userData.childData[0].weightNotes;
+          this.length = this.userData.childData[0].length;
+          this.lengthNotes = this.userData.childData[0].lengthNotes;
+          this.headDiameter = this.userData.childData[0].headDiameter;
+          this.headDiameterCategory = this.userData.childData[0].headDiameterCategory;
+          this.headDiameterNotes = this.userData.childData[0].headDiameterNotes;
+          this.seriesWeight = this.userData.childData[0].seriesWeight;
+          this.seriesLength = this.userData.childData[0].seriesLength;
+          this.seriesHeadDiameter = this.userData.childData[0].seriesHeadDiameter;
           this.modalService.dismissAll(LoadingComponent);
         }
       },

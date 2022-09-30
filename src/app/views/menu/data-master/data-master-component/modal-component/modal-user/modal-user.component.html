@@ -32,7 +32,7 @@
     <div class="col-md-12">
       <div class="form-group">
         <label for="name">Nomor Telepon</label>
-        <input [(ngModel)]="phoneNo" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="12">
+        <input [(ngModel)]="phoneNo" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="13">
         <div *ngIf="phoneNoEmpty == true" class="make-orange" >
           <div *ngIf="phoneNoEmpty == true">Nomo Telepon Harus Diisi</div>
         </div>

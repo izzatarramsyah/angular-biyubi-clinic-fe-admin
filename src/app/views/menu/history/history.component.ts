@@ -110,7 +110,7 @@ export class HistoryComponent implements OnInit{
               this.listData.push({
                 activity : this.auditTrail[i].activity,
                 username : this.auditTrail[i].value1,
-                date : this.datepipe.transform(this.auditTrail[i].createdDtm, 'dd-MM-yyyy'),
+                date : this.datepipe.transform(this.auditTrail[i].createdDtm, 'dd-MM-yyyy HH:mm:ss'),
                 detail : this.auditTrail[i].value2
               });
             }

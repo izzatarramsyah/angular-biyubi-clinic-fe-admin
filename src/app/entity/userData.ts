@@ -1,7 +1,7 @@
 export interface UserData {
     id : number;
     fullname : string;
-    childData : ChildData;
+    childData : ChildData [] ;
  }
 
  export interface ChildData {

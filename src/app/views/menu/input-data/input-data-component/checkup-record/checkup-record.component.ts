@@ -9,7 +9,7 @@ import { UserService } from '../../../../../integration/service/userService';
 import { RecordService } from '../../../../../integration/service/recordService';
 import { MasterService } from '../../../../../integration/service/masterService';
 import { UserAdmin } from "../../../../../entity/userAdmin";
-import { CheckUpSchedule } from "../../../../../entity/checkUpSchedule";
+import { CheckUpMaster } from "../../../../../entity/checkUpMaster";
 import { ListChild, ListUser } from "../../../../../entity/listUser";
 import { AlertComponent } from "../../../components/alert/alert.component";
 import { LoadingComponent } from "../../../components/loading/loading.component";
@@ -26,7 +26,7 @@ export class CheckUpRecordComponent implements OnInit {
   resultOflistUser : ListUser [];
   tempUser : ListUser;
   tempListChild : ListChild [] ;
-  checkUpSchedule : CheckUpSchedule[];
+  checkUpMaster : CheckUpMaster[];
   selectedIdChild = 0;
   selectedBatch = 0;
 
@@ -47,6 +47,7 @@ export class CheckUpRecordComponent implements OnInit {
   selectedBatchEmpty : boolean;
   selectedIdChildEmpty : boolean;
   checkUpDateEmpty : boolean;
+  notesEmpty : boolean;
 
   isReadOnly = false;
   isDisabled = false;
@@ -70,6 +71,7 @@ export class CheckUpRecordComponent implements OnInit {
 
   ngOnInit() { 
     this.getListUser();
+    this.getListCheckUp();
   }
 
   numberOnly(event): boolean {
@@ -86,7 +88,6 @@ export class CheckUpRecordComponent implements OnInit {
   reset(){
     this.selectedIdChild = 0;
     this.selectedBatch = 0;
-    this.checkUpSchedule = [];
     this.description = null;
     this.checkUpDate = null;
     this.weight = null;
@@ -120,6 +121,29 @@ export class CheckUpRecordComponent implements OnInit {
     );
   }
 
+  getListCheckUp() {
+    this.modalService.open(LoadingComponent, this.ngbModalOptions);
+    this.checkUpMaster = [];
+    let payload = {
+        uName : this.userAdmin.username,
+        session : this.userAdmin.sessionId,
+        command : 'info-list-checkup',
+        channel : "WEB"
+    };
+    this.masterService.getListMst(JSON.stringify(payload))
+    .pipe(first()).subscribe(
+      (data) => {
+        this.modalService.dismissAll(LoadingComponent);
+        if (data.header.responseCode == '00') {
+          this.checkUpMaster = data.payload.object;
+        } 
+      },
+      (error) => {
+        console.log("error : ", error);
+      }  
+    );
+  }
+
   selectEvent(object) {
     this.tempUser = object;
     this.tempListChild = this.tempUser.listChild;
@@ -138,39 +162,9 @@ export class CheckUpRecordComponent implements OnInit {
     }
   }
 
-  getSchedule(){
-    this.modalService.open(LoadingComponent, this.ngbModalOptions);
-    this.checkUpSchedule = [];
-    let payload = {
-      header : {
-        uName : this.userAdmin.username,
-        session : this.userAdmin.sessionId,
-        command : 'info-schedule-checkup',
-        channel : "WEB"
-      },
-      payload : {
-        parentId : this.tempUser.id,
-        childId : this.selectedIdChild,
-      }
-    };
-    this.recordService.getSchedule(JSON.stringify(payload))
-    .pipe(first()).subscribe(
-      (data) => {
-        if (data.header.responseCode == '00') {
-          this.checkUpSchedule = data.payload.object;
-        } 
-        this.modalService.dismissAll(LoadingComponent);
-      },
-      (error) => {
-        console.log("error : ", error);
-      }  
-    );
-  }
-
   changeChildName(e){
     this.reset();
     this.selectedIdChild = e.target.value;
-    this.getSchedule();
   }
 
   changeBatch(e){
@@ -179,26 +173,10 @@ export class CheckUpRecordComponent implements OnInit {
     this.isReadOnly = false;
     this.isDisabled = false;
     this.isDate = true;
-    for (const i in this.checkUpSchedule) {
-      if ( this.selectedBatch == this.checkUpSchedule[i].batch ) {
-        this.mstCode = this.checkUpSchedule[i].code;
-        this.description = this.checkUpSchedule[i].description;
-        if (this.checkUpSchedule[i].checkUpDate == null) {
-            this.isReadOnly = false;
-            this.checkUpDate = null;
-            this.weight = null;
-            this.length = null;
-            this.headDiameter = null;
-        } else {
-            this.isReadOnly = true;
-            this.isDisabled = true;
-            this.isDate = false;
-            this.checkUpDate = this.checkUpSchedule[i].checkUpDate;
-            this.weight = this.checkUpSchedule[i].weight;
-            this.length = this.checkUpSchedule[i].length;
-            this.headDiameter = this.checkUpSchedule[i].headDiameter;
-            this.notes = this.checkUpSchedule[i].notes;
-        }
+    for (const i in this.checkUpMaster) {
+      if ( this.selectedBatch == this.checkUpMaster[i].batch ) {
+        this.mstCode = this.checkUpMaster[i].code;
+        this.description = this.checkUpMaster[i].description;
         break;
       }
     }
@@ -212,6 +190,7 @@ export class CheckUpRecordComponent implements OnInit {
     this.selectedBatchEmpty = false;
     this.selectedIdChildEmpty = false;
     this.checkUpDateEmpty = false;
+    this.notesEmpty = false;
 
     if (this.tempUser == null) {
       this.parentNameValid = false;
@@ -225,7 +204,7 @@ export class CheckUpRecordComponent implements OnInit {
     if (this.headDiameter == null){
       this.headDiameterEmpty = true;
     }
-    if (this.selectedBatch == 0) {
+    if (this.selectedBatch == null) {
       this.selectedBatchEmpty = true;
     }
     if (this.selectedIdChild == 0) {
@@ -234,9 +213,12 @@ export class CheckUpRecordComponent implements OnInit {
     if (this.checkUpDate == null) {
       this.checkUpDateEmpty = true;
     }
+    if (this.notes == null) {
+      this.notesEmpty = true;
+    }
     if (this.parentNameValid == true && this.lengthEmpty == false && this.weightEmpty == false
       && this.headDiameterEmpty == false && this.selectedBatchEmpty == false 
-        && this.selectedIdChildEmpty == false && this.checkUpDateEmpty == false) {
+        && this.selectedIdChildEmpty == false && this.checkUpDateEmpty == false && this.notesEmpty == false) {
         const modalRef = this.modalService.open(AlertComponent);
         modalRef.componentInstance.header = 'Konfrimasi';
         modalRef.componentInstance.wording = 'Apakah anda yakin untuk menyimpan data ini ? ';

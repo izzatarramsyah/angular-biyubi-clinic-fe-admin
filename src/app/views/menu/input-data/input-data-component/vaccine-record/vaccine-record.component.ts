@@ -9,9 +9,10 @@ import { UserService } from '../../../../../integration/service/userService';
 import { RecordService } from '../../../../../integration/service/recordService';
 import { UserAdmin } from "../../../../../entity/userAdmin";
 import { ListChild, ListUser } from "../../../../../entity/listUser";
+import { VaccineMaster, VaccineMasterDtl } from "../../../../../entity/vaccineMaster";
 import { AlertComponent } from "../../../components/alert/alert.component";
 import { LoadingComponent } from "../../../components/loading/loading.component";
-import { VaccineSchedule } from "../../../../../entity/vaccineSchedule";
+import { MasterService } from '../../../../../integration/service/masterService';
 
 @Component({
   selector: 'app-vaccine-record',
@@ -22,18 +23,18 @@ import { VaccineSchedule } from "../../../../../entity/vaccineSchedule";
 export class VaccineRecordComponent implements OnInit {
 
   userAdmin : UserAdmin;
-  vaccineSchedule : VaccineSchedule [];
   resultOflistUser : ListUser [];
   tempUser : ListUser;
   tempListChild : ListChild [] ;
-  listBatch = [];
-  listVaccine = [];
+  vaccineMaster : VaccineMaster [];
+  vaccineMasterDtl : VaccineMasterDtl [];
 
   isReadOnly = false;
   isDisabled = false;
   
-  selectedIdChild : number;
-  selectedBatch : number;
+  selectedIdChild = 0;
+  selectedBatch = 0;
+
   vaccineCode : string;
   vaccineName : string;
   vaccineDate : string;
@@ -46,6 +47,7 @@ export class VaccineRecordComponent implements OnInit {
   vaccineNameEmpty : boolean;
   selectedBatchEmpty : boolean;
   selectedIdChildEmpty : boolean;
+  notesEmpty : boolean;
 
   keyword = 'fullname';
 
@@ -60,15 +62,15 @@ export class VaccineRecordComponent implements OnInit {
               private userService: UserService,
               private userAdminService: UserAdminService,
               private recordService: RecordService,
-              public datepipe: DatePipe) {
+              private masterService : MasterService,
+              private datepipe: DatePipe) {
     this.userAdmin = this.userAdminService.userAdminValue;
   }
 
   ngOnInit() { 
-    this.selectedIdChild = 0;
-    this.selectedBatch = 0;
     this.vaccineName = '0';
     this.getListUser();
+    this.getListVaccine();
   }
 
   numberOnly(event): boolean {
@@ -83,8 +85,6 @@ export class VaccineRecordComponent implements OnInit {
   }
   
   reset(){
-    this.listBatch = [];
-    this.listVaccine = [];
     this.selectedIdChild = 0;
     this.vaccineName = '0';
     this.selectedBatch = 0;
@@ -97,7 +97,7 @@ export class VaccineRecordComponent implements OnInit {
 
   changeVaccineDate(e) {
     this.vaccineDate = null;
-    if (this.vaccineName == '' || this.vaccineName == null) {
+    if (this.vaccineName == '' || this.vaccineName == null || this.vaccineName == '0') {
       const modalRef = this.modalService.open(AlertComponent);
       modalRef.componentInstance.header = "Informasi";
       modalRef.componentInstance.wording = "Mohon Pilih Nama Imunisasi Terlebih Dahulu";
@@ -106,6 +106,12 @@ export class VaccineRecordComponent implements OnInit {
       modalRef.componentInstance.header = "Informasi";
       modalRef.componentInstance.wording = "Mohon Pilih Bulan Imunisasi";
     } else {
+      for (const i in this.vaccineMaster) {
+        if (this.vaccineCode  == this.vaccineMaster[i].vaccineCode) {
+          this.expiredDays = this.vaccineMaster[i].expDays;
+          break;
+        }
+      }
       this.expiredDate = '';
       this.vaccineDate = e.target.value;
       let vDate = this.datepipe.transform(this.vaccineDate, "MM/dd/yyyy");
@@ -138,6 +144,29 @@ export class VaccineRecordComponent implements OnInit {
     );
   }
 
+  getListVaccine() {
+    this.modalService.open(LoadingComponent, this.ngbModalOptions);
+    this.vaccineMaster = [];
+    let payload = {
+        uName : this.userAdmin.username,
+        session : this.userAdmin.sessionId,
+        command : 'info-list-vaccine',
+        channel : "WEB"
+    };
+    this.masterService.getListMst(JSON.stringify(payload))
+    .pipe(first()).subscribe(
+      (data) => {
+        this.modalService.dismissAll(LoadingComponent);
+        if (data.header.responseCode == '00') {
+          this.vaccineMaster = data.payload.object;
+        } 
+      },
+      (error) => {
+        console.log("error : ", error);
+      }  
+    );
+  }
+
   selectEvent(object) {
     this.tempUser = object;
     this.tempListChild = this.tempUser.listChild;
@@ -159,89 +188,14 @@ export class VaccineRecordComponent implements OnInit {
   changeChildName(e){
     this.reset();
     this.selectedIdChild = e.target.value;
-    this.getSchedule();
   }
 
-  getSchedule(){
-    this.modalService.open(LoadingComponent,this.ngbModalOptions);
-    this.vaccineSchedule = [];
-    let payload = {
-      header : {
-        uName : this.userAdmin.username,
-        session : this.userAdmin.sessionId,
-        command : 'info-schedule-vaccine',
-        channel : "WEB"
-      },
-      payload : {
-        parentId : this.tempUser.id,
-        childId : this.selectedIdChild,
-      }
-    };
-    this.recordService.getSchedule(JSON.stringify(payload))
-    .pipe(first()).subscribe(
-      (data) => {
-        if (data.header.responseCode == '00') {
-          this.vaccineSchedule = data.payload.object;
-          for (var i in this.vaccineSchedule) {
-            const name = this.vaccineSchedule[i].vaccineName;
-            const existing = this.listVaccine.find(({vaccineName}) => name === vaccineName);
-            if (!existing) {
-              this.listVaccine.push({
-                vaccineCode : this.vaccineSchedule[i].vaccineCode,
-                vaccineName : this.vaccineSchedule[i].vaccineName
-              });
-            }
-          }
-        } 
-        this.modalService.dismissAll(LoadingComponent);
-      },
-      (error) => {
-        console.log("error : ", error);
-      }  
-    );
-  }
-  
   changeVaccineName(e) {
     this.vaccineCode = e.target.value;
-    this.listBatch = [];
-    this.selectedBatch = 0;
-    this.isReadOnly = false;
-    this.isDisabled = false;
-    this.isDate = true;
-    this.expiredDate = null;
-    this.vaccineDate = null;
-    for (const i in this.vaccineSchedule) {
-      if (this.vaccineCode  == this.vaccineSchedule[i].vaccineCode) {
-        this.listBatch.push({
-          batch : this.vaccineSchedule[i].batch,
-          isDisabled : false
-        });
-      }
-    }
-  }
-
-  changeSelectedBatch(e){
-    this.selectedBatch = e.target.value;
-    this.isReadOnly = false;
-    this.isDisabled = false;
-    this.isDate = true;
-    this.expiredDate = null;
-    this.vaccineDate = null;
-    for (const i in this.vaccineSchedule) {
-      if ( this.selectedBatch == this.vaccineSchedule[i].batch 
-        && this.vaccineCode == this.vaccineSchedule[i].vaccineCode ) {
-        if (this.vaccineSchedule[i].vaccineDate == null) {
-            this.isReadOnly = false;
-            this.vaccineDate = null;
-            this.expiredDays = this.vaccineSchedule[i].expDays;
-        } else {
-            this.isReadOnly = true;
-            this.isDisabled = true;
-            this.isDate = false;
-            this.vaccineDate = this.vaccineSchedule[i].vaccineDate;
-            this.expiredDate = this.vaccineSchedule[i].expDate;
-            this.notes = this.vaccineSchedule[i].notes;
-        }
+    this.vaccineMasterDtl = [];
+    for (const i in this.vaccineMaster) {
+      if (this.vaccineCode  == this.vaccineMaster[i].vaccineCode) {
+        this.vaccineMasterDtl = this.vaccineMaster[i].detail;
         break;
       }
     }
@@ -254,6 +208,7 @@ export class VaccineRecordComponent implements OnInit {
     this.selectedBatchEmpty = false;
     this.selectedIdChildEmpty = false;
     this.parentNameValid = true;
+    this.notesEmpty = false;
 
     if (this.vaccineDate == null) {
       this.vaccineDateEmpty = true;
@@ -275,9 +230,13 @@ export class VaccineRecordComponent implements OnInit {
       this.selectedIdChildEmpty = true;
     }
 
+    if (this.notes == null) {
+      this.notesEmpty = true;
+    }
+
     if (this.vaccineDateEmpty == false && this.parentNameValid == true 
       && this.vaccineNameEmpty == false && this.selectedBatchEmpty == false
-      && this.selectedIdChildEmpty == false) {
+      && this.selectedIdChildEmpty == false && this.notesEmpty == false) {
         const modalRef = this.modalService.open(AlertComponent);
         modalRef.componentInstance.header = 'Konfrimasi';
         modalRef.componentInstance.wording = 'Apakah anda yakin untuk menyimpan data ini ? ';

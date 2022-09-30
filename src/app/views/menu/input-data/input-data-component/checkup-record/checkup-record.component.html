@@ -55,7 +55,7 @@
                 <div class="col-md-2">
                   <select [(ngModel)]="selectedBatch" class="form-control deft" (change)="changeBatch($event)">
                     <option value=0 disabled>-- Pilih --</option>
-                    <option *ngFor="let list of checkUpSchedule" value="{{list.batch}}">{{list.batch}}</option>
+                    <option *ngFor="let list of checkUpMaster" value="{{list.batch}}">{{list.batch}}</option>
                   </select>
                   <div *ngIf="selectedBatchEmpty == true" class="make-orange" >
                     <div *ngIf="selectedBatchEmpty == true">Bulan Harus Diisi</div>
@@ -135,6 +135,9 @@
                 </div>
                 <div class="col-md-10">
                   <textarea [(ngModel)]="notes" type="text" class="form-control" [readonly]="isReadOnly"></textarea>
+                  <div *ngIf="notesEmpty == true" class="make-orange" >
+                    <div *ngIf="notesEmpty == true">Catatan Harus Diisi</div>
+                  </div> 
                 </div>
               </div>
             </div>

@@ -55,7 +55,7 @@
               <div class="col-md-6">
                 <select [(ngModel)]="vaccineName" class="form-control deft" (change)="changeVaccineName($event)">
                   <option value=0 disabled selected>-- Silahkan Pilih Jenis Imunisasi --</option> 
-                  <option *ngFor="let list of listVaccine" value="{{list.vaccineCode}}">{{list.vaccineName}}</option>
+                  <option *ngFor="let list of vaccineMaster" value="{{list.vaccineCode}}">{{list.vaccineName}}</option>
                  </select>
                  <div *ngIf="vaccineNameEmpty == true" class="make-orange" >
                   <div *ngIf="vaccineNameEmpty == true">Nama Imunisasi Harus Diisi</div>
@@ -65,9 +65,9 @@
                 <label for="name">Imunisasiasi Ke - </label>
               </div>
               <div class="col-md-2">
-                <select [(ngModel)]="selectedBatch" class="form-control deft" (change)="changeSelectedBatch($event)">
+                <select [(ngModel)]="selectedBatch" class="form-control deft" >
                   <option value=0 disabled>-- Pilih --</option>
-                  <option *ngFor="let list of listBatch" value={{list.batch}} >{{list.batch}}</option>
+                  <option *ngFor="let list of vaccineMasterDtl" value={{list.batch}} >{{list.batch}}</option>
                 </select>
                 <div *ngIf="selectedBatchEmpty == true" class="make-orange" >
                   <div *ngIf="selectedBatchEmpty == true">Bulan Imunisasi Harus Diisi</div>
@@ -107,7 +107,10 @@
                </div>
                <div class="col-md-10">
                  <textarea [(ngModel)]="notes" type="textArea" class="form-control" [readOnly]="isReadOnly"></textarea>
-               </div>
+                 <div *ngIf="notesEmpty == true" class="make-orange" >
+                    <div *ngIf="notesEmpty == true">Catatan Harus Diisi</div>
+                 </div> 
+                </div>
              </div>
            </div>
            <br>
