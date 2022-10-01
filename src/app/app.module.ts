@@ -23,6 +23,8 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { LoadingComponent } from './views/components/loading/loading.component';
 import { ProfileComponent } from './views/components/profile/profile.component';
 import { QRCodeComponent } from './views/components/qrcode/qrcode.component';
+import { LogComponent } from './views/components/log/log.component';
+import { DataTablesModule } from 'angular-datatables';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -41,7 +43,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LoginComponent,
     LoadingComponent,
     ProfileComponent,
-    QRCodeComponent
+    QRCodeComponent,
+    LogComponent
   ],
   imports: [
     CommonModule,
@@ -53,6 +56,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgbModule,
     RouterModule.forRoot(Approutes, { useHash: false, relativeLinkResolution: 'legacy' }),
     PerfectScrollbarModule,
+    DataTablesModule
   ],
   providers: [
     {

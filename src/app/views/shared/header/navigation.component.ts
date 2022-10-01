@@ -8,8 +8,10 @@ import { Router } from '@angular/router';
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { ProfileComponent } from "../../components/profile/profile.component";
 import { QRCodeComponent } from "../../components/qrcode/qrcode.component";
+import { LogComponent } from "../../components/log/log.component";
 import { DatePipe } from '@angular/common';
-import { QRCodeService } from '../../../integration/service/qrCodeService';
+import { AuditTrailService } from '../../../integration/service/auditTrailService';
+import { AuditTrail } from "../../../entity/auditTrail";
 
 @Component({
   selector: 'app-navigation',
@@ -21,6 +23,7 @@ export class NavigationComponent implements OnInit {
   userAdmin : UserAdmin;
   qrCode : string; 
   message : string;
+  auditTrail : AuditTrail [];
 
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
@@ -31,7 +34,7 @@ export class NavigationComponent implements OnInit {
               private userAdminService: UserAdminService,
               private router: Router,
               private datepipe: DatePipe,
-              private qRCodeService: QRCodeService) {
+              private auditTrailService : AuditTrailService) {
     this.userAdmin = this.userAdminService.userAdminValue;
   }
 
@@ -73,5 +76,43 @@ export class NavigationComponent implements OnInit {
       console.log('error : ', error);
     });
   } 
+
+  log() {
+    this.modalService.open(LoadingComponent, this.ngbModalOptions);
+
+    let date = new Date();
+    date.setDate(date.getDate() - 7);
+    let startDate = this.datepipe.transform(date, "yyyy-MM-dd");
+    let endate = this.datepipe.transform(new Date(), "yyyy-MM-dd");
+
+    let payload = {
+      header : {
+        uName: this.userAdmin.username,
+        session: this.userAdmin.sessionId,
+        channel : "WEB"
+      },
+      payload : {
+        username : this.userAdmin.username,
+        startDate : startDate,
+        endDate : endate
+      }
+    };
+
+    this.auditTrailService.listActivity(JSON.stringify(payload))
+    .pipe(first()).subscribe(
+      (data) => {
+        if (data.header.responseCode == '00') {
+          this.modalService.dismissAll(LoadingComponent);
+          this.auditTrail = data.payload.object;
+          const modalRef = this.modalService.open(LogComponent);
+          modalRef.componentInstance.auditTrail = this.auditTrail;
+        } 
+      },
+      (error) => {
+        console.log("error : ", error);
+      }  
+    );
+
+  }
 
 }

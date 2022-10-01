@@ -34,12 +34,12 @@ export const ROUTES: RouteInfo[] = [
     extralink: false,
     submenu: []
   },
-  {
-    path: '/menu/history',
-    title: 'Data Riwayat',
-    icon: 'bi bi-clock-history',
-    class: '',
-    extralink: false,
-    submenu: []
-  }
+  // {
+  //   path: '/menu/history',
+  //   title: 'Data Riwayat',
+  //   icon: 'bi bi-clock-history',
+  //   class: '',
+  //   extralink: false,
+  //   submenu: []
+  // }
 ];

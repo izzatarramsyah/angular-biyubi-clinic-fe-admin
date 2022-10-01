@@ -6,8 +6,7 @@ import { QRCodeService } from '../../../integration/service/qrCodeService';
 
 @Component({
   selector: 'app-qrcode',
-  templateUrl: './qrcode.component.html',
-  styleUrls: ['./qrcode.component.css']
+  templateUrl: './qrcode.component.html'
 })
 
 export class QRCodeComponent implements OnInit {

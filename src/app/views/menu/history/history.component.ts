@@ -19,7 +19,6 @@ import { LoadingComponent } from "../../components/loading/loading.component";
 export class HistoryComponent implements OnInit{
  
   auditTrail : AuditTrail [];
-  listData = [];
   userAdmin : UserAdmin;
   dtOptions : any;
 
@@ -67,7 +66,6 @@ export class HistoryComponent implements OnInit{
 
   search() {
     this.auditTrail = [];
-    this.listData = [];
     this.showTable = false;
     this.loading = true;
 
@@ -106,14 +104,6 @@ export class HistoryComponent implements OnInit{
         (data) => {
           if (data.header.responseCode == '00') {
             this.auditTrail = data.payload.object;
-            for (const i in this.auditTrail) {
-              this.listData.push({
-                activity : this.auditTrail[i].activity,
-                username : this.auditTrail[i].value1,
-                date : this.datepipe.transform(this.auditTrail[i].createdDtm, 'dd-MM-yyyy HH:mm:ss'),
-                detail : this.auditTrail[i].value2
-              });
-            }
             this.dtOptions = {
               pagingType: 'full_numbers',
               pageLength: 4,

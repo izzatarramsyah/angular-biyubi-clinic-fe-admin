@@ -79,15 +79,13 @@
                                     <th class="text-dark font-medium fs-4" style="text-align:center">Username</th>
                                     <th class="text-dark font-medium fs-4" style="text-align:center">Tanggal</th>
                                     <th class="text-dark font-medium fs-4" style="text-align:center">Aktivitas</th>
-                                    <th class="text-dark font-medium fs-4" style="text-align:center">Detail</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor='let list of listData'>
+                                <tr *ngFor='let list of auditTrail'>
                                     <td class="fs-4" style="text-align:center">{{list.username}}</td>
                                     <td class="fs-4" style="text-align:center">{{list.date}}</td>
                                     <td class="fs-4" style="text-align:center">{{list.activity}}</td>
-                                    <td class="fs-4" style="text-align:center">{{list.detail}}</td>
                                 </tr>              
                             </tbody>
                           </table>
