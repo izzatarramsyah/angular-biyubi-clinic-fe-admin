@@ -85,7 +85,7 @@
                   <label for="name">Berat Badan</label>
                 </div>
                 <div class="col-md-1">
-                  <input [(ngModel)]="weight" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="3" >
+                  <input [(ngModel)]="weight" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="4" >
                   <div *ngIf="weightEmpty == true" class="make-orange" >
                     <div *ngIf="weightEmpty == true">Berat Saat Lahir Harus Diisi</div>
                   </div> 
@@ -97,7 +97,7 @@
                   <label for="name">Panjang Lahir</label>
                 </div>
                 <div class="col-md-1">
-                  <input [(ngModel)]="lenght" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="3" >
+                  <input [(ngModel)]="lenght" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="4" >
                   <div *ngIf="lenghtEmpty == true" class="make-orange" >
                     <div *ngIf="lenghtEmpty == true">Panjang Saat Lahir Harus Diisi</div>
                   </div> 
@@ -109,7 +109,7 @@
                   <label for="name">Lingkar Kepala</label>
                 </div>
                 <div class="col-md-1">
-                  <input [(ngModel)]="headDiameter" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="3" >
+                  <input [(ngModel)]="headDiameter" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="4" >
                   <div *ngIf="headDiameterEmpty == true" class="make-orange" >
                     <div *ngIf="headDiameterEmpty == true">Lingkar Kepala Harus Diisi</div>
                   </div> 

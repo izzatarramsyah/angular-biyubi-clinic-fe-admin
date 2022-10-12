@@ -8,22 +8,17 @@ import { environment } from "../../../environments/environment";
   providedIn: 'root'
 })
 
-export class ExportService {
+export class BulkProcessService {
   
     constructor(private httpClient: HttpClient, 
                 private http: HttpClient) {
     }
   
-    schedule(payload) {
-      return this.http
-      .post(`${environment.apiUrl}/clinic/export/excel`, payload, { responseType:'blob' })
-      .toPromise();
-    }
-
-    report(payload) {
-      return this.http
-      .post(`${environment.apiUrl}/clinic/export/pdf`, payload, { responseType:'blob' })
-      .toPromise();
-    }
+    bulkProcess(payload : string) {
+      return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/upload/bulkProcess`, payload)
+      .pipe(map(res => {
+        return res;
+      }));
+    } 
 
 }

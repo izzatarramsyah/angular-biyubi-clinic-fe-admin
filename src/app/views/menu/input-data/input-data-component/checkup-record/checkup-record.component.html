@@ -91,7 +91,7 @@
                   <label for="name">Berat Badan</label>
                 </div>
                 <div class="col-md-1">
-                  <input [(ngModel)]="weight" type="weight" class="form-control" [readonly]="isReadOnly" (keypress)="numberOnly($event)" maxlength="3">
+                  <input [(ngModel)]="weight" type="weight" class="form-control" [readonly]="isReadOnly" (keypress)="numberOnly($event)" maxlength="4">
                   <div *ngIf="weightEmpty == true" class="make-orange" >
                     <div *ngIf="weightEmpty == true">Berat Badan Harus Diisi</div>
                   </div> 
@@ -103,7 +103,7 @@
                   <label for="name">Panjang Badan</label>
                 </div>
                 <div class="col-md-1">
-                  <input [(ngModel)]="length" type="length" class="form-control" [readonly]="isReadOnly" (keypress)="numberOnly($event)" maxlength="3">
+                  <input [(ngModel)]="length" type="length" class="form-control" [readonly]="isReadOnly" (keypress)="numberOnly($event)" maxlength="4">
                   <div *ngIf="lengthEmpty == true" class="make-orange" >
                     <div *ngIf="lengthEmpty == true">Panjang Badan Harus Diisi</div>
                   </div> 
@@ -115,7 +115,7 @@
                   <label for="name">Lingkar Kepala</label>
                 </div>
                 <div class="col-md-1">
-                  <input [(ngModel)]="headDiameter" type="text" class="form-control" [readonly]="isReadOnly" (keypress)="numberOnly($event)" maxlength="3">
+                  <input [(ngModel)]="headDiameter" type="text" class="form-control" [readonly]="isReadOnly" (keypress)="numberOnly($event)" maxlength="4">
                   <div *ngIf="headDiameterEmpty == true" class="make-orange" >
                     <div *ngIf="headDiameterEmpty == true">Lingkar Kepala Harus Diisi</div>
                   </div> 

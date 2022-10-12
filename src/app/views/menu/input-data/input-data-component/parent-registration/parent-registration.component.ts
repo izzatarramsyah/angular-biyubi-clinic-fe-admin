@@ -31,6 +31,8 @@ export class ParentRegistrationComponent implements OnInit {
   emailValid : boolean;
   parentNameValid : boolean;
 
+  message = [] ;
+
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
     keyboard : false
@@ -92,7 +94,9 @@ export class ParentRegistrationComponent implements OnInit {
       && this.addressEmpty == false && this.emailEmpty == false && this.emailValid == true ) { 
         const modalRef = this.modalService.open(AlertComponent);
         modalRef.componentInstance.header = 'Konfrimasi';
-        modalRef.componentInstance.wording = 'Apakah anda yakin untuk menyimpan data ini ? ';
+        this.message = [];
+        this.message.push('Apakah anda yakin untuk menyimpan data ini ? ');
+        modalRef.componentInstance.wording = this.message;
         modalRef.componentInstance.emitData.subscribe(($e) => {
           this.recive($e);
         })
@@ -106,7 +110,7 @@ export class ParentRegistrationComponent implements OnInit {
         header : {
           uName : this.userAdmin.username,
           session : this.userAdmin.sessionId,
-          command : 'save',
+          command : 'user-registration',
           channel : "WEB"
         },
         payload : {
@@ -126,7 +130,9 @@ export class ParentRegistrationComponent implements OnInit {
             this.modalService.dismissAll(LoadingComponent);
             const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
             modalRef.componentInstance.header = header;
-            modalRef.componentInstance.wording = data.header.responseMessage;
+            this.message = [];
+            this.message.push(data.header.responseMessage);
+            modalRef.componentInstance.wording = this.message;
           },
           (error) => {
               console.log("error : ", error);

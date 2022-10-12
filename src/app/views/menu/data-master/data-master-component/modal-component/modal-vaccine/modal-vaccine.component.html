@@ -26,7 +26,6 @@
       <div class="form-group">
         <label for="type">Bulan Ke-</label>
         <select [(ngModel)]="selectedBatch" class="form-control deft" >
-          <option value=0 [disabled]="true" >-- Pilih --</option>
           <option *ngFor="let list of vaccineMaster.detail" value="{{list.batch}}">{{list.batch}}</option>
         </select>
         <div *ngIf="selectedBatchEmpty == true" class="make-orange" >
@@ -39,7 +38,6 @@
       <div class="form-group">
         <label for="type">Bulan Ke-</label>
         <select [(ngModel)]="selectedBatch" class="form-control deft" >
-          <option value=0 [disabled]="true" >-- Pilih --</option>
           <option *ngFor="let list of listBatch" value="{{list.batch}}" [disabled]="list.value">{{list.batch}}</option>
         </select>
         <div *ngIf="selectedBatchEmpty == true" class="make-orange" >

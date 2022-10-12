@@ -42,6 +42,8 @@ export class ChildRegistrationComponent implements OnInit {
 
   keyword = 'fullname';
 
+  message = [];
+
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
     keyboard : false
@@ -142,7 +144,9 @@ export class ChildRegistrationComponent implements OnInit {
       && this.lenghtEmpty == false && this.lenghtEmpty == false && this.headDiameterEmpty == false && this.parentNameValid == true) {
         const modalRef = this.modalService.open(AlertComponent);
         modalRef.componentInstance.header = 'Konfrimasi';
-        modalRef.componentInstance.wording = 'Apakah anda yakin untuk menyimpan data ini ? ';
+        this.message = [];
+        this.message.push('Apakah anda yakin untuk menyimpan data ini ? ');
+        modalRef.componentInstance.wording = this.message;
         modalRef.componentInstance.emitData.subscribe(($e) => {
           this.recive($e);
         })
@@ -156,7 +160,7 @@ export class ChildRegistrationComponent implements OnInit {
         header : {
             uName : this.userAdmin.username,
             session : this.userAdmin.sessionId,
-            command : 'save',
+            command : 'child-registration',
             channel : "WEB"
         },
         payload : {
@@ -180,7 +184,9 @@ export class ChildRegistrationComponent implements OnInit {
             this.modalService.dismissAll(LoadingComponent);
             const modalRef = this.modalService.open(AlertComponent,this.ngbModalOptions);
             modalRef.componentInstance.header = header;
-            modalRef.componentInstance.wording = data.header.responseMessage;
+            this.message = [];
+            this.message.push(data.header.responseMessage);
+            modalRef.componentInstance.wording = this.message;
           },
           (error) => {
               console.log("error : ", error);

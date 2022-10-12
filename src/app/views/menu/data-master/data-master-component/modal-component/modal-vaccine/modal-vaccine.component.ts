@@ -54,6 +54,8 @@ export class ModalVaccineComponent implements OnInit {
       {batch: 12, value: false}
     ];
 
+    message = [];
+
     ngbModalOptions: NgbModalOptions = {
       backdrop : 'static',
       keyboard : false
@@ -128,7 +130,7 @@ export class ModalVaccineComponent implements OnInit {
         this.expiredDaysEmpty = true;
       }
 
-      if (this.selectedBatch == 0) {
+      if (this.selectedBatch == null) {
         this.selectedBatchEmpty = true;
       }
 
@@ -143,7 +145,7 @@ export class ModalVaccineComponent implements OnInit {
               header : {
                 uName : this.userAdmin.username,
                 session : this.userAdmin.sessionId,
-                command : 'update',
+                command : 'update-vaccine',
                 channel : 'WEB'
               },
               payload : {
@@ -166,7 +168,9 @@ export class ModalVaccineComponent implements OnInit {
                 this.modalService.dismissAll(LoadingComponent);
                 const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
                 modalRef.componentInstance.header = header;
-                modalRef.componentInstance.wording = data.header.responseMessage;
+                this.message = [];
+                this.message.push(data.header.responseMessage);
+                modalRef.componentInstance.wording = this.message;
               },
               (error) => {
                 console.log("error : ", error);
@@ -186,7 +190,7 @@ export class ModalVaccineComponent implements OnInit {
               header : {
                 uName: this.userAdmin.username,
                 session: this.userAdmin.sessionId,
-                command: 'save',
+                command: 'save-vaccine',
                 channel : 'WEB'
               },
               payload : {
@@ -207,7 +211,9 @@ export class ModalVaccineComponent implements OnInit {
                 this.modalService.dismissAll(LoadingComponent);
                 const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
                 modalRef.componentInstance.header = header;
-                modalRef.componentInstance.wording = data.header.responseMessage;
+                this.message = [];
+                this.message.push(data.header.responseMessage);
+                modalRef.componentInstance.wording = this.message;
               },
               (error) => {
                 console.log("error : ", error);

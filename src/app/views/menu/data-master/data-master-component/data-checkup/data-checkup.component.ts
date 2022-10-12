@@ -25,6 +25,8 @@ export class DataCheckUpComponent implements OnInit{
   showTable = false;
   dtOptions: any = {};
 
+  message = [];
+
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
     keyboard : false
@@ -91,10 +93,14 @@ export class DataCheckUpComponent implements OnInit{
     const modalRef = this.modalService.open(AlertComponent);
     modalRef.componentInstance.header = 'Konfrimasi';
     if (e.target.checked == true) {
-      modalRef.componentInstance.wording = 'Apakah anda yakin untuk mengaktifkan vaksin ini ? ';
+      this.message = [];
+      this.message.push('Apakah anda yakin untuk mengaktifkan vaksin ini ?  ');
+      modalRef.componentInstance.wording = this.message;
       this.status = 'ACTIVE';
     } else {
-      modalRef.componentInstance.wording = 'Apakah anda yakin untuk menonaktifkan vaksin ini ? ';
+      this.message = [];
+      this.message.push('Apakah anda yakin untuk menonaktifkan vaksin ini ? ');
+      modalRef.componentInstance.wording = this.message;
       this.status = 'INACTIVE';
     }
     modalRef.componentInstance.emitData.subscribe(($e) => {
@@ -109,7 +115,7 @@ export class DataCheckUpComponent implements OnInit{
         header : {
           uName : this.userAdmin.username,
           session : this.userAdmin.sessionId,
-          command : 'changeStatus',
+          command : 'change-status-checkup',
           channel : "WEB"
         },payload : {
           actName : object.actName,
@@ -127,7 +133,9 @@ export class DataCheckUpComponent implements OnInit{
           this.modalService.dismissAll(LoadingComponent);
           const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
           modalRef.componentInstance.header = header;
-          modalRef.componentInstance.wording = data.header.responseMessage;
+          this.message = [];
+          this.message.push(data.header.responseMessage);
+          modalRef.componentInstance.wording = this.message;
         },
         (error) => {
           console.log("error : ", error);
@@ -144,7 +152,7 @@ export class DataCheckUpComponent implements OnInit{
       header : {
         uName: this.userAdmin.username,
         session: this.userAdmin.sessionId,
-        command: 'mst-checkup'
+        command: 'info-list-checkup'
       }
     };
     this.exportService.schedule(JSON.stringify(payload))
