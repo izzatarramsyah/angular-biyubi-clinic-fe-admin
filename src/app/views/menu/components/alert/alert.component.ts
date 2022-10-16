@@ -15,6 +15,7 @@ export class AlertComponent implements OnInit {
 
     constructor(public modal: NgbActiveModal,
                 private modalService: NgbModal) {
+                  console.log(this.wording)
     }
     
     ngOnInit() {  }
