@@ -131,7 +131,7 @@ export class HistoryComponent implements OnInit{
       header : {
         uName: this.userAdmin.username,
         session: this.userAdmin.sessionId,
-        command: "list-audit-trail"
+        command: "list-logs"
       },
       payload: {
         username : this.username,

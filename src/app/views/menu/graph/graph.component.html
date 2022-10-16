@@ -36,17 +36,21 @@
                 <div class="col-md-2">
                   <label for="name">Nama Anak</label>
                 </div>
-                <div class="col-md-9">
-                  <select [(ngModel)]="selectedChildId" class="form-control deft" (change)="changeChildName($event)">
-                    <option value=0 disabled>-- Silahkan Pilih Nama Anak --</option>
-                    <option *ngFor="let list of tempListChild" value="{{list.id}}" >{{list.fullname}}</option>
-                  </select>
-                </div>
-                <div class="col-md-1">
-                  <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
-                    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-                    <i class="bi bi-info"></i>
-                  </button>
+                <div class="col-md-10 container">
+                  <div class="row">
+                    <div class="col-10">
+                      <select [(ngModel)]="selectedChildId" class="form-control deft" (change)="changeChildName($event)">
+                        <option value=0 disabled>-- Silahkan Pilih Nama Anak --</option>
+                        <option *ngFor="let list of tempListChild" value="{{list.id}}" >{{list.fullname}}</option>
+                      </select>
+                    </div>
+                    <div class="col-2">
+                      <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+                      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                      <i class="bi bi-info"></i>
+                    </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -59,17 +63,21 @@
                     <div class="col-md-2">
                       <label for="name">Tanggal Lahir</label>
                     </div>
-                    <div class="col-md-2">
-                      <input [(ngModel)]="birthDate" type="text" class="form-control" [readonly]="isReadOnly">
-                    </div>
-                    <div class="col-md-1">
-                      <label for="name">Usia</label>
-                    </div>
-                    <div class="col-md-1">
-                      <input [(ngModel)]="age" type="text" class="form-control" [readonly]="isReadOnly">
-                    </div>
-                    <div class="col-md-2">
-                      <label for="name">Bulan</label>
+                    <div class="col-md-10 container">
+                      <div class="row">
+                        <div class="col-5">
+                          <input [(ngModel)]="birthDate" type="text" class="form-control" [readonly]="isReadOnly">
+                        </div>
+                        <div class="col-2">
+                          <label for="name">Usia</label>
+                        </div>
+                        <div class="col-3">
+                          <input [(ngModel)]="age" type="text" class="form-control" [readonly]="isReadOnly">
+                        </div>
+                        <div class="col-2">
+                          <label for="name">Bulan</label>
+                        </div>
+                      </div>
                     </div>
                     <br>
                   </div>

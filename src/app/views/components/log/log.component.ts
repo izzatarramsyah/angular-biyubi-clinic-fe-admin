@@ -13,23 +13,18 @@ export class LogComponent implements OnInit {
     
     @Input() auditTrail : AuditTrail [] ;
     userAdmin : UserAdmin;  
-    showTable = false;
-    dtOptions : any;
+    dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 4,
+      lengthMenu : [4,8,16,32,64,128],
+      processing: true
+    };
 
     constructor(public modal: NgbActiveModal,
                 public datepipe: DatePipe) {
     }
     
     ngOnInit() {  
-      if (this.auditTrail.length > 0) {
-          this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 4,
-            lengthMenu : [4,8,16,32,64,128],
-            processing: true
-          };
-         this.showTable = true;
-      }
     }
 
     closeModal(){

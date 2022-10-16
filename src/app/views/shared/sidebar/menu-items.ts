@@ -27,6 +27,14 @@ export const ROUTES: RouteInfo[] = [
     submenu: []
   },
   {
+    path: '/menu/upload-data',
+    title: 'Upload Data',
+    icon: 'bi bi-upload',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
     path: '/menu/data-master',
     title: 'Data Master',
     icon: 'bi bi-key',

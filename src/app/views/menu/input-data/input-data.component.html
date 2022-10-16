@@ -11,13 +11,13 @@
                 <div class="col-md-12">
                   <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
                     <li [ngbNavItem]="1">
-                      <a ngbNavLink>Registrasi Pengguna</a>
+                      <a ngbNavLink> Pengguna</a>
                       <ng-template ngbNavContent>
                         <app-parent-registration></app-parent-registration>
                       </ng-template>
                     </li>
                     <li [ngbNavItem]="2">
-                      <a ngbNavLink>Registrasi Anak</a>
+                      <a ngbNavLink> Anak</a>
                       <ng-template ngbNavContent>
                         <app-child-registration></app-child-registration>
                       </ng-template>
@@ -29,7 +29,7 @@
                       </ng-template>
                     </li>
                     <li [ngbNavItem]="4">
-                      <a ngbNavLink>Jejak Medis</a>
+                      <a ngbNavLink> Medis</a>
                       <ng-template ngbNavContent>
                         <app-checkup-record></app-checkup-record>
                       </ng-template>

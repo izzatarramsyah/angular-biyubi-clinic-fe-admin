@@ -30,6 +30,8 @@ import { HistoryComponent } from './history/history.component';
 import { FileSaverModule } from 'ngx-filesaver';
 import { EditCheckUpComponent } from "./schedule/schedule-component/edit-checkup/edit-checkup-component";
 import { EditVaccineComponent } from "./schedule/schedule-component/edit-vaccine/edit-vaccine.component";
+import { UploadDataComponent } from './upload-data/upload-data.component';
+import { AlertUploadDataComponent } from "./upload-data/upload-data-component/alert/alert-upload-data.component";
 
 @NgModule({ 
   providers: [DatePipe],
@@ -65,7 +67,9 @@ import { EditVaccineComponent } from "./schedule/schedule-component/edit-vaccine
     ModalChildComponent,
     HistoryComponent,
     EditCheckUpComponent,
-    EditVaccineComponent
+    EditVaccineComponent,
+    UploadDataComponent,
+    AlertUploadDataComponent
   ]
 })
 export class ComponentsModule { }

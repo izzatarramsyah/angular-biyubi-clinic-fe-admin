@@ -30,6 +30,8 @@ export class ModalChildComponent implements OnInit {
     birthDateEmpty : boolean;
     genderEmpty : boolean;
 
+    message = [];
+
     ngbModalOptions: NgbModalOptions = {
       backdrop : 'static',
       keyboard : false
@@ -79,7 +81,7 @@ export class ModalChildComponent implements OnInit {
           header : {
             uName : this.userAdmin.username,
             session : this.userAdmin.sessionId,
-            command : 'update',
+            command : 'user-update',
             channel : 'WEB'
           },
           payload : {
@@ -99,7 +101,9 @@ export class ModalChildComponent implements OnInit {
             this.modalService.dismissAll(LoadingComponent);
             const modalRef = this.modalService.open(AlertComponent,this.ngbModalOptions);
             modalRef.componentInstance.header = header;
-            modalRef.componentInstance.wording = data.header.responseMessage;
+            this.message = [];
+            this.message.push(data.header.responseMessage);
+            modalRef.componentInstance.wording = this.message;
           },
           (error) => {
             console.log("error : ", error);

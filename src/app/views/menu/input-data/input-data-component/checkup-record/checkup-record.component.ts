@@ -55,6 +55,8 @@ export class CheckUpRecordComponent implements OnInit {
 
   keyword = 'fullname';
 
+  message = [];
+
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
     keyboard : false
@@ -104,8 +106,8 @@ export class CheckUpRecordComponent implements OnInit {
       header : {
         uName : this.userAdmin.username,
         session : this.userAdmin.sessionId,
-        command :'info-all-simple-user',
-        channel : "WEB"
+        command : 'info-id-user',
+        channel : 'WEB'
       }
     };
     this.userService.getUser(JSON.stringify(payload))
@@ -221,7 +223,9 @@ export class CheckUpRecordComponent implements OnInit {
         && this.selectedIdChildEmpty == false && this.checkUpDateEmpty == false && this.notesEmpty == false) {
         const modalRef = this.modalService.open(AlertComponent);
         modalRef.componentInstance.header = 'Konfrimasi';
-        modalRef.componentInstance.wording = 'Apakah anda yakin untuk menyimpan data ini ? ';
+        this.message = [];
+        this.message.push('Apakah anda yakin untuk menyimpan data ini ? ');
+        modalRef.componentInstance.wording = this.message;
         modalRef.componentInstance.emitData.subscribe(($e) => {
           this.recive($e);
         })
@@ -236,7 +240,7 @@ export class CheckUpRecordComponent implements OnInit {
           uName : this.userAdmin.username,
           session : this.userAdmin.sessionId,
           channel : "WEB",
-          command : "save"
+          command : "save-checkup-record"
         },
         payload : {
           userId : this.tempUser.id,
@@ -260,7 +264,9 @@ export class CheckUpRecordComponent implements OnInit {
           this.modalService.dismissAll(LoadingComponent);
           const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
           modalRef.componentInstance.header = header;
-          modalRef.componentInstance.wording = data.header.responseMessage;
+          this.message = [];
+          this.message.push(data.header.responseMessage);
+          modalRef.componentInstance.wording = this.message;
         },
         (error) => {
           console.log("error : ", error);

@@ -2,7 +2,9 @@
     <h4 class="modal-title" id="modal-register">{{header}}</h4>
 </div>
 <div class="modal-body">
-    {{wording}}
+    <div *ngIf="wording.length > 0" class="row">
+        <div *ngFor="let notif of wording" style="float: left"> {{notif}}</div>
+    </div>
 </div>
 <div class="modal-footer" >     
     <div *ngIf="header === 'Konfrimasi'">

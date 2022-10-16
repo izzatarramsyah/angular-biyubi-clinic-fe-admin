@@ -52,17 +52,21 @@
                 <div class="col-md-2">
                   <label for="name">Pemeriksan Ke - </label>
                 </div>
-                <div class="col-md-2">
-                  <select [(ngModel)]="selectedBatch" class="form-control deft" (change)="changeBatch($event)">
-                    <option value=0 disabled>-- Pilih --</option>
-                    <option *ngFor="let list of checkUpMaster" value="{{list.batch}}">{{list.batch}}</option>
-                  </select>
-                  <div *ngIf="selectedBatchEmpty == true" class="make-orange" >
-                    <div *ngIf="selectedBatchEmpty == true">Bulan Harus Diisi</div>
+                <div class="col-md-10 container">
+                  <div class="row">
+                    <div class="col-3">
+                      <select [(ngModel)]="selectedBatch" class="form-control deft" (change)="changeBatch($event)">
+                        <option value=0 disabled>--</option>
+                        <option *ngFor="let list of checkUpMaster" value="{{list.batch}}">{{list.batch}}</option>
+                      </select>
+                      <div *ngIf="selectedBatchEmpty == true" class="make-orange" >
+                        <div *ngIf="selectedBatchEmpty == true">Bulan Harus Diisi</div>
+                      </div>
+                    </div>
+                    <div class="col-9">
+                      <input [(ngModel)]="description" type="description" class="form-control" readonly>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-8">
-                  <input [(ngModel)]="description" type="description" class="form-control" readonly>
                 </div>
               </div>
             </div>
@@ -90,38 +94,50 @@
                 <div class="col-md-2">
                   <label for="name">Berat Badan</label>
                 </div>
-                <div class="col-md-1">
-                  <input [(ngModel)]="weight" type="weight" class="form-control" [readonly]="isReadOnly" (keypress)="numberOnly($event)" maxlength="3">
-                  <div *ngIf="weightEmpty == true" class="make-orange" >
-                    <div *ngIf="weightEmpty == true">Berat Badan Harus Diisi</div>
-                  </div> 
-                </div>
-                <div class="col-md-1">
-                  <label for="name">KG</label>
+                <div class="col-md-2 container">
+                  <div class="row">
+                    <div class="col-9">
+                      <input [(ngModel)]="weight" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="4" >
+                      <div *ngIf="weightEmpty == true" class="make-orange" >
+                        <div *ngIf="weightEmpty == true">Berat Saat Lahir Harus Diisi</div>
+                      </div> 
+                    </div>
+                    <div class="col-3">
+                      <label for="name">KG</label>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-md-2">
-                  <label for="name">Panjang Badan</label>
+                  <label for="name">Panjang Lahir</label>
                 </div>
-                <div class="col-md-1">
-                  <input [(ngModel)]="length" type="length" class="form-control" [readonly]="isReadOnly" (keypress)="numberOnly($event)" maxlength="3">
-                  <div *ngIf="lengthEmpty == true" class="make-orange" >
-                    <div *ngIf="lengthEmpty == true">Panjang Badan Harus Diisi</div>
-                  </div> 
-                </div>
-                <div class="col-md-1">
-                  <label for="name">CM</label>
+                <div class="col-md-2 container">
+                  <div class="row">
+                    <div class="col-9">
+                      <input [(ngModel)]="length" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="4" >
+                      <div *ngIf="lengthEmpty == true" class="make-orange" >
+                        <div *ngIf="lengthEmpty == true">Panjang Saat Lahir Harus Diisi</div>
+                      </div> 
+                    </div>
+                    <div class="col-3">
+                      <label for="name">CM</label>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-md-2">
                   <label for="name">Lingkar Kepala</label>
                 </div>
-                <div class="col-md-1">
-                  <input [(ngModel)]="headDiameter" type="text" class="form-control" [readonly]="isReadOnly" (keypress)="numberOnly($event)" maxlength="3">
-                  <div *ngIf="headDiameterEmpty == true" class="make-orange" >
-                    <div *ngIf="headDiameterEmpty == true">Lingkar Kepala Harus Diisi</div>
-                  </div> 
-                </div>
-                <div class="col-md-1">
-                  <label for="name">CM</label>
+                <div class="col-md-2 container">
+                  <div class="row">
+                    <div class="col-9">
+                      <input [(ngModel)]="headDiameter" type="text" class="form-control" (keypress)="numberOnly($event)" maxlength="4" >
+                      <div *ngIf="headDiameterEmpty == true" class="make-orange" >
+                        <div *ngIf="headDiameterEmpty == true">Lingkar Kepala Harus Diisi</div>
+                      </div> 
+                    </div>
+                    <div class="col-3">
+                      <label for="name">CM</label>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

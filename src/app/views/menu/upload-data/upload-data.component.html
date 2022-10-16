@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body" >
+                <!-- title -->
+                <!-- <h4 class="card-title">Data Riwayat</h4>
+                <h5 class="card-subtitle">Data Riwayat Aktivitas Admin</h5> -->
+                <!-- title -->
+                <!-- <br> -->
+                <div class="col-md-12" >
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2">
+                               <label for="name">Tipe Input Data</label>
+                            </div>
+                            <div class="col-md-10">
+                                <select class="form-control" (change)="onChangeType($event)">
+                                    <option *ngFor="let list of dataType" value="{{list.value}}" [disabled]="list.isDisabled">{{list.name}}</option>
+                                </select> 
+                                <div *ngIf="selectedValueEmpty == true" class="make-orange" >
+                                    <div *ngIf="selectedValueEmpty == true">Tipe Data Harus Diisi</div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2">
+                               <label for="name">Upload</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="file" class="custom-file-input" (change)="uploadFile($event)"required>
+                                <a *ngIf="url != null" [href]="url" class="text-pink d-block mt-2" download>
+                                    <i class="fal fa-arrow-to-bottom"></i> Download contoh file excel
+                                </a>   
+                                <div *ngIf="fileEmpty == true" class="make-orange" >
+                                    <div *ngIf="fileEmpty == true">File harus di upload</div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-success" (click)="upload()" >Upload
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

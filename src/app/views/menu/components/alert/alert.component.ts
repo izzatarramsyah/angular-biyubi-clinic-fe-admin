@@ -10,7 +10,7 @@ import { first } from 'rxjs/operators';
 export class AlertComponent implements OnInit {
     
     @Input() header : string;
-    @Input() wording : string;
+    @Input() wording : string [];
     @Output() emitData = new EventEmitter();
 
     constructor(public modal: NgbActiveModal,

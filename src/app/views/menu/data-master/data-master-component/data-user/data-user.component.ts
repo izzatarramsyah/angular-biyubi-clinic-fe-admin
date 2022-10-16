@@ -27,6 +27,8 @@ export class DataUserComponent implements OnInit{
   status : string;
   showTable : boolean;
 
+  message = [];
+  
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
     keyboard : false
@@ -87,14 +89,18 @@ export class DataUserComponent implements OnInit{
     const modalRef = this.modalService.open(AlertComponent);
     modalRef.componentInstance.header = 'Konfrimasi';
     if (e.target.checked == true) {
-      modalRef.componentInstance.wording = 'Apakah anda yakin untuk mengaktifkan pengguna ini ? ';
+      this.message = [];
+      this.message.push('Apakah anda yakin untuk mengaktifkan vaksin ini ?  ');
+      modalRef.componentInstance.wording = this.message;
       this.status = 'ACTIVE';
     } else {
-      modalRef.componentInstance.wording = 'Apakah anda yakin untuk menonaktifkan pengguna ini ? ';
+      this.message = [];
+      this.message.push('Apakah anda yakin untuk menonaktifkan vaksin ini ? ');
+      modalRef.componentInstance.wording = this.message;
       this.status = 'INACTIVE';
     }
     modalRef.componentInstance.emitData.subscribe(($e) => {
-      this.recive($e, object.id);
+      this.recive($e, object);
     })
   }
 
@@ -105,7 +111,7 @@ export class DataUserComponent implements OnInit{
         header : {
           uName : this.userAdmin.username,
           session : this.userAdmin.sessionId,
-          command : 'changeStatus',
+          command : 'user-change-status',
           channel : 'WEB'
         },
         payload : {
@@ -123,7 +129,9 @@ export class DataUserComponent implements OnInit{
           this.modalService.dismissAll(LoadingComponent);
           const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
           modalRef.componentInstance.header = header;
-          modalRef.componentInstance.wording = data.header.responseMessage;
+          this.message = [];
+          this.message.push(data.header.responseMessage);
+          modalRef.componentInstance.wording = this.message;
         },
         (error) => {
           console.log("error : ", error);

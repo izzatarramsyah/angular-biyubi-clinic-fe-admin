@@ -73,7 +73,7 @@ export class ScheduleComponent implements OnInit {
       header : {
         uName : this.userAdmin.username,
         session : this.userAdmin.sessionId,
-        command :'info-all-simple-user',
+        command :'info-id-user',
         channel : "WEB"
       }
     };
@@ -243,7 +243,7 @@ export class ScheduleComponent implements OnInit {
         header : {
           uName : this.userAdmin.username,
           session : this.userAdmin.sessionId,
-          command : 'report-checkup',
+          command : 'schedule-checkup',
         },
         payload: {
           userId : this.tempUser.id,
@@ -257,7 +257,7 @@ export class ScheduleComponent implements OnInit {
         header : {
           uName: this.userAdmin.username,
           session: this.userAdmin.sessionId,
-          command: 'report-vaccine'
+          command: 'schedule-vaccine'
         },
         payload: {
           userId : this.tempUser.id,

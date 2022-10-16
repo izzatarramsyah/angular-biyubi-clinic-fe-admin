@@ -125,7 +125,7 @@ export class GraphComponent implements OnInit {
       header : {
         uName : this.userAdmin.username,
         session : this.userAdmin.sessionId,
-        command :'info-all-simple-user',
+        command : 'info-id-user',
         channel : "WEB"
       }
     };

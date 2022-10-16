@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-register">Data Telah Di Proses</h4>
+</div>
+<div class="modal-body">
+    <div *ngIf="wording.length > 0" class="row">
+        <ng-container *ngFor="let p of wording">
+            <div [innerHTML]="p"></div>
+        </ng-container>
+    </div>
+    <br>
+    <div *ngIf="object.length > 0"> 
+        <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+                <thead>
+                    <tr>
+                        <th class="text-dark font-medium fs-4" style="text-align:center">Baris</th>
+                        <th class="text-dark font-medium fs-4" style="text-align:center">Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let list of object'>
+                        <td class="fs-4" style="text-align:center">{{list.param}}</td>
+                        <td class="fs-4" style="text-align:center">{{list.message}}</td>
+                    </tr>              
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer" >     
+    <div>
+        <button type="button" class="btn btn-outline-dark" (click)="closeModal()">Tutup</button>&nbsp;   
+    </div>
+</div>

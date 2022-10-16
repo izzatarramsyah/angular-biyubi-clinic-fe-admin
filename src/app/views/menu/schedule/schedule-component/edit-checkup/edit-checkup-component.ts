@@ -33,6 +33,8 @@ export class EditCheckUpComponent implements OnInit {
     headDiameterEmpty : boolean;
     notesEmpty : boolean;
 
+    message = [];
+
     ngbModalOptions: NgbModalOptions = {
       backdrop : 'static',
       keyboard : false
@@ -87,7 +89,7 @@ export class EditCheckUpComponent implements OnInit {
             header : {
               uName : this.userAdmin.username,
               session : this.userAdmin.sessionId,
-              command : 'update',
+              command : 'update-checkup-record',
               channel : 'WEB'
             },
             payload : {
@@ -110,7 +112,9 @@ export class EditCheckUpComponent implements OnInit {
               this.modalService.dismissAll(LoadingComponent);
               const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
               modalRef.componentInstance.header = header;
-              modalRef.componentInstance.wording = data.header.responseMessage;
+              this.message = [];
+              this.message.push(data.header.responseMessage);
+              modalRef.componentInstance.wording = this.message;
             },
             (error) => {
               console.log("error : ", error);

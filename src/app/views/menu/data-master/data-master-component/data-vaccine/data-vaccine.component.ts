@@ -24,6 +24,10 @@ export class DataVaccineComponent implements OnInit{
   showTable = false;
   dtOptions: any = {};
   
+  status : string;
+
+  message = [];
+
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
     keyboard : false
@@ -85,35 +89,38 @@ export class DataVaccineComponent implements OnInit{
   }
 
   changeCheckBox(e , object){
-    e.preventDefault();
+     e.preventDefault();
     const modalRef = this.modalService.open(AlertComponent);
-    let status;
     modalRef.componentInstance.header = 'Konfrimasi';
     if (e.target.checked == true) {
-      modalRef.componentInstance.wording = 'Apakah anda yakin untuk mengaktifkan vaksin ini ? ';
-      status = 'ACTIVE';
+      this.message = [];
+      this.message.push('Apakah anda yakin untuk mengaktifkan vaksin ini ?  ');
+      modalRef.componentInstance.wording = this.message;
+      this.status = 'ACTIVE';
     } else {
-      modalRef.componentInstance.wording = 'Apakah anda yakin untuk menonaktifkan vaksin ini ? ';
-      status = 'INACTIVE';
+      this.message = [];
+      this.message.push('Apakah anda yakin untuk menonaktifkan vaksin ini ? ');
+      modalRef.componentInstance.wording = this.message;
+      this.status = 'INACTIVE';
     }
     modalRef.componentInstance.emitData.subscribe(($e) => {
-      this.recive($e, object, status);
+      this.recive($e, object);
     })
   }
 
-  recive(event, object, status) {
+  recive(event, object) {
     if (event) {
       this.modalService.open(LoadingComponent, this.ngbModalOptions);
       let payload = {
         header : {
           uName : this.userAdmin.username,
           session : this.userAdmin.sessionId,
-          command : 'changeStatus',
+          command : 'change-status-vaccine',
           channel : "WEB"
         },payload : {
           vaccineCode : object.vaccineCode,
           vaccineName : object.vaccineName,
-          status : status
+          status : this.status
         }
       };
       this.masterService.processMstVaccine(JSON.stringify(payload))
@@ -126,7 +133,9 @@ export class DataVaccineComponent implements OnInit{
           this.modalService.dismissAll(LoadingComponent);
           const modalRef = this.modalService.open(AlertComponent, this.ngbModalOptions);
           modalRef.componentInstance.header = header;
-          modalRef.componentInstance.wording = data.header.responseMessage;
+          this.message = [];
+          this.message.push(data.header.responseMessage);
+          modalRef.componentInstance.wording = this.message;
         },
         (error) => {
           console.log("error : ", error);
@@ -141,7 +150,7 @@ export class DataVaccineComponent implements OnInit{
       header : {
         uName: this.userAdmin.username,
         session: this.userAdmin.sessionId,
-        command: 'mst-vaccine'
+        command: 'info-list-vaccine'
       }
     };
     this.exportService.schedule(JSON.stringify(payload))

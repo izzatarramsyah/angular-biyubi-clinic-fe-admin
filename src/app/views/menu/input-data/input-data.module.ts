@@ -7,6 +7,7 @@ import { InputDataComponent } from "./input-data.component";
 import { VaccineRecordComponent } from "./input-data-component/vaccine-record/vaccine-record.component";
 import { ParentRegistrationComponent } from "./input-data-component/parent-registration/parent-registration.component";
 import { ChildRegistrationComponent } from "./input-data-component/child-registration/child-registration.component";
+import { CheckUpRecordComponent } from "./input-data-component/checkup-record/checkup-record.component";
 
 const routes: Routes = [
   {
@@ -31,7 +32,8 @@ const routes: Routes = [
     InputDataComponent,
     VaccineRecordComponent,
     ParentRegistrationComponent,
-    ChildRegistrationComponent
+    ChildRegistrationComponent,
+    CheckUpRecordComponent
   ],
 })
 export class InputDataModule {}
