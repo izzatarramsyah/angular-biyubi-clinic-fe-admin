@@ -15,7 +15,7 @@ export class AuditTrailService {
     }
   
     listActivity(payload : string) {
-      return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/auditTrail/listActivity`, payload)
+      return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/userAdmin/getLogs`, payload)
       .pipe(map(res => {
         return res;
       }));

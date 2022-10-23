@@ -3,7 +3,6 @@ import { InputDataComponent } from './input-data/input-data.component';
 import { DataMasterComponent } from './data-master/data-master.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { GraphComponent } from './graph/graph.component';
-import { HistoryComponent } from './history/history.component';
 import { UploadDataComponent } from './upload-data/upload-data.component';
 
 export const ComponentsRoutes: Routes = [
@@ -25,10 +24,6 @@ export const ComponentsRoutes: Routes = [
 			{
 				path: 'graph',
 				component: GraphComponent
-			},
-			{
-				path: 'history',
-				component: HistoryComponent
 			},
 			{
 				path: 'upload-data',

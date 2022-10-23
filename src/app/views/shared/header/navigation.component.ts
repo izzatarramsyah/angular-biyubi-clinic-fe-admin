@@ -92,9 +92,7 @@ export class NavigationComponent implements OnInit {
         channel : "WEB"
       },
       payload : {
-        username : this.userAdmin.username,
-        startDate : startDate,
-        endDate : endate
+        username : this.userAdmin.username
       }
     };
 

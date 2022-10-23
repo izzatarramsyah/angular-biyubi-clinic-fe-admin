@@ -1,5 +1,5 @@
 export interface AuditTrail {
 	activity : string
-	username : string;
-	date : string;
+	value1 : string;
+	createdDtm : string;
 }
