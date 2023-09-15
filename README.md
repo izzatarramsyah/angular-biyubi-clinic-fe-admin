@@ -1,6 +1,8 @@
-# BiyubiClinicFrontendAdmin
+# Description
+Frontend for Biyubi Clinic App Admin
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
+# Project 
+Biyubi Clinic Growth Monitoring for 0-2 years child accroding Z Score WHO
 
-Angular as Frontend for Biyubi Clinic App Project
-
+# Stack 
+Angular version 14.2.1
