@@ -1,5 +1,5 @@
 # Description
-Frontend for Biyubi Clinic App Admin
+Angular Frontend for Biyubi Clinic App Admin
 
 # Project 
 Biyubi Clinic Growth Monitoring for 0-2 years child accroding Z Score WHO
