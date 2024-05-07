@@ -15,21 +15,21 @@ export class RecordService {
     }
    
     checkUpRecord(payload : string) {
-        return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/record/checkUpRecord`, payload)
+        return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/record/checkUpRecord`, payload)
         .pipe(map(res => {
             return res;
         }));
     } 
 
     vaccineRecord(payload : string) {
-        return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/record/vaccineRecord`, payload)
+        return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/record/vaccineRecord`, payload)
         .pipe(map(res => {
             return res;
         }));
     } 
     
     getSchedule(payload : string) {
-        return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/record/getSchedule`, payload)
+        return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/record/getSchedule`, payload)
         .pipe(map(res => {
             return res;
         }));

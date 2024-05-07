@@ -16,13 +16,13 @@ export class ExportService {
   
     schedule(payload) {
       return this.http
-      .post(`${environment.apiUrl}/clinic/export/excel`, payload, { responseType:'blob' })
+      .post(`${environment.apiUrl}/biyubi-clinic-backend/export/excel`, payload, { responseType:'blob' })
       .toPromise();
     }
 
     report(payload) {
       return this.http
-      .post(`${environment.apiUrl}/clinic/export/pdf`, payload, { responseType:'blob' })
+      .post(`${environment.apiUrl}/biyubi-clinic-backend/export/pdf`, payload, { responseType:'blob' })
       .toPromise();
     }
 

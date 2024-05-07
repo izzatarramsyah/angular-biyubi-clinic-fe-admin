@@ -15,21 +15,21 @@ export class UserService {
     }
   
     getUser(payload : string) {
-      return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/user/getUser`, payload)
+      return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/user/getUser`, payload)
       .pipe(map(res => {
         return res;
       }));
     } 
 
     userProcess(payload : string) {
-      return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/user/userProcess`, payload)
+      return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/user/userProcess`, payload)
       .pipe(map(res => {
         return res;
       }));
     } 
     
     childProcess(payload : string) {
-      return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/user/childProcess`, payload)
+      return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/user/childProcess`, payload)
       .pipe(map(res => {
         return res;
       }));

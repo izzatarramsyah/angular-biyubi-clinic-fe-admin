@@ -15,7 +15,7 @@ export class BulkProcessService {
     }
   
     bulkProcess(payload : string) {
-      return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/upload/bulkProcess`, payload)
+      return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/upload/bulkProcess`, payload)
       .pipe(map(res => {
         return res;
       }));

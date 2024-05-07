@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   envName: 'prod',
-  apiUrl: 'https://biyubi-clinic-backend.herokuapp.com',
-  socketUrl: 'https://biyubi-whatsapp-api.herokuapp.com'
+  apiUrl: 'http://localhost:8888',
+  socketUrl: 'http://localhost:8888'
 };

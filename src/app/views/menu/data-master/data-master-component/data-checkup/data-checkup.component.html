@@ -14,6 +14,7 @@
                 <th class="text-dark font-medium fs-4" style="text-align:center">Aktivitas</th>
                 <th class="text-dark font-medium fs-4" style="text-align:center">Bulan Ke-</th>
                 <th class="text-dark font-medium fs-4" style="text-align:center">Pemeriksaan Selanjutnya</th>
+                <th class="text-dark font-medium fs-4" style="text-align:center">Status</th>
                 <th class="text-dark font-medium fs-4" style="text-align:center">Aksi</th>
             </tr>
         </thead>
@@ -22,6 +23,9 @@
                 <td class="fs-4" style="text-align:center">{{list.description}}</td>
                 <td class="fs-4" style="text-align:center">{{list.batch}}</td>
                 <td class="fs-4" style="text-align:center">{{list.nextCheckUpDays}}</td>
+                <td class="fs-4" style="text-align:center">
+                  <span [ngClass]="list.status == 'ACTIVE' ? 'p-2 bg-success rounded-circle d-inline-block ms-3' : 'p-2 bg-danger rounded-circle d-inline-block ms-3'"></span>
+                </td>
                 <td class="fs-4" style="text-align:center">
                   <label class="switch">  
                     <input type="checkbox" (click)="changeCheckBox($event,list)" [checked]="list.status == 'ACTIVE'">

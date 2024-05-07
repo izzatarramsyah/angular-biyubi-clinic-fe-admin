@@ -89,7 +89,7 @@ export class DataVaccineComponent implements OnInit{
   }
 
   changeCheckBox(e , object){
-     e.preventDefault();
+    e.preventDefault();
     const modalRef = this.modalService.open(AlertComponent);
     modalRef.componentInstance.header = 'Konfrimasi';
     if (e.target.checked == true) {

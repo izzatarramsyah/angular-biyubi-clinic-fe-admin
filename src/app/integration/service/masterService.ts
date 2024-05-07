@@ -15,21 +15,21 @@ export class MasterService {
     }
   
     getListMst(payload : string) {
-      return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/mst/getListMst`, payload)
+      return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/mst/getListMst`, payload)
       .pipe(map(res => {
         return res;
       }));
     } 
   
     processMstVaccine(payload : string) {
-      return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/mst/processMstVaccine`, payload)
+      return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/mst/processMstVaccine`, payload)
       .pipe(map(res => {
         return res;
       }));
     } 
 
     processMstCheckUp(payload : string) {
-      return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/mst/processMstCheckUp`, payload)
+      return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/mst/processMstCheckUp`, payload)
       .pipe(map(res => {
         return res;
       }));

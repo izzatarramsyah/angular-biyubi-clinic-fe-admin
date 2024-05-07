@@ -25,7 +25,7 @@ export class UserAdminService {
     }
 
     login(payload : string) {
-        return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/userAdmin/login`, payload)
+        return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/userAdmin/login`, payload)
           .pipe(map(res => {
             if (res.header.responseCode === '00') {
               localStorage.setItem('userAdmin', JSON.stringify(res.payload.object));
@@ -36,7 +36,7 @@ export class UserAdminService {
     }
 
     checkSession(payload : string) {
-      return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/userAdmin/checkSession`, payload)
+      return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/userAdmin/checkSession`, payload)
         .pipe(map(res => {
           if (res.header.responseCode != '00') {
             const user = res.payload.object;
@@ -48,7 +48,7 @@ export class UserAdminService {
     } 
 
     logout(payload : string) {
-      return this.http.post<ApiResponse>(`${environment.apiUrl}/clinic/userAdmin/logout`, payload)
+      return this.http.post<ApiResponse>(`${environment.apiUrl}/biyubi-clinic-backend/userAdmin/logout`, payload)
         .pipe(map(res => {
           const user = res.payload.object;
           this.userAdminSubject.next(user);
