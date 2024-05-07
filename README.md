@@ -16,6 +16,7 @@ Simple Frontend Web Application with Growth Monitoring for 0-2 Years Child Accro
 - Input and Upload Excel ( Growth Checkup & Imunisation Schedule )
 - Data Master
 - Reporting for Growth and Imunisation
+- Sending Whatsapp Notification ( Scan QR Code to Login to Whatsapp )
 
 ## Preview
 
