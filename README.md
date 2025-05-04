@@ -1,24 +1,28 @@
-# Angular Simple Project
+# Biyubi Clinic Growth Monitoring App (Frontend)
 
-## Project Name
-Biyubi Clinic Growth Monitoring App 
+A simple frontend web application built with **Angular**, designed for **Growth Monitoring** of children aged 0-2 years old, according to **WHO Z Score** guidelines. This project aims to allow healthcare professionals and parents to track and manage a child's growth, vaccination schedule, and checkups.
 
-## Project Description
-Simple Frontend Web Application with Growth Monitoring for 0-2 Years Child Accroding Z Score WHO Case Study
+---
 
-## Project Stack
-- Angular version 14.2.1
-- npm
+## 📦 Tech Stack
 
-## Project Feature
-- View Graphic Growth ( Height, Weight, Head Diameter )
-- Generate Schedule for Growth Checkup and Imunisation Schedule
-- Input and Upload Excel ( Growth Checkup & Imunisation Schedule )
-- Data Master
-- Reporting for Growth and Imunisation
-- Sending Whatsapp Notification ( Scan QR Code to Login to Whatsapp )
+- **Angular 14.2.1**
+- **npm**
 
-## Preview
+---
+
+## 🔧 Features
+
+- 📊 **Growth Graphs**: View graphical representation of **Height**, **Weight**, and **Head Diameter** growth.
+- 📅 **Growth Checkup & Immunization Schedule**: Generate and manage schedules for growth checkups and immunization.
+- 📥 **Excel Upload**: Input and upload Excel files for **Growth Checkups** and **Immunization Schedules**.
+- 🗂️ **Data Management**: Manage master data like checkup information, immunization details, etc.
+- 📝 **Growth & Immunization Reports**: Generate detailed reports on growth and immunization history.
+- 📱 **WhatsApp Notifications**: Send notifications via WhatsApp by scanning a QR code to login to WhatsApp.
+  
+---
+
+## 🖼️ Project Preview
 
 `Dashboard`
 <img width="952" alt="dashboard" src="https://github.com/izzatarramsyah/biyubi-clinic-frontend-admin/assets/24617733/9cf0261d-03fa-45d8-8fb0-0a695f7bc407">
@@ -38,4 +42,37 @@ Simple Frontend Web Application with Growth Monitoring for 0-2 Years Child Accro
 `Growth Result and Graphic`
 <img width="941" alt="grafik" src="https://github.com/izzatarramsyah/biyubi-clinic-frontend-admin/assets/24617733/e71b2542-7287-4a06-aab8-7fb164af9127">
 <img width="944" alt="grafik 2" src="https://github.com/izzatarramsyah/biyubi-clinic-frontend-admin/assets/24617733/8b1c29b9-38b4-4d56-b5f6-a32cd6a3335d">
+
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- **Node.js** (for running npm)
+- **npm** (Node Package Manager)
+
+### Installation
+
+1. **Clone the repository:**
+    ```bash
+    git clone https://github.com/izzatarramsyah/angular-biyubi-clinic-fe-admin
+    cd biyubi-clinic-growth-monitoring-frontend
+    ```
+
+2. **Install the dependencies:**
+    ```bash
+    npm install
+    ```
+
+3. **Run the Angular project:**
+    ```bash
+    ng serve
+    ```
+
+4. **Access the application:**
+    - The application should now be running at `http://localhost:4200`.
+
+---
+
 
